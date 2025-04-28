@@ -66,4 +66,14 @@ logging:
   logback:
     rollingpolicy:
       max-file-size: 10MB
-      max-history: 30 
+      max-history: 30
+
+# 自定义日志配置
+goodsop:
+  logging:
+    enabled: true
+    include-request-params: true
+    include-response-body: true
+    service-slow-threshold: 300
+    controller-slow-threshold: 500
+    request-id-length: 12 
