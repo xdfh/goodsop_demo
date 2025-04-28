@@ -20,6 +20,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public Page<User> pageUsers(Page<User> page, User user) {
+        return pageUsers(page, user, null, null);
+    }
+
+    @Override
+    public Page<User> pageUsers(Page<User> page, User user, String sortField, String sortOrder) {
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         if (user != null) {
             // 根据用户名模糊查询
@@ -39,6 +44,28 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
                 queryWrapper.eq(User::getStatus, user.getStatus());
             }
         }
+        
+        // 添加排序功能
+        if (StringUtils.hasText(sortField)) {
+            boolean isAsc = !"desc".equalsIgnoreCase(sortOrder);
+            
+            // 根据创建时间排序
+            if ("create_time".equals(sortField)) {
+                queryWrapper.orderBy(true, isAsc, User::getCreateTime);
+            }
+            // 根据更新时间排序
+            else if ("update_time".equals(sortField)) {
+                queryWrapper.orderBy(true, isAsc, User::getUpdateTime);
+            }
+            // 默认按照创建时间降序排序
+            else {
+                queryWrapper.orderByDesc(User::getCreateTime);
+            }
+        } else {
+            // 默认按照创建时间降序排序
+            queryWrapper.orderByDesc(User::getCreateTime);
+        }
+        
         return this.page(page, queryWrapper);
     }
 

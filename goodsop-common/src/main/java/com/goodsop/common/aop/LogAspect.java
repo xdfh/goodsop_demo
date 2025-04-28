@@ -25,7 +25,7 @@ import java.util.UUID;
 @Slf4j
 public class LogAspect {
     
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper;
     private final WebLogProperties logProperties;
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -33,8 +33,9 @@ public class LogAspect {
     /**
      * 构造方法，注入配置属性
      */
-    public LogAspect(WebLogProperties logProperties) {
+    public LogAspect(WebLogProperties logProperties, ObjectMapper objectMapper) {
         this.logProperties = logProperties;
+        this.objectMapper = objectMapper;
     }
     
     /**

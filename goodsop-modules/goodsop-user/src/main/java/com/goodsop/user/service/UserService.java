@@ -19,6 +19,17 @@ public interface UserService extends IService<User> {
     Page<User> pageUsers(Page<User> page, User user);
     
     /**
+     * 分页查询用户（支持排序）
+     *
+     * @param page       分页参数
+     * @param user       查询条件
+     * @param sortField  排序字段
+     * @param sortOrder  排序方向
+     * @return 用户分页列表
+     */
+    Page<User> pageUsers(Page<User> page, User user, String sortField, String sortOrder);
+    
+    /**
      * 根据ID查询用户
      *
      * @param id 用户ID

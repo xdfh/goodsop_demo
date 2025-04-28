@@ -28,9 +28,11 @@ public class UserController {
     public Result<Page<User>> pageUsers(
             @Parameter(description = "页码", required = true) @RequestParam(defaultValue = "1") long current,
             @Parameter(description = "每页条数", required = true) @RequestParam(defaultValue = "10") long size,
+            @Parameter(description = "排序字段，支持create_time/update_time") @RequestParam(required = false) String sortField,
+            @Parameter(description = "排序方向，asc升序/desc降序") @RequestParam(defaultValue = "desc") String sortOrder,
             @Parameter(description = "用户查询条件") User user) {
         Page<User> page = new Page<>(current, size);
-        Page<User> result = userService.pageUsers(page, user);
+        Page<User> result = userService.pageUsers(page, user, sortField, sortOrder);
         return Result.success(result);
     }
 
