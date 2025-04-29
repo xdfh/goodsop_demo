@@ -46,16 +46,48 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     cache-enabled: false
 
+# Knife4j配置
 knife4j:
   enable: true
-  openapi:
-    title: Goodsop API文档
-    description: Goodsop REST API接口文档
-    email: admin@goodsop.com
-    version: 1.0.0
-    license: Apache 2.0
-    license-url: https://goodsop.com
-    terms-of-service-url: https://goodsop.com
+  setting:
+    language: zh-CN
+    enable-swagger-models: true
+    enable-document-manage: true
+    swagger-model-name: 实体类列表
+    enable-version: true
+    enable-footer: false
+    enable-group: true
+  basic:
+    enable: false
+  documents:
+    - group: default
+      name: 使用指南
+      locations: classpath:markdown/*
+
+# SpringDoc配置
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    disable-swagger-default-url: true
+    display-request-duration: true
+    operations-sorter: method
+    tags-sorter: alpha
+  group-configs:
+    - group: 文件管理模块
+      paths-to-match: /file/**
+      packages-to-scan: com.goodsop.file.controller
+    - group: 用户管理模块
+      paths-to-match: /user/**
+      packages-to-scan: com.goodsop.user.controller
+    - group: 系统服务模块
+      paths-to-match: /system/**
+      packages-to-scan: com.goodsop.server.controller
+    - group: IoT设备模块
+      paths-to-match: /iot/**
+      packages-to-scan: com.goodsop.iot.controller
 
 logging:
   level:

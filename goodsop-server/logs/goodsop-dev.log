@@ -4777,3 +4777,594 @@ Caused by: java.net.ConnectException: Connection refused: no further information
 │ 执行时间 : 6ms
 │ 返回结果 : {"code":200,"msg":"success","data":{"id":99,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0}}
 └─────────────────────────────────────────────────────┘
+2025-04-29T16:08:56.764+08:00  INFO 6052 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 6052 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-29T16:08:56.765+08:00 DEBUG 6052 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-29T16:08:56.766+08:00  INFO 6052 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-29T16:08:57.727+08:00  INFO 6052 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-29T16:08:57.736+08:00  INFO 6052 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-29T16:08:57.736+08:00  INFO 6052 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-29T16:08:57.799+08:00  INFO 6052 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-29T16:08:57.800+08:00  INFO 6052 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1003 ms
+2025-04-29T16:08:58.880+08:00  INFO 6052 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2025-04-29T16:08:58.926+08:00  INFO 6052 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2025-04-29T16:08:58.936+08:00  INFO 6052 --- [main] com.goodsop.server.GoodsopApplication    : Started GoodsopApplication in 2.444 seconds (process running for 2.653)
+2025-04-29T16:10:03.815+08:00  INFO 6052 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-29T16:10:03.815+08:00  INFO 6052 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-04-29T16:10:03.816+08:00  INFO 6052 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2025-04-29T16:10:09.780+08:00  INFO 6052 --- [http-nio-8080-exec-4] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 70 ms
+2025-04-29T16:55:29.594+08:00  INFO 7156 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 7156 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-29T16:55:29.596+08:00 DEBUG 7156 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-29T16:55:29.596+08:00  INFO 7156 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-29T16:55:30.555+08:00  INFO 7156 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-29T16:55:30.562+08:00  INFO 7156 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-29T16:55:30.563+08:00  INFO 7156 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-29T16:55:30.624+08:00  INFO 7156 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-29T16:55:30.625+08:00  INFO 7156 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 995 ms
+2025-04-29T16:55:31.705+08:00  INFO 7156 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2025-04-29T16:55:31.757+08:00  INFO 7156 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2025-04-29T16:55:31.768+08:00  INFO 7156 --- [main] com.goodsop.server.GoodsopApplication    : Started GoodsopApplication in 2.447 seconds (process running for 2.673)
+2025-04-29T16:58:14.427+08:00  INFO 7156 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-29T16:58:14.428+08:00  INFO 7156 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-04-29T16:58:14.429+08:00  INFO 7156 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-04-29T16:58:14.728+08:00  INFO 7156 --- [http-nio-8080-exec-3] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 65 ms
+2025-04-29T17:02:48.280+08:00  INFO 20096 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 20096 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-29T17:02:48.282+08:00 DEBUG 20096 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-29T17:02:48.282+08:00  INFO 20096 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-29T17:02:49.315+08:00  INFO 20096 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-29T17:02:49.322+08:00  INFO 20096 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-29T17:02:49.322+08:00  INFO 20096 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-29T17:02:49.388+08:00  INFO 20096 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-29T17:02:49.388+08:00  INFO 20096 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1075 ms
+2025-04-29T17:02:50.475+08:00  INFO 20096 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2025-04-29T17:02:50.520+08:00  INFO 20096 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2025-04-29T17:02:50.531+08:00  INFO 20096 --- [main] com.goodsop.server.GoodsopApplication    : Started GoodsopApplication in 2.542 seconds (process running for 2.733)
+2025-04-29T17:02:54.763+08:00  INFO 20096 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-29T17:02:54.764+08:00  INFO 20096 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-04-29T17:02:54.765+08:00  INFO 20096 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-04-29T17:02:55.068+08:00  INFO 20096 --- [http-nio-8080-exec-3] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 67 ms
+2025-04-29T17:18:32.405+08:00  INFO 9212 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 9212 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-29T17:18:32.407+08:00 DEBUG 9212 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-29T17:18:32.408+08:00  INFO 9212 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-29T17:18:33.383+08:00  INFO 9212 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-29T17:18:33.390+08:00  INFO 9212 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-29T17:18:33.390+08:00  INFO 9212 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-29T17:18:33.451+08:00  INFO 9212 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-29T17:18:33.452+08:00  INFO 9212 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1010 ms
+2025-04-29T17:18:34.443+08:00  WARN 9212 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'multipleOpenApiResource' defined in class path resource [org/springdoc/webmvc/core/configuration/MultipleOpenApiSupportConfiguration.class]: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@52d63b7e and org.springdoc.webmvc.api.OpenApiWebMvcResource@74830d73)
+2025-04-29T17:18:34.445+08:00  INFO 9212 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-0} closing ...
+2025-04-29T17:18:34.447+08:00  INFO 9212 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-04-29T17:18:34.489+08:00  INFO 9212 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-04-29T17:18:34.500+08:00 ERROR 9212 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'multipleOpenApiResource' defined in class path resource [org/springdoc/webmvc/core/configuration/MultipleOpenApiSupportConfiguration.class]: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@52d63b7e and org.springdoc.webmvc.api.OpenApiWebMvcResource@74830d73)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1770) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:973) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:950) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:738) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:440) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
+	at com.goodsop.server.GoodsopApplication.main(GoodsopApplication.java:17) ~[classes/:na]
+Caused by: java.lang.IllegalStateException: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@52d63b7e and org.springdoc.webmvc.api.OpenApiWebMvcResource@74830d73)
+	at java.base/java.util.stream.Collectors.duplicateKeyException(Collectors.java:135) ~[na:na]
+	at java.base/java.util.stream.Collectors.lambda$uniqKeysMapAccumulator$1(Collectors.java:182) ~[na:na]
+	at java.base/java.util.stream.ReduceOps$3ReducingSink.accept(ReduceOps.java:169) ~[na:na]
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499) ~[na:na]
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682) ~[na:na]
+	at org.springdoc.webmvc.api.MultipleOpenApiResource.afterPropertiesSet(MultipleOpenApiResource.java:137) ~[springdoc-openapi-starter-webmvc-api-2.0.4.jar:2.0.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1817) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1766) ~[spring-beans-6.0.13.jar:6.0.13]
+	... 16 common frames omitted
+
+2025-04-29T17:18:52.479+08:00  INFO 12768 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 12768 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-29T17:18:52.481+08:00 DEBUG 12768 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-29T17:18:52.481+08:00  INFO 12768 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-29T17:18:53.493+08:00  INFO 12768 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-29T17:18:53.500+08:00  INFO 12768 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-29T17:18:53.501+08:00  INFO 12768 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-29T17:18:53.563+08:00  INFO 12768 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-29T17:18:53.564+08:00  INFO 12768 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1052 ms
+2025-04-29T17:18:54.550+08:00  WARN 12768 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'multipleOpenApiResource' defined in class path resource [org/springdoc/webmvc/core/configuration/MultipleOpenApiSupportConfiguration.class]: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@644947ee and org.springdoc.webmvc.api.OpenApiWebMvcResource@25421809)
+2025-04-29T17:18:54.552+08:00  INFO 12768 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-0} closing ...
+2025-04-29T17:18:54.553+08:00  INFO 12768 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-04-29T17:18:54.599+08:00  INFO 12768 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-04-29T17:18:54.609+08:00 ERROR 12768 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'multipleOpenApiResource' defined in class path resource [org/springdoc/webmvc/core/configuration/MultipleOpenApiSupportConfiguration.class]: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@644947ee and org.springdoc.webmvc.api.OpenApiWebMvcResource@25421809)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1770) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:973) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:950) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:738) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:440) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
+	at com.goodsop.server.GoodsopApplication.main(GoodsopApplication.java:17) ~[classes/:na]
+Caused by: java.lang.IllegalStateException: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@644947ee and org.springdoc.webmvc.api.OpenApiWebMvcResource@25421809)
+	at java.base/java.util.stream.Collectors.duplicateKeyException(Collectors.java:135) ~[na:na]
+	at java.base/java.util.stream.Collectors.lambda$uniqKeysMapAccumulator$1(Collectors.java:182) ~[na:na]
+	at java.base/java.util.stream.ReduceOps$3ReducingSink.accept(ReduceOps.java:169) ~[na:na]
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499) ~[na:na]
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682) ~[na:na]
+	at org.springdoc.webmvc.api.MultipleOpenApiResource.afterPropertiesSet(MultipleOpenApiResource.java:137) ~[springdoc-openapi-starter-webmvc-api-2.0.4.jar:2.0.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1817) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1766) ~[spring-beans-6.0.13.jar:6.0.13]
+	... 16 common frames omitted
+
+2025-04-29T17:19:10.040+08:00  INFO 20364 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 20364 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-29T17:19:10.042+08:00 DEBUG 20364 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-29T17:19:10.042+08:00  INFO 20364 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-29T17:19:11.014+08:00  INFO 20364 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-29T17:19:11.021+08:00  INFO 20364 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-29T17:19:11.022+08:00  INFO 20364 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-29T17:19:11.088+08:00  INFO 20364 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-29T17:19:11.088+08:00  INFO 20364 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1013 ms
+2025-04-29T17:19:12.073+08:00  WARN 20364 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'multipleOpenApiResource' defined in class path resource [org/springdoc/webmvc/core/configuration/MultipleOpenApiSupportConfiguration.class]: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@25421809 and org.springdoc.webmvc.api.OpenApiWebMvcResource@714bffd5)
+2025-04-29T17:19:12.074+08:00  INFO 20364 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-0} closing ...
+2025-04-29T17:19:12.076+08:00  INFO 20364 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-04-29T17:19:12.121+08:00  INFO 20364 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-04-29T17:19:12.132+08:00 ERROR 20364 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'multipleOpenApiResource' defined in class path resource [org/springdoc/webmvc/core/configuration/MultipleOpenApiSupportConfiguration.class]: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@25421809 and org.springdoc.webmvc.api.OpenApiWebMvcResource@714bffd5)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1770) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:973) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:950) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:738) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:440) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
+	at com.goodsop.server.GoodsopApplication.main(GoodsopApplication.java:17) ~[classes/:na]
+Caused by: java.lang.IllegalStateException: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@25421809 and org.springdoc.webmvc.api.OpenApiWebMvcResource@714bffd5)
+	at java.base/java.util.stream.Collectors.duplicateKeyException(Collectors.java:135) ~[na:na]
+	at java.base/java.util.stream.Collectors.lambda$uniqKeysMapAccumulator$1(Collectors.java:182) ~[na:na]
+	at java.base/java.util.stream.ReduceOps$3ReducingSink.accept(ReduceOps.java:169) ~[na:na]
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499) ~[na:na]
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682) ~[na:na]
+	at org.springdoc.webmvc.api.MultipleOpenApiResource.afterPropertiesSet(MultipleOpenApiResource.java:137) ~[springdoc-openapi-starter-webmvc-api-2.0.4.jar:2.0.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1817) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1766) ~[spring-beans-6.0.13.jar:6.0.13]
+	... 16 common frames omitted
+
+2025-04-29T17:19:48.265+08:00  INFO 12212 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 12212 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-29T17:19:48.266+08:00 DEBUG 12212 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-29T17:19:48.267+08:00  INFO 12212 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-29T17:19:49.281+08:00  INFO 12212 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-29T17:19:49.288+08:00  INFO 12212 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-29T17:19:49.289+08:00  INFO 12212 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-29T17:19:49.350+08:00  INFO 12212 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-29T17:19:49.351+08:00  INFO 12212 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1054 ms
+2025-04-29T17:19:50.326+08:00  WARN 12212 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'multipleOpenApiResource' defined in class path resource [org/springdoc/webmvc/core/configuration/MultipleOpenApiSupportConfiguration.class]: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@25421809 and org.springdoc.webmvc.api.OpenApiWebMvcResource@714bffd5)
+2025-04-29T17:19:50.327+08:00  INFO 12212 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-0} closing ...
+2025-04-29T17:19:50.329+08:00  INFO 12212 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-04-29T17:19:50.371+08:00  INFO 12212 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-04-29T17:19:50.381+08:00 ERROR 12212 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'multipleOpenApiResource' defined in class path resource [org/springdoc/webmvc/core/configuration/MultipleOpenApiSupportConfiguration.class]: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@25421809 and org.springdoc.webmvc.api.OpenApiWebMvcResource@714bffd5)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1770) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:973) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:950) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:738) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:440) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
+	at com.goodsop.server.GoodsopApplication.main(GoodsopApplication.java:17) ~[classes/:na]
+Caused by: java.lang.IllegalStateException: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@25421809 and org.springdoc.webmvc.api.OpenApiWebMvcResource@714bffd5)
+	at java.base/java.util.stream.Collectors.duplicateKeyException(Collectors.java:135) ~[na:na]
+	at java.base/java.util.stream.Collectors.lambda$uniqKeysMapAccumulator$1(Collectors.java:182) ~[na:na]
+	at java.base/java.util.stream.ReduceOps$3ReducingSink.accept(ReduceOps.java:169) ~[na:na]
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499) ~[na:na]
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682) ~[na:na]
+	at org.springdoc.webmvc.api.MultipleOpenApiResource.afterPropertiesSet(MultipleOpenApiResource.java:137) ~[springdoc-openapi-starter-webmvc-api-2.0.4.jar:2.0.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1817) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1766) ~[spring-beans-6.0.13.jar:6.0.13]
+	... 16 common frames omitted
+
+2025-04-29T17:21:49.102+08:00  INFO 4044 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 4044 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-29T17:21:49.103+08:00 DEBUG 4044 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-29T17:21:49.104+08:00  INFO 4044 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-29T17:21:49.446+08:00  WARN 4044 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'systemApi' defined in class path resource [com/goodsop/server/config/ServerOpenApiConfig.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=serverOpenApiConfig; factoryMethodName=systemApi; initMethodNames=null; destroyMethodNames=[(inferred)]; defined in class path resource [com/goodsop/server/config/ServerOpenApiConfig.class]] for bean 'systemApi' since there is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=globalOpenApiConfig; factoryMethodName=systemApi; initMethodNames=null; destroyMethodNames=[(inferred)]; defined in class path resource [com/goodsop/server/config/GlobalOpenApiConfig.class]] bound.
+2025-04-29T17:21:49.460+08:00  INFO 4044 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-04-29T17:21:49.470+08:00 ERROR 4044 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'systemApi', defined in class path resource [com/goodsop/server/config/ServerOpenApiConfig.class], could not be registered. A bean with that name has already been defined in class path resource [com/goodsop/server/config/GlobalOpenApiConfig.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+2025-04-29T17:23:58.539+08:00  INFO 10404 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 10404 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-29T17:23:58.540+08:00 DEBUG 10404 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-29T17:23:58.541+08:00  INFO 10404 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-29T17:23:58.877+08:00  WARN 10404 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'systemApi' defined in class path resource [com/goodsop/server/config/ServerOpenApiConfig.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=serverOpenApiConfig; factoryMethodName=systemApi; initMethodNames=null; destroyMethodNames=[(inferred)]; defined in class path resource [com/goodsop/server/config/ServerOpenApiConfig.class]] for bean 'systemApi' since there is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=globalOpenApiConfig; factoryMethodName=systemApi; initMethodNames=null; destroyMethodNames=[(inferred)]; defined in class path resource [com/goodsop/server/config/GlobalOpenApiConfig.class]] bound.
+2025-04-29T17:23:58.891+08:00  INFO 10404 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-04-29T17:23:58.904+08:00 ERROR 10404 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'systemApi', defined in class path resource [com/goodsop/server/config/ServerOpenApiConfig.class], could not be registered. A bean with that name has already been defined in class path resource [com/goodsop/server/config/GlobalOpenApiConfig.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+2025-04-29T17:24:31.331+08:00  INFO 2592 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 2592 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-29T17:24:31.333+08:00 DEBUG 2592 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-29T17:24:31.334+08:00  INFO 2592 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-29T17:24:32.309+08:00  INFO 2592 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-29T17:24:32.317+08:00  INFO 2592 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-29T17:24:32.318+08:00  INFO 2592 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-29T17:24:32.381+08:00  INFO 2592 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-29T17:24:32.381+08:00  INFO 2592 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1016 ms
+2025-04-29T17:24:33.363+08:00  WARN 2592 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'multipleOpenApiResource' defined in class path resource [org/springdoc/webmvc/core/configuration/MultipleOpenApiSupportConfiguration.class]: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@43ab0659 and org.springdoc.webmvc.api.OpenApiWebMvcResource@644947ee)
+2025-04-29T17:24:33.365+08:00  INFO 2592 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-0} closing ...
+2025-04-29T17:24:33.366+08:00  INFO 2592 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-04-29T17:24:33.410+08:00  INFO 2592 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-04-29T17:24:33.420+08:00 ERROR 2592 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'multipleOpenApiResource' defined in class path resource [org/springdoc/webmvc/core/configuration/MultipleOpenApiSupportConfiguration.class]: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@43ab0659 and org.springdoc.webmvc.api.OpenApiWebMvcResource@644947ee)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1770) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:973) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:950) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:738) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:440) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
+	at com.goodsop.server.GoodsopApplication.main(GoodsopApplication.java:17) ~[classes/:na]
+Caused by: java.lang.IllegalStateException: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@43ab0659 and org.springdoc.webmvc.api.OpenApiWebMvcResource@644947ee)
+	at java.base/java.util.stream.Collectors.duplicateKeyException(Collectors.java:135) ~[na:na]
+	at java.base/java.util.stream.Collectors.lambda$uniqKeysMapAccumulator$1(Collectors.java:182) ~[na:na]
+	at java.base/java.util.stream.ReduceOps$3ReducingSink.accept(ReduceOps.java:169) ~[na:na]
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499) ~[na:na]
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682) ~[na:na]
+	at org.springdoc.webmvc.api.MultipleOpenApiResource.afterPropertiesSet(MultipleOpenApiResource.java:137) ~[springdoc-openapi-starter-webmvc-api-2.0.4.jar:2.0.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1817) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1766) ~[spring-beans-6.0.13.jar:6.0.13]
+	... 16 common frames omitted
+
+2025-04-29T17:25:41.933+08:00  INFO 8188 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 8188 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-29T17:25:41.934+08:00 DEBUG 8188 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-29T17:25:41.935+08:00  INFO 8188 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-29T17:25:42.900+08:00  INFO 8188 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-29T17:25:42.907+08:00  INFO 8188 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-29T17:25:42.908+08:00  INFO 8188 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-29T17:25:42.974+08:00  INFO 8188 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-29T17:25:42.975+08:00  INFO 8188 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1008 ms
+2025-04-29T17:25:43.954+08:00  WARN 8188 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'multipleOpenApiResource' defined in class path resource [org/springdoc/webmvc/core/configuration/MultipleOpenApiSupportConfiguration.class]: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@644947ee and org.springdoc.webmvc.api.OpenApiWebMvcResource@25421809)
+2025-04-29T17:25:43.956+08:00  INFO 8188 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-0} closing ...
+2025-04-29T17:25:43.958+08:00  INFO 8188 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-04-29T17:25:44.002+08:00  INFO 8188 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-04-29T17:25:44.014+08:00 ERROR 8188 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'multipleOpenApiResource' defined in class path resource [org/springdoc/webmvc/core/configuration/MultipleOpenApiSupportConfiguration.class]: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@644947ee and org.springdoc.webmvc.api.OpenApiWebMvcResource@25421809)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1770) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:973) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:950) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:738) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:440) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
+	at com.goodsop.server.GoodsopApplication.main(GoodsopApplication.java:17) ~[classes/:na]
+Caused by: java.lang.IllegalStateException: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@644947ee and org.springdoc.webmvc.api.OpenApiWebMvcResource@25421809)
+	at java.base/java.util.stream.Collectors.duplicateKeyException(Collectors.java:135) ~[na:na]
+	at java.base/java.util.stream.Collectors.lambda$uniqKeysMapAccumulator$1(Collectors.java:182) ~[na:na]
+	at java.base/java.util.stream.ReduceOps$3ReducingSink.accept(ReduceOps.java:169) ~[na:na]
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499) ~[na:na]
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682) ~[na:na]
+	at org.springdoc.webmvc.api.MultipleOpenApiResource.afterPropertiesSet(MultipleOpenApiResource.java:137) ~[springdoc-openapi-starter-webmvc-api-2.0.4.jar:2.0.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1817) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1766) ~[spring-beans-6.0.13.jar:6.0.13]
+	... 16 common frames omitted
+
+2025-04-29T17:29:12.630+08:00  INFO 6352 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 6352 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-29T17:29:12.632+08:00 DEBUG 6352 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-29T17:29:12.633+08:00  INFO 6352 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-29T17:29:13.621+08:00  INFO 6352 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-29T17:29:13.627+08:00  INFO 6352 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-29T17:29:13.628+08:00  INFO 6352 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-29T17:29:13.689+08:00  INFO 6352 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-29T17:29:13.690+08:00  INFO 6352 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1023 ms
+2025-04-29T17:29:14.668+08:00  WARN 6352 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'multipleOpenApiResource' defined in class path resource [org/springdoc/webmvc/core/configuration/MultipleOpenApiSupportConfiguration.class]: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@714bffd5 and org.springdoc.webmvc.api.OpenApiWebMvcResource@6ac9b66b)
+2025-04-29T17:29:14.669+08:00  INFO 6352 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-0} closing ...
+2025-04-29T17:29:14.671+08:00  INFO 6352 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-04-29T17:29:14.715+08:00  INFO 6352 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-04-29T17:29:14.725+08:00 ERROR 6352 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'multipleOpenApiResource' defined in class path resource [org/springdoc/webmvc/core/configuration/MultipleOpenApiSupportConfiguration.class]: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@714bffd5 and org.springdoc.webmvc.api.OpenApiWebMvcResource@6ac9b66b)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1770) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:973) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:950) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:738) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:440) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
+	at com.goodsop.server.GoodsopApplication.main(GoodsopApplication.java:17) ~[classes/:na]
+Caused by: java.lang.IllegalStateException: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@714bffd5 and org.springdoc.webmvc.api.OpenApiWebMvcResource@6ac9b66b)
+	at java.base/java.util.stream.Collectors.duplicateKeyException(Collectors.java:135) ~[na:na]
+	at java.base/java.util.stream.Collectors.lambda$uniqKeysMapAccumulator$1(Collectors.java:182) ~[na:na]
+	at java.base/java.util.stream.ReduceOps$3ReducingSink.accept(ReduceOps.java:169) ~[na:na]
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499) ~[na:na]
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682) ~[na:na]
+	at org.springdoc.webmvc.api.MultipleOpenApiResource.afterPropertiesSet(MultipleOpenApiResource.java:137) ~[springdoc-openapi-starter-webmvc-api-2.0.4.jar:2.0.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1817) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1766) ~[spring-beans-6.0.13.jar:6.0.13]
+	... 16 common frames omitted
+
+2025-04-29T17:39:29.668+08:00  INFO 17060 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 17060 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-29T17:39:29.669+08:00 DEBUG 17060 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-29T17:39:29.670+08:00  INFO 17060 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-29T17:39:30.003+08:00  WARN 17060 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'userApi' defined in class path resource [com/goodsop/user/config/UserApiConfig.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=userApiConfig; factoryMethodName=userApi; initMethodNames=null; destroyMethodNames=[(inferred)]; defined in class path resource [com/goodsop/user/config/UserApiConfig.class]] for bean 'userApi' since there is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=globalOpenApiConfig; factoryMethodName=userApi; initMethodNames=null; destroyMethodNames=[(inferred)]; defined in class path resource [com/goodsop/server/config/GlobalOpenApiConfig.class]] bound.
+2025-04-29T17:39:30.015+08:00  INFO 17060 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-04-29T17:39:30.026+08:00 ERROR 17060 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'userApi', defined in class path resource [com/goodsop/user/config/UserApiConfig.class], could not be registered. A bean with that name has already been defined in class path resource [com/goodsop/server/config/GlobalOpenApiConfig.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+2025-04-29T17:40:15.395+08:00  INFO 13012 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 13012 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-29T17:40:15.396+08:00 DEBUG 13012 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-29T17:40:15.397+08:00  INFO 13012 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-29T17:40:15.753+08:00  WARN 13012 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'userApi' defined in class path resource [com/goodsop/user/config/UserApiConfig.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=userApiConfig; factoryMethodName=userApi; initMethodNames=null; destroyMethodNames=[(inferred)]; defined in class path resource [com/goodsop/user/config/UserApiConfig.class]] for bean 'userApi' since there is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=globalOpenApiConfig; factoryMethodName=userApi; initMethodNames=null; destroyMethodNames=[(inferred)]; defined in class path resource [com/goodsop/server/config/GlobalOpenApiConfig.class]] bound.
+2025-04-29T17:40:15.776+08:00  INFO 13012 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-04-29T17:40:15.790+08:00 ERROR 13012 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'userApi', defined in class path resource [com/goodsop/user/config/UserApiConfig.class], could not be registered. A bean with that name has already been defined in class path resource [com/goodsop/server/config/GlobalOpenApiConfig.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+2025-04-29T17:41:04.233+08:00  INFO 13744 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 13744 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-29T17:41:04.235+08:00 DEBUG 13744 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-29T17:41:04.235+08:00  INFO 13744 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-29T17:41:04.567+08:00  WARN 13744 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'userApi' defined in class path resource [com/goodsop/user/config/UserApiConfig.class]: Cannot register bean definition [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=userApiConfig; factoryMethodName=userApi; initMethodNames=null; destroyMethodNames=[(inferred)]; defined in class path resource [com/goodsop/user/config/UserApiConfig.class]] for bean 'userApi' since there is already [Root bean: class [null]; scope=; abstract=false; lazyInit=null; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=globalOpenApiConfig; factoryMethodName=userApi; initMethodNames=null; destroyMethodNames=[(inferred)]; defined in class path resource [com/goodsop/server/config/GlobalOpenApiConfig.class]] bound.
+2025-04-29T17:41:04.580+08:00  INFO 13744 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-04-29T17:41:04.592+08:00 ERROR 13744 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'userApi', defined in class path resource [com/goodsop/user/config/UserApiConfig.class], could not be registered. A bean with that name has already been defined in class path resource [com/goodsop/server/config/GlobalOpenApiConfig.class] and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+2025-04-29T17:42:12.097+08:00  INFO 8076 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 8076 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-29T17:42:12.098+08:00 DEBUG 8076 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-29T17:42:12.099+08:00  INFO 8076 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-29T17:42:13.055+08:00  INFO 8076 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-29T17:42:13.061+08:00  INFO 8076 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-29T17:42:13.062+08:00  INFO 8076 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-29T17:42:13.122+08:00  INFO 8076 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-29T17:42:13.122+08:00  INFO 8076 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 994 ms
+2025-04-29T17:42:14.121+08:00  WARN 8076 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'multipleOpenApiResource' defined in class path resource [org/springdoc/webmvc/core/configuration/MultipleOpenApiSupportConfiguration.class]: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@39f93225 and org.springdoc.webmvc.api.OpenApiWebMvcResource@24b3f778)
+2025-04-29T17:42:14.122+08:00  INFO 8076 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-0} closing ...
+2025-04-29T17:42:14.124+08:00  INFO 8076 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-04-29T17:42:14.166+08:00  INFO 8076 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-04-29T17:42:14.177+08:00 ERROR 8076 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'multipleOpenApiResource' defined in class path resource [org/springdoc/webmvc/core/configuration/MultipleOpenApiSupportConfiguration.class]: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@39f93225 and org.springdoc.webmvc.api.OpenApiWebMvcResource@24b3f778)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1770) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:973) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:950) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:738) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:440) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
+	at com.goodsop.server.GoodsopApplication.main(GoodsopApplication.java:17) ~[classes/:na]
+Caused by: java.lang.IllegalStateException: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@39f93225 and org.springdoc.webmvc.api.OpenApiWebMvcResource@24b3f778)
+	at java.base/java.util.stream.Collectors.duplicateKeyException(Collectors.java:135) ~[na:na]
+	at java.base/java.util.stream.Collectors.lambda$uniqKeysMapAccumulator$1(Collectors.java:182) ~[na:na]
+	at java.base/java.util.stream.ReduceOps$3ReducingSink.accept(ReduceOps.java:169) ~[na:na]
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499) ~[na:na]
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682) ~[na:na]
+	at org.springdoc.webmvc.api.MultipleOpenApiResource.afterPropertiesSet(MultipleOpenApiResource.java:137) ~[springdoc-openapi-starter-webmvc-api-2.0.4.jar:2.0.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1817) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1766) ~[spring-beans-6.0.13.jar:6.0.13]
+	... 16 common frames omitted
+
+2025-04-29T17:43:59.015+08:00  INFO 13488 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 13488 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-29T17:43:59.017+08:00 DEBUG 13488 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-29T17:43:59.018+08:00  INFO 13488 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-29T17:44:00.069+08:00  INFO 13488 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-29T17:44:00.076+08:00  INFO 13488 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-29T17:44:00.077+08:00  INFO 13488 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-29T17:44:00.142+08:00  INFO 13488 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-29T17:44:00.143+08:00  INFO 13488 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1094 ms
+2025-04-29T17:44:01.150+08:00  WARN 13488 --- [main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'multipleOpenApiResource' defined in class path resource [org/springdoc/webmvc/core/configuration/MultipleOpenApiSupportConfiguration.class]: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@11adab6d and org.springdoc.webmvc.api.OpenApiWebMvcResource@11bfd751)
+2025-04-29T17:44:01.152+08:00  INFO 13488 --- [main] com.alibaba.druid.pool.DruidDataSource   : {dataSource-0} closing ...
+2025-04-29T17:44:01.154+08:00  INFO 13488 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2025-04-29T17:44:01.199+08:00  INFO 13488 --- [main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-04-29T17:44:01.210+08:00 ERROR 13488 --- [main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'multipleOpenApiResource' defined in class path resource [org/springdoc/webmvc/core/configuration/MultipleOpenApiSupportConfiguration.class]: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@11adab6d and org.springdoc.webmvc.api.OpenApiWebMvcResource@11bfd751)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1770) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:598) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:520) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:973) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:950) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616) ~[spring-context-6.0.13.jar:6.0.13]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:738) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:440) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:316) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-3.1.5.jar:3.1.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-3.1.5.jar:3.1.5]
+	at com.goodsop.server.GoodsopApplication.main(GoodsopApplication.java:17) ~[classes/:na]
+Caused by: java.lang.IllegalStateException: Duplicate key 文件管理 (attempted merging values org.springdoc.webmvc.api.OpenApiWebMvcResource@11adab6d and org.springdoc.webmvc.api.OpenApiWebMvcResource@11bfd751)
+	at java.base/java.util.stream.Collectors.duplicateKeyException(Collectors.java:135) ~[na:na]
+	at java.base/java.util.stream.Collectors.lambda$uniqKeysMapAccumulator$1(Collectors.java:182) ~[na:na]
+	at java.base/java.util.stream.ReduceOps$3ReducingSink.accept(ReduceOps.java:169) ~[na:na]
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1625) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:509) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:499) ~[na:na]
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:921) ~[na:na]
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234) ~[na:na]
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:682) ~[na:na]
+	at org.springdoc.webmvc.api.MultipleOpenApiResource.afterPropertiesSet(MultipleOpenApiResource.java:137) ~[springdoc-openapi-starter-webmvc-api-2.0.4.jar:2.0.4]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1817) ~[spring-beans-6.0.13.jar:6.0.13]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1766) ~[spring-beans-6.0.13.jar:6.0.13]
+	... 16 common frames omitted
+
