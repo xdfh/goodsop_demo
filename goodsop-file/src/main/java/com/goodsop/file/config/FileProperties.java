@@ -33,6 +33,11 @@ public class FileProperties {
         private String path;
         
         /**
+         * 访问基础URL
+         */
+        private String baseUrl;
+        
+        /**
          * 是否启用解密
          */
         private Boolean enableDecrypt = true;

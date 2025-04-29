@@ -6,19 +6,29 @@ package com.goodsop.file.constant;
 public class FileConstant {
     
     /**
-     * 文件状态：临时
+     * 文件状态：上传中
      */
-    public static final int FILE_STATUS_TEMP = 0;
+    public static final int FILE_STATUS_UPLOADING = 0;
     
     /**
-     * 文件状态：正常
+     * 文件状态：已完成
      */
     public static final int FILE_STATUS_NORMAL = 1;
     
     /**
-     * 文件状态：已删除
+     * 文件状态：已失效
      */
-    public static final int FILE_STATUS_DELETED = 2;
+    public static final int FILE_STATUS_EXPIRED = 2;
+    
+    /**
+     * 是否删除：否
+     */
+    public static final int DELETED_FALSE = 0;
+    
+    /**
+     * 是否删除：是
+     */
+    public static final int DELETED_TRUE = 1;
     
     /**
      * 是否加密/压缩：否

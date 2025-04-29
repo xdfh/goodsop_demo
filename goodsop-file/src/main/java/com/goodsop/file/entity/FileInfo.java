@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -16,10 +17,22 @@ import java.time.LocalDateTime;
 public class FileInfo {
     
     /**
-     * 主键
+     * 主键ID
      */
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
+    
+    /**
+     * 设备ID
+     */
+    @TableField("device_id")
+    private String deviceId;
+    
+    /**
+     * 用户ID
+     */
+    @TableField("user_id")
+    private String userId;
     
     /**
      * 文件名
@@ -28,16 +41,22 @@ public class FileInfo {
     private String fileName;
     
     /**
-     * 原始文件名
-     */
-    @TableField("original_name")
-    private String originalName;
-    
-    /**
      * 文件存储路径
      */
     @TableField("file_path")
     private String filePath;
+    
+    /**
+     * 文件访问URL
+     */
+    @TableField("access_url")
+    private String accessUrl;
+    
+    /**
+     * 域名前缀
+     */
+    @TableField("domain_prefix")
+    private String domainPrefix;
     
     /**
      * 文件大小(字节)
@@ -54,8 +73,26 @@ public class FileInfo {
     /**
      * 文件MD5值
      */
-    @TableField("md5")
-    private String md5;
+    @TableField("file_md5")
+    private String fileMd5;
+    
+    /**
+     * 录音日期
+     */
+    @TableField("record_date")
+    private LocalDate recordDate;
+    
+    /**
+     * 录音开始时间
+     */
+    @TableField("record_start_time")
+    private LocalDateTime recordStartTime;
+    
+    /**
+     * 录音时长(毫秒)
+     */
+    @TableField("record_duration")
+    private Long recordDuration;
     
     /**
      * 上传时间
@@ -64,25 +101,7 @@ public class FileInfo {
     private LocalDateTime uploadTime;
     
     /**
-     * 上传设备ID
-     */
-    @TableField("device_id")
-    private String deviceId;
-    
-    /**
-     * 是否加密(0-否，1-是)
-     */
-    @TableField("is_encrypted")
-    private Integer isEncrypted;
-    
-    /**
-     * 是否压缩(0-否，1-是)
-     */
-    @TableField("is_compressed")
-    private Integer isCompressed;
-    
-    /**
-     * 文件状态(0-临时，1-正常，2-已删除)
+     * 文件状态: 0-上传中，1-已完成，2-已失效
      */
     @TableField("status")
     private Integer status;
@@ -100,9 +119,9 @@ public class FileInfo {
     private LocalDateTime updateTime;
     
     /**
-     * 逻辑删除标志(0-未删除，1-已删除)
+     * 是否删除: 0-未删除，1-已删除
      */
     @TableLogic
-    @TableField("is_deleted")
-    private Integer isDeleted;
+    @TableField("deleted")
+    private Integer deleted;
 } 

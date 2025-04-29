@@ -36,64 +36,83 @@ public class FileUploadController {
     @Operation(summary = "上传文件")
     public Map<String, Object> uploadFile(
             @Parameter(description = "文件", required = true) @RequestParam("file") MultipartFile file,
-            @Parameter(description = "设备ID") @RequestParam(value = "deviceId", required = false) String deviceId,
-            @Parameter(description = "是否加密(0-否，1-是)") @RequestParam(value = "isEncrypted", required = false, defaultValue = "0") Integer isEncrypted,
-            @Parameter(description = "是否压缩(0-否，1-是)") @RequestParam(value = "isCompressed", required = false, defaultValue = "0") Integer isCompressed) {
+            @Parameter(description = "设备ID") @RequestParam(required = false, defaultValue = "unknown") String deviceId,
+            @Parameter(description = "是否加密(0-否，1-是)") @RequestParam(required = false, defaultValue = "0") Integer isEncrypted,
+            @Parameter(description = "是否压缩(0-否，1-是)") @RequestParam(required = false, defaultValue = "0") Integer isCompressed) {
         
-        log.info("接收到文件上传请求: fileName={}, deviceId={}, isEncrypted={}, isCompressed={}",
-                file.getOriginalFilename(), deviceId, isEncrypted, isCompressed);
+        log.info("接收到文件上传请求: fileName={}, fileSize={}, deviceId={}, isEncrypted={}, isCompressed={}",
+                file.getOriginalFilename(), file.getSize(), deviceId, isEncrypted, isCompressed);
         
-        FileInfo fileInfo = fileService.uploadFile(file, deviceId, isEncrypted, isCompressed);
-        
-        Map<String, Object> result = new HashMap<>();
-        result.put("fileId", fileInfo.getId());
-        result.put("fileName", fileInfo.getFileName());
-        result.put("originalName", fileInfo.getOriginalName());
-        result.put("fileSize", fileInfo.getFileSize());
-        result.put("fileType", fileInfo.getFileType());
-        result.put("uploadTime", fileInfo.getUploadTime());
-        result.put("url", "/api/file/download/" + fileInfo.getId());
-        
-        return result;
+        try {
+            FileInfo fileInfo = fileService.uploadFile(file, deviceId, isEncrypted, isCompressed);
+            
+            Map<String, Object> result = new HashMap<>();
+            result.put("fileId", fileInfo.getId());
+            result.put("fileName", fileInfo.getFileName());
+            result.put("fileSize", fileInfo.getFileSize());
+            result.put("fileType", fileInfo.getFileType());
+            result.put("uploadTime", fileInfo.getUploadTime());
+            result.put("success", true);
+            
+            return result;
+        } catch (Exception e) {
+            log.error("文件上传失败: {}", e.getMessage(), e);
+            
+            Map<String, Object> error = new HashMap<>();
+            error.put("success", false);
+            error.put("message", "文件上传失败: " + e.getMessage());
+            
+            return error;
+        }
     }
     
     /**
      * 分块上传文件（断点续传）
      */
-    @PostMapping("/chunk")
-    @Operation(summary = "分块上传文件（断点续传）")
+    @PostMapping("/chunk/upload")
+    @Operation(summary = "分块上传文件(断点续传)")
     public Map<String, Object> uploadFileChunk(
             @Parameter(description = "文件块", required = true) @RequestParam("file") MultipartFile file,
             @Parameter(description = "文件名", required = true) @RequestParam("fileName") String fileName,
-            @Parameter(description = "设备ID") @RequestParam(value = "deviceId", required = false) String deviceId,
+            @Parameter(description = "设备ID") @RequestParam(required = false, defaultValue = "unknown") String deviceId,
             @Parameter(description = "当前块索引", required = true) @RequestParam("chunk") Integer chunk,
             @Parameter(description = "总块数", required = true) @RequestParam("chunks") Integer chunks,
-            @Parameter(description = "是否加密(0-否，1-是)") @RequestParam(value = "isEncrypted", required = false, defaultValue = "0") Integer isEncrypted,
-            @Parameter(description = "是否压缩(0-否，1-是)") @RequestParam(value = "isCompressed", required = false, defaultValue = "0") Integer isCompressed) {
+            @Parameter(description = "是否加密(0-否，1-是)") @RequestParam(required = false, defaultValue = "0") Integer isEncrypted,
+            @Parameter(description = "是否压缩(0-否，1-是)") @RequestParam(required = false, defaultValue = "0") Integer isCompressed) {
         
-        log.info("接收到分块文件上传请求: fileName={}, chunk={}/{}, deviceId={}, isEncrypted={}, isCompressed={}",
-                fileName, chunk + 1, chunks, deviceId, isEncrypted, isCompressed);
-        
-        FileInfo fileInfo = fileService.uploadFileChunk(file, fileName, deviceId, chunk, chunks, isEncrypted, isCompressed);
+        log.info("接收到分块上传请求: fileName={}, chunk={}/{}, fileSize={}, deviceId={}",
+                fileName, chunk, chunks, file.getSize(), deviceId);
         
         Map<String, Object> result = new HashMap<>();
-        result.put("chunk", chunk);
-        result.put("chunks", chunks);
         
-        // 如果是最后一块，返回完整文件信息
-        if (fileInfo != null) {
-            result.put("fileId", fileInfo.getId());
-            result.put("fileName", fileInfo.getFileName());
-            result.put("originalName", fileInfo.getOriginalName());
-            result.put("fileSize", fileInfo.getFileSize());
-            result.put("fileType", fileInfo.getFileType());
-            result.put("uploadTime", fileInfo.getUploadTime());
-            result.put("url", "/api/file/download/" + fileInfo.getId());
-            result.put("finished", true);
-        } else {
-            result.put("finished", false);
+        try {
+            // 上传文件块
+            FileInfo fileInfo = fileService.uploadFileChunk(file, fileName, deviceId, chunk, chunks, isEncrypted, isCompressed);
+            
+            if (fileInfo != null) {
+                // 全部分块上传完成
+                result.put("fileId", fileInfo.getId());
+                result.put("fileName", fileInfo.getFileName());
+                result.put("fileSize", fileInfo.getFileSize());
+                result.put("fileType", fileInfo.getFileType());
+                result.put("uploadTime", fileInfo.getUploadTime());
+                result.put("completed", true);
+            } else {
+                // 部分分块上传完成
+                result.put("completed", false);
+                result.put("chunk", chunk);
+            }
+            
+            result.put("success", true);
+            
+            return result;
+        } catch (Exception e) {
+            log.error("分块上传失败: {}", e.getMessage(), e);
+            
+            result.put("success", false);
+            result.put("message", "分块上传失败: " + e.getMessage());
+            
+            return result;
         }
-        
-        return result;
     }
 } 

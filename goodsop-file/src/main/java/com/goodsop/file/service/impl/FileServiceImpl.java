@@ -22,9 +22,12 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.Instant;
 import java.util.Map;
 import java.util.Objects;
 
@@ -57,25 +60,91 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
             // 处理文件（解压缩、解密）
             File processedFile = processFile(originalFile, isEncrypted, isCompressed);
             
-            // 计算MD5
+            // 计算MD5，但不再存储到数据库
             String md5 = fileEncryptUtil.calculateMD5(processedFile);
+            
+            // 解析文件名，例如: {设备ID}_{YYYYMMDD}_{用户ID}_{音频开始时间戳13位}_{音频时长毫秒级}_{文件hash值}
+            // 示例: ASD111_20250429_333_1745921269000_10000_a98b56f513cc95932141567aa4c0524d.tgz
+            String userId = "default";
+            LocalDate recordDate = LocalDate.now();
+            LocalDateTime recordStartTime = null;
+            Long recordDuration = null;
+            
+            if (originalFilename != null && originalFilename.contains("_")) {
+                String[] parts = originalFilename.split("_");
+                // 至少有5个部分才进行解析
+                if (parts.length >= 5) {
+                    // 尝试解析日期
+                    try {
+                        if (parts[1].length() == 8) {
+                            String dateStr = parts[1];
+                            recordDate = LocalDate.parse(dateStr, 
+                                DateTimeFormatter.ofPattern("yyyyMMdd"));
+                        }
+                    } catch (Exception e) {
+                        log.warn("解析录音日期失败: {}", e.getMessage());
+                    }
+                    
+                    // 尝试解析用户ID
+                    if (parts.length > 2) {
+                        userId = parts[2];
+                    }
+                    
+                    // 尝试解析录音开始时间
+                    if (parts.length > 3) {
+                        try {
+                            long timestamp = Long.parseLong(parts[3]);
+                            recordStartTime = LocalDateTime.ofInstant(
+                                Instant.ofEpochMilli(timestamp), 
+                                ZoneId.systemDefault());
+                        } catch (Exception e) {
+                            log.warn("解析录音开始时间失败: {}", e.getMessage());
+                        }
+                    }
+                    
+                    // 尝试解析录音时长
+                    if (parts.length > 4) {
+                        try {
+                            recordDuration = Long.parseLong(parts[4]);
+                        } catch (Exception e) {
+                            log.warn("解析录音时长失败: {}", e.getMessage());
+                        }
+                    }
+                }
+            }
             
             // 创建文件信息记录
             FileInfo fileInfo = new FileInfo();
-            fileInfo.setFileName(processedFile.getName());
-            fileInfo.setOriginalName(originalFilename);
+            fileInfo.setFileName(originalFilename);
             fileInfo.setFilePath(processedFile.getAbsolutePath());
             fileInfo.setFileSize(processedFile.length());
             fileInfo.setFileType(fileType);
-            fileInfo.setMd5(md5);
             fileInfo.setUploadTime(LocalDateTime.now());
             fileInfo.setDeviceId(deviceId);
-            fileInfo.setIsEncrypted(isEncrypted);
-            fileInfo.setIsCompressed(isCompressed);
+            fileInfo.setUserId(userId);
+            fileInfo.setFileMd5(md5);
+            fileInfo.setRecordDate(recordDate);
+            fileInfo.setRecordStartTime(recordStartTime);
+            fileInfo.setRecordDuration(recordDuration);
+            
+            // 设置访问URL和域名前缀
+            String baseUrl = fileProperties.getStorage().getBaseUrl();
+            if (baseUrl != null && !baseUrl.isEmpty()) {
+                String relativePath = processedFile.getAbsolutePath().replace(fileProperties.getStorage().getPath(), "");
+                fileInfo.setAccessUrl(baseUrl + "/" + relativePath);
+                
+                try {
+                    URL url = new URL(baseUrl);
+                    fileInfo.setDomainPrefix(url.getHost());
+                } catch (Exception e) {
+                    log.warn("解析域名前缀失败: {}", e.getMessage());
+                }
+            }
+            
             fileInfo.setStatus(FileConstant.FILE_STATUS_NORMAL);
             fileInfo.setCreateTime(LocalDateTime.now());
             fileInfo.setUpdateTime(LocalDateTime.now());
-            fileInfo.setIsDeleted(0);
+            fileInfo.setDeleted(0);
             
             // 保存到数据库
             this.save(fileInfo);
@@ -112,25 +181,90 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
             // 如果是最后一块，进行文件处理
             File processedFile = processFile(targetFile, isEncrypted, isCompressed);
             
-            // 计算MD5
+            // 计算MD5，但不再存储到数据库
             String md5 = fileEncryptUtil.calculateMD5(processedFile);
+
+            // 解析文件名，例如: {设备ID}_{YYYYMMDD}_{用户ID}_{音频开始时间戳13位}_{音频时长毫秒级}_{文件hash值}
+            String userId = "default";
+            LocalDate recordDate = LocalDate.now();
+            LocalDateTime recordStartTime = null;
+            Long recordDuration = null;
             
-            // 创建文件信息记录
+            if (originalFilename != null && originalFilename.contains("_")) {
+                String[] parts = originalFilename.split("_");
+                // 至少有5个部分才进行解析
+                if (parts.length >= 5) {
+                    // 尝试解析日期
+                    try {
+                        if (parts[1].length() == 8) {
+                            String dateStr = parts[1];
+                            recordDate = LocalDate.parse(dateStr, 
+                                DateTimeFormatter.ofPattern("yyyyMMdd"));
+                        }
+                    } catch (Exception e) {
+                        log.warn("解析录音日期失败: {}", e.getMessage());
+                    }
+                    
+                    // 尝试解析用户ID
+                    if (parts.length > 2) {
+                        userId = parts[2];
+                    }
+                    
+                    // 尝试解析录音开始时间
+                    if (parts.length > 3) {
+                        try {
+                            long timestamp = Long.parseLong(parts[3]);
+                            recordStartTime = LocalDateTime.ofInstant(
+                                Instant.ofEpochMilli(timestamp), 
+                                ZoneId.systemDefault());
+                        } catch (Exception e) {
+                            log.warn("解析录音开始时间失败: {}", e.getMessage());
+                        }
+                    }
+                    
+                    // 尝试解析录音时长
+                    if (parts.length > 4) {
+                        try {
+                            recordDuration = Long.parseLong(parts[4]);
+                        } catch (Exception e) {
+                            log.warn("解析录音时长失败: {}", e.getMessage());
+                        }
+                    }
+                }
+            }
+            
+            // 创建文件信息记录，合并所有分块文件
             FileInfo fileInfo = new FileInfo();
-            fileInfo.setFileName(processedFile.getName());
-            fileInfo.setOriginalName(originalFilename);
+            fileInfo.setFileName(originalFilename);
             fileInfo.setFilePath(processedFile.getAbsolutePath());
             fileInfo.setFileSize(processedFile.length());
             fileInfo.setFileType(fileType);
-            fileInfo.setMd5(md5);
             fileInfo.setUploadTime(LocalDateTime.now());
             fileInfo.setDeviceId(deviceId);
-            fileInfo.setIsEncrypted(isEncrypted);
-            fileInfo.setIsCompressed(isCompressed);
+            fileInfo.setUserId(userId);
+            fileInfo.setFileMd5(md5);
+            fileInfo.setRecordDate(recordDate);
+            fileInfo.setRecordStartTime(recordStartTime);
+            fileInfo.setRecordDuration(recordDuration);
+            
+            // 设置访问URL和域名前缀
+            String baseUrl = fileProperties.getStorage().getBaseUrl();
+            if (baseUrl != null && !baseUrl.isEmpty()) {
+                String relativePath = processedFile.getAbsolutePath().replace(fileProperties.getStorage().getPath(), "");
+                fileInfo.setAccessUrl(baseUrl + "/" + relativePath);
+                
+                try {
+                    URL url = new URL(baseUrl);
+                    fileInfo.setDomainPrefix(url.getHost());
+                } catch (Exception e) {
+                    log.warn("解析域名前缀失败: {}", e.getMessage());
+                }
+            }
+            
             fileInfo.setStatus(FileConstant.FILE_STATUS_NORMAL);
             fileInfo.setCreateTime(LocalDateTime.now());
             fileInfo.setUpdateTime(LocalDateTime.now());
-            fileInfo.setIsDeleted(0);
+            fileInfo.setDeleted(0);
             
             // 保存到数据库
             this.save(fileInfo);
@@ -159,7 +293,7 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
             }
             
             // 下载文件（支持断点续传）
-            fileTransferUtil.downloadWithRange(request, response, file, fileInfo.getOriginalName());
+            fileTransferUtil.downloadWithRange(request, response, file, fileInfo.getFileName());
         } catch (Exception e) {
             log.error("文件下载失败: {}", e.getMessage(), e);
             throw new RuntimeException("文件下载失败", e);
@@ -211,7 +345,7 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
             }
             
             // 更新数据库记录
-            fileInfo.setStatus(FileConstant.FILE_STATUS_DELETED);
+            fileInfo.setStatus(FileConstant.FILE_STATUS_EXPIRED);
             fileInfo.setUpdateTime(LocalDateTime.now());
             return this.updateById(fileInfo);
         } catch (Exception e) {
