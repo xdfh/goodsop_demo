@@ -4685,3 +4685,95 @@ Caused by: java.net.ConnectException: Connection refused: no further information
 
 2025-04-28T11:21:11.574+08:00  INFO 7436 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
 2025-04-28T11:21:11.575+08:00  INFO 7436 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2025-04-29T11:22:30.354+08:00  INFO 11848 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 11848 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-29T11:22:30.355+08:00 DEBUG 11848 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-29T11:22:30.356+08:00  INFO 11848 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-29T11:22:31.351+08:00  INFO 11848 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-29T11:22:31.358+08:00  INFO 11848 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-29T11:22:31.359+08:00  INFO 11848 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-29T11:22:31.424+08:00  INFO 11848 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-29T11:22:31.425+08:00  INFO 11848 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1038 ms
+2025-04-29T11:22:32.532+08:00  INFO 11848 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2025-04-29T11:22:32.583+08:00  INFO 11848 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2025-04-29T11:22:32.594+08:00  INFO 11848 --- [main] com.goodsop.server.GoodsopApplication    : Started GoodsopApplication in 2.52 seconds (process running for 2.717)
+2025-04-29T11:22:37.202+08:00  INFO 11848 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-29T11:22:37.203+08:00  INFO 11848 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-04-29T11:22:37.204+08:00  INFO 11848 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-04-29T11:22:37.615+08:00  INFO 11848 --- [http-nio-8080-exec-3] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 175 ms
+2025-04-29T11:22:44.920+08:00  INFO 11848 --- [http-nio-8080-exec-4] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [3097e66f5005] - 2025-04-29 11:22:44 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://localhost:8080/api/user/page
+│ 请求方式 : GET
+│ 请求IP  : 0:0:0:0:0:0:0:1
+│ 类方法   : com.goodsop.user.controller.UserController.pageUsers
+│ 请求参数 : [1, 10, null, desc, User(id=null, username=null, password=null, email=null, phone=null, status=null, createTime=null, updateTime=null, createBy=null, updateBy=null, isDeleted=null)]
+└─────────────────────────────────────────────────────┘
+2025-04-29T11:22:44.983+08:00  INFO 11848 --- [http-nio-8080-exec-4] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2025-04-29T11:22:45.113+08:00 DEBUG 11848 --- [http-nio-8080-exec-4] c.g.user.mapper.UserMapper.selectList    : ==>  Preparing: SELECT id,username,password,email,phone,status,create_time,update_time,create_by,update_by,is_deleted FROM t_user WHERE is_deleted=0 ORDER BY create_time DESC
+2025-04-29T11:22:45.122+08:00 DEBUG 11848 --- [http-nio-8080-exec-4] c.g.user.mapper.UserMapper.selectList    : ==> Parameters: 
+2025-04-29T11:22:45.145+08:00 DEBUG 11848 --- [http-nio-8080-exec-4] c.g.user.mapper.UserMapper.selectList    : <==      Total: 9
+2025-04-29T11:22:45.150+08:00  INFO 11848 --- [http-nio-8080-exec-4] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [3097e66f5005] - 2025-04-29 11:22:45 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 231ms
+│ 返回结果 : {"code":200,"msg":"success","data":{"records":[{"id":102,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":98,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":99,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":100,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":101,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":97,"username":"asd","password":"51156","email":"","phone":"15612356748","status":0,"createTime":"2025-04-25T14:39:50.547661","updateTime":"2025-04-25T14:39:50.548658","createBy":"system","updateBy":"system","isDeleted":0},{"id":94,"username":"test1","password":"password1","email":"test1@example.com","phone":"13800138001","status":1,"createTime":"2025-04-25T14:37:07.834146","updateTime":"2025-04-25T14:37:07.834146","createBy":"system","updateBy":"system","isDeleted":0},{"id":95,"username":"test2","password":"password2","email":"test2@example.com","phone":"13800138002","status":1,"createTime":"2025-04-25T14:37:07.834146","updateTime":"2025-04-25T14:37:07.834146","createBy":"system","updateBy":"system","isDeleted":0},{"id":96,"username":"test3","password":"password3","email":"test3@example.com","phone":"13800138003","status":0,"createTime":"2025-04-25T14:37:07.834146","updateTime":"2025-04-25T14:37:07.834146","createBy":"system","updateBy":"system","isDeleted":0}],"total":0,"size":10,"current":1,"orders":[],"optimizeCountSql":true,"searchCount":true,"maxLimit":null,"countId":null,"pages":0}}
+└─────────────────────────────────────────────────────┘
+2025-04-29T11:30:23.409+08:00  INFO 8120 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 8120 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-29T11:30:23.412+08:00 DEBUG 8120 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-29T11:30:23.413+08:00  INFO 8120 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-29T11:30:24.409+08:00  INFO 8120 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-29T11:30:24.422+08:00  INFO 8120 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-29T11:30:24.423+08:00  INFO 8120 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-29T11:30:24.499+08:00  INFO 8120 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-29T11:30:24.501+08:00  INFO 8120 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1055 ms
+2025-04-29T11:30:25.643+08:00  INFO 8120 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2025-04-29T11:30:25.696+08:00  INFO 8120 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2025-04-29T11:30:25.706+08:00  INFO 8120 --- [main] com.goodsop.server.GoodsopApplication    : Started GoodsopApplication in 2.577 seconds (process running for 2.794)
+2025-04-29T11:30:48.406+08:00  INFO 8120 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-29T11:30:48.407+08:00  INFO 8120 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-04-29T11:30:48.408+08:00  INFO 8120 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-04-29T11:30:48.801+08:00  INFO 8120 --- [http-nio-8080-exec-5] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 166 ms
+2025-04-29T11:30:53.419+08:00  INFO 8120 --- [http-nio-8080-exec-4] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [7d07f04a9e59] - 2025-04-29 11:30:53 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://localhost:8080/api/user/page
+│ 请求方式 : GET
+│ 请求IP  : 0:0:0:0:0:0:0:1
+│ 类方法   : com.goodsop.user.controller.UserController.pageUsers
+│ 请求参数 : [1, 10, null, desc, User(id=null, username=null, password=null, email=null, phone=null, status=null, createTime=null, updateTime=null, createBy=null, updateBy=null, isDeleted=null)]
+└─────────────────────────────────────────────────────┘
+2025-04-29T11:30:53.485+08:00  INFO 8120 --- [http-nio-8080-exec-4] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2025-04-29T11:30:53.610+08:00 DEBUG 8120 --- [http-nio-8080-exec-4] c.g.user.mapper.UserMapper.selectList    : ==>  Preparing: SELECT id,username,password,email,phone,status,create_time,update_time,create_by,update_by,is_deleted FROM t_user WHERE is_deleted=0 ORDER BY create_time DESC
+2025-04-29T11:30:53.621+08:00 DEBUG 8120 --- [http-nio-8080-exec-4] c.g.user.mapper.UserMapper.selectList    : ==> Parameters: 
+2025-04-29T11:30:53.637+08:00 DEBUG 8120 --- [http-nio-8080-exec-4] c.g.user.mapper.UserMapper.selectList    : <==      Total: 9
+2025-04-29T11:30:53.642+08:00  INFO 8120 --- [http-nio-8080-exec-4] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [7d07f04a9e59] - 2025-04-29 11:30:53 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 227ms
+│ 返回结果 : {"code":200,"msg":"success","data":{"records":[{"id":102,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":98,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":99,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":100,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":101,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":97,"username":"asd","password":"51156","email":"","phone":"15612356748","status":0,"createTime":"2025-04-25 14:39:50.547","updateTime":"2025-04-25 14:39:50.548","createBy":"system","updateBy":"system","isDeleted":0},{"id":94,"username":"test1","password":"password1","email":"test1@example.com","phone":"13800138001","status":1,"createTime":"2025-04-25 14:37:07.834","updateTime":"2025-04-25 14:37:07.834","createBy":"system","updateBy":"system","isDeleted":0},{"id":95,"username":"test2","password":"password2","email":"test2@example.com","phone":"13800138002","status":1,"createTime":"2025-04-25 14:37:07.834","updateTime":"2025-04-25 14:37:07.834","createBy":"system","updateBy":"system","isDeleted":0},{"id":96,"username":"test3","password":"password3","email":"test3@example.com","phone":"13800138003","status":0,"createTime":"2025-04-25 14:37:07.834","updateTime":"2025-04-25 14:37:07.834","createBy":"system","updateBy":"system","isDeleted":0}],"total":0,"size":10,"current":1,"orders":[],"optimizeCountSql":true,"searchCount":true,"maxLimit":null,"countId":null,"pages":0}}
+└─────────────────────────────────────────────────────┘
+2025-04-29T11:31:11.772+08:00  INFO 8120 --- [http-nio-8080-exec-3] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [d0ad01f718c9] - 2025-04-29 11:31:11 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://localhost:8080/api/user/99
+│ 请求方式 : GET
+│ 请求IP  : 0:0:0:0:0:0:0:1
+│ 类方法   : com.goodsop.user.controller.UserController.getUserById
+│ 请求参数 : [99]
+└─────────────────────────────────────────────────────┘
+2025-04-29T11:31:11.774+08:00 DEBUG 8120 --- [http-nio-8080-exec-3] c.g.user.mapper.UserMapper.selectById    : ==>  Preparing: SELECT id,username,password,email,phone,status,create_time,update_time,create_by,update_by,is_deleted FROM t_user WHERE id=? AND is_deleted=0
+2025-04-29T11:31:11.775+08:00 DEBUG 8120 --- [http-nio-8080-exec-3] c.g.user.mapper.UserMapper.selectById    : ==> Parameters: 99(Long)
+2025-04-29T11:31:11.776+08:00 DEBUG 8120 --- [http-nio-8080-exec-3] c.g.user.mapper.UserMapper.selectById    : <==      Total: 1
+2025-04-29T11:31:11.778+08:00  INFO 8120 --- [http-nio-8080-exec-3] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [d0ad01f718c9] - 2025-04-29 11:31:11 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 6ms
+│ 返回结果 : {"code":200,"msg":"success","data":{"id":99,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0}}
+└─────────────────────────────────────────────────────┘

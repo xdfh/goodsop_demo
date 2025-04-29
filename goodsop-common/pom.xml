@@ -43,6 +43,13 @@
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 
+        <!-- 配置处理器依赖 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <!-- Java 8日期时间API支持 -->
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>

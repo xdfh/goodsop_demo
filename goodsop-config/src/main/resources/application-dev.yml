@@ -26,7 +26,7 @@ spring:
       pool-prepared-statements: true
       max-pool-prepared-statement-per-connection-size: 20
   jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
+    date-format: yyyy-MM-dd HH:mm:ss.SSS
     time-zone: GMT+8
   servlet:
     multipart:

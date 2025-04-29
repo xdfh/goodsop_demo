@@ -18,7 +18,7 @@ spring:
       max-active: 20
       max-wait: 60000
   jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
+    date-format: yyyy-MM-dd HH:mm:ss.SSS
     time-zone: GMT+8
   servlet:
     multipart:

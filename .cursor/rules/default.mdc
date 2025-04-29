@@ -1,3 +1,8 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
 
 # 项目背景
 - 使用 springboot 3.1.5 + jdk17 Java 17 构建 RESTful API 服务
@@ -26,4 +31,6 @@
 - 使用 mockito作为测试工具
 - 使用 sonarQube作为代码质量管理工具
 - 使用 sonarScanner作为代码质量扫描工具
-- 完成需求开发后需标记到对应的 .md文档
+- 每一个功能模块开发完成后需要编写单元测试和集成测试代码
+- 完成需求开发和测试后需标记到对应的 需求文档，在需求项前面以 [√] 进行标记
+
