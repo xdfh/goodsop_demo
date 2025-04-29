@@ -21,7 +21,9 @@
     <modules>
         <module>goodsop-common</module>
         <module>goodsop-config</module>
-        <module>goodsop-modules</module>
+        <module>goodsop-file</module>
+        <module>goodsop-user</module>
+        <module>goodsop-iot</module>
         <module>goodsop-server</module>
     </modules>
 

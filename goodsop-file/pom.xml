@@ -9,48 +9,51 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>goodsop-modules</artifactId>
-    <packaging>pom</packaging>
-    <name>goodsop-modules</name>
-    <description>业务模块</description>
+    <artifactId>goodsop-file</artifactId>
+    <name>goodsop-file</name>
+    <description>文件模块</description>
 
-    <modules>
-        <module>goodsop-user</module>
-        <module>goodsop-file</module>
-        <module>goodsop-iot</module>
-    </modules>
-
-    <properties>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-    
     <dependencies>
         <!-- 公共模块依赖 -->
         <dependency>
             <groupId>com.goodsop</groupId>
             <artifactId>goodsop-common</artifactId>
         </dependency>
-        
+
         <!-- Spring Boot依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        
+
         <!-- 工具类依赖 -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
         </dependency>
-        
+
         <!-- 测试依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-extension</artifactId>
+            <version>3.5.5</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-core</artifactId>
+            <version>3.5.5</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
         </dependency>
     </dependencies>
 </project> 
