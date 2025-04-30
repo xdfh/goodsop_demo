@@ -112,7 +112,7 @@ goodsop:
   # 文件模块配置
   file:
     storage:
-      path: D:\file\
+      path: D:/file/
       enable-decrypt: true
       enable-decompress: true
       aes-key: 1234567890abcdef1234567890abcdef

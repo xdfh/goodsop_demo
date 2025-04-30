@@ -22,9 +22,10 @@ public interface FileService {
      * @param deviceId   设备ID
      * @param isEncrypted 是否加密
      * @param isCompressed 是否压缩
+     * @param originalExtension 原始文件扩展名（解压后使用）
      * @return 文件信息
      */
-    FileInfo uploadFile(MultipartFile file, String deviceId, Integer isEncrypted, Integer isCompressed);
+    FileInfo uploadFile(MultipartFile file, String deviceId, Integer isEncrypted, Integer isCompressed, String originalExtension);
     
     /**
      * 分块上传文件（断点续传）
@@ -36,10 +37,11 @@ public interface FileService {
      * @param chunks     总块数
      * @param isEncrypted 是否加密
      * @param isCompressed 是否压缩
+     * @param originalExtension 原始文件扩展名（解压后使用）
      * @return 如果是最后一块，返回文件信息；否则返回null
      */
     FileInfo uploadFileChunk(MultipartFile file, String fileName, String deviceId, 
-                            Integer chunk, Integer chunks, Integer isEncrypted, Integer isCompressed);
+                            Integer chunk, Integer chunks, Integer isEncrypted, Integer isCompressed, String originalExtension);
     
     /**
      * 下载文件

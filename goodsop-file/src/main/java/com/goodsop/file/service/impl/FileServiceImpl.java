@@ -31,6 +31,8 @@ import java.time.Instant;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.regex.Pattern;
 
 /**
  * 文件服务实现类
@@ -47,15 +49,27 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
     
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public FileInfo uploadFile(MultipartFile file, String deviceId, Integer isEncrypted, Integer isCompressed) {
+    public FileInfo uploadFile(MultipartFile file, String deviceId, Integer isEncrypted, Integer isCompressed, String originalExtension) {
         try {
             // 获取当前日期作为子目录
             String dateDir = LocalDate.now().format(DateTimeFormatter.ofPattern(FileConstant.DATE_FORMAT_YYYYMMDD));
-            String storageDir = fileProperties.getStorage().getPath() + dateDir;
+            // 确保路径分隔符正确
+            String basePath = fileProperties.getStorage().getPath();
+            if (!basePath.endsWith(File.separator)) {
+                basePath = basePath + File.separator;
+            }
+            String storageDir = basePath + dateDir;
             
             // 获取原始文件名并检查格式
             String originalFilename = file.getOriginalFilename();
             String fileType = getFileType(originalFilename);
+            
+            // 保存原始扩展名，用于解压缩后恢复
+            if (originalExtension != null && !originalExtension.isEmpty()) {
+                // 保存原始扩展名到线程局部变量或缓存中，供解压缩使用
+                EXTENSION_CACHE.put(originalFilename, originalExtension);
+                log.info("保存原始文件扩展名: {} -> {}", originalFilename, originalExtension);
+            }
             
             // 如果文件名不符合标准格式，则重命名
             if (originalFilename != null && !isStandardFilename(originalFilename)) {
@@ -68,7 +82,7 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
             // 存储原始文件 - 注意这里传入重命名后的文件名
             File originalFile = storeFileWithName(file, storageDir, originalFilename);
             
-            // 处理文件（解压缩、解密）
+            // 处理文件（解压缩、解密）- 如果提供了原始扩展名，会在解压缩时使用
             File processedFile = processFile(originalFile, isEncrypted, isCompressed);
             
             // 计算MD5
@@ -198,34 +212,81 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
     @Override
     @Transactional(rollbackFor = Exception.class)
     public FileInfo uploadFileChunk(MultipartFile file, String fileName, String deviceId, 
-                                  Integer chunk, Integer chunks, Integer isEncrypted, Integer isCompressed) {
+                                  Integer chunk, Integer chunks, Integer isEncrypted, Integer isCompressed, String originalExtension) {
         try {
             // 获取当前日期作为子目录
             String dateDir = LocalDate.now().format(DateTimeFormatter.ofPattern(FileConstant.DATE_FORMAT_YYYYMMDD));
-            String storageDir = fileProperties.getStorage().getPath() + dateDir;
+            // 确保路径分隔符正确
+            String basePath = fileProperties.getStorage().getPath();
+            if (!basePath.endsWith(File.separator)) {
+                basePath = basePath + File.separator;
+            }
+            // 修复路径连接，使用File.separator确保分隔符一致性
+            String storageDir = basePath + dateDir;
             
-            // 检查文件名是否符合标准格式，如果不符合则重命名
-            String finalFileName = fileName;
-            if (!isStandardFilename(fileName)) {
-                log.info("分块上传的文件名不符合标准格式，将进行重命名: {}", fileName);
-                String fileType = getFileType(fileName);
-                finalFileName = generateStandardFilename(fileName, deviceId, fileType);
-                log.info("生成标准格式文件名: {}", finalFileName);
+            // 添加日志，输出存储路径信息
+            log.info("文件存储配置路径: {}", fileProperties.getStorage().getPath());
+            log.info("修正的基础路径: {}", basePath);
+            log.info("今日日期格式化: {}", dateDir);
+            log.info("实际存储目录: {}", storageDir);
+            
+            // 保存原始扩展名，用于解压缩后恢复
+            if (originalExtension != null && !originalExtension.isEmpty()) {
+                // 保存原始扩展名到缓存中，供解压缩使用
+                EXTENSION_CACHE.put(fileName, originalExtension);
+                log.info("保存原始文件扩展名: {} -> {}", fileName, originalExtension);
             }
             
-            // 存储分块文件
+            // 检查目录是否存在，不存在则创建
+            File storageDirFile = new File(storageDir);
+            if (!storageDirFile.exists()) {
+                boolean created = storageDirFile.mkdirs();
+                log.info("创建存储目录: {} 结果: {}", storageDir, created ? "成功" : "失败");
+            } else {
+                log.info("存储目录已存在: {}", storageDir);
+            }
+            
+            // 将原始文件名保存到线程本地变量，用于后续分块使用同一文件名
+            String originalFileName = fileName;
+            
+            // 检查文件名是否符合标准格式，如果不符合则重命名
+            // 重要修复：使用原始文件名作为key，获取已经生成的标准文件名
+            String finalFileName = getOrCreateStandardFileName(originalFileName, deviceId);
+            
+            log.info("处理分块上传: fileChunk={}/{}, fileName={}", chunk + 1, chunks, finalFileName);
+            
+            // 存储分块文件 - 注意fileTransferUtil.storeFileChunk只有在所有分块上传完毕后才会返回合并后的文件
             File targetFile = fileTransferUtil.storeFileChunk(file, storageDir, finalFileName, chunk, chunks);
             
-            // 如果不是最后一块，返回null
+            // 如果不是所有分块都上传完成，返回null
             if (targetFile == null) {
+                log.info("分块{}上传成功，等待其他分块上传", chunk + 1);
                 return null;
+            }
+            
+            // 所有分块上传完成，清理文件名缓存
+            cleanupFilenameCache(originalFileName);
+            
+            log.info("所有分块上传完成，开始处理合并后的文件: {}", targetFile.getAbsolutePath());
+            if (!targetFile.exists()) {
+                log.error("合并后的文件不存在: {}", targetFile.getAbsolutePath());
+                throw new RuntimeException("合并后的文件不存在");
             }
             
             // 处理文件
             String fileType = getFileType(finalFileName);
             
-            // 如果是最后一块，进行文件处理
+            // 所有分块已上传完成，进行文件处理
             File processedFile = processFile(targetFile, isEncrypted, isCompressed);
+            
+            // 处理完成后清理原始扩展名缓存
+            EXTENSION_CACHE.remove(fileName);
+            
+            log.info("文件处理完成: {}", processedFile.getAbsolutePath());
+            if (!processedFile.exists()) {
+                log.error("处理后的文件不存在: {}", processedFile.getAbsolutePath());
+                throw new RuntimeException("处理后的文件不存在");
+            }
             
             // 计算MD5
             String md5 = fileEncryptUtil.calculateMD5(processedFile);
@@ -350,6 +411,120 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
         }
     }
     
+    // 新增一个线程安全的文件名缓存Map，用于确保同一文件的所有分块使用相同的文件名
+    private static final Map<String, String> FILENAME_CACHE = new ConcurrentHashMap<>();
+    
+    // 扩展名缓存，用于保存原始文件扩展名
+    private static final Map<String, String> EXTENSION_CACHE = new ConcurrentHashMap<>();
+    
+    /**
+     * 生成标准格式文件名
+     * 确保相同原始文件名的所有分块使用相同的标准文件名
+     * 
+     * @param originalFilename 原始文件名
+     * @param deviceId 设备ID
+     * @return 标准格式文件名
+     */
+    private String getOrCreateStandardFileName(String originalFilename, String deviceId) {
+        if (originalFilename == null) {
+            return UUID.randomUUID().toString();
+        }
+        
+        // 使用原始文件名作为缓存key
+        return FILENAME_CACHE.computeIfAbsent(originalFilename, key -> {
+            log.info("分块上传的文件名不符合标准格式，将进行重命名: {}", originalFilename);
+            String fileType = getFileType(originalFilename);
+            
+            // 尝试从原始文件名中提取信息
+            String userId = "default";
+            Long timestamp = System.currentTimeMillis();
+            Long duration = 0L;
+            
+            // 尝试从原始文件名中解析信息，如果可能的话
+            if (originalFilename.contains("_")) {
+                String[] parts = originalFilename.split("_");
+                // 如果包含足够的部分，尝试提取
+                if (parts.length >= 3) {
+                    // 尝试提取用户ID (通常是第3个部分)
+                    if (parts.length > 2) {
+                        userId = parts[2];
+                    }
+                    
+                    // 尝试提取时间戳 (通常是第4个部分)
+                    if (parts.length > 3) {
+                        try {
+                            timestamp = Long.parseLong(parts[3]);
+                        } catch (NumberFormatException e) {
+                            log.warn("无法从文件名解析时间戳，使用当前时间戳");
+                        }
+                    }
+                    
+                    // 尝试提取时长 (通常是第5个部分)
+                    if (parts.length > 4) {
+                        try {
+                            duration = Long.parseLong(parts[4]);
+                        } catch (NumberFormatException e) {
+                            log.warn("无法从文件名解析时长，使用默认值0");
+                        }
+                    }
+                }
+            }
+            
+            // 计算或使用文件MD5值
+            String md5;
+            if (originalFilename.contains("_") && originalFilename.split("_").length > 5) {
+                // 尝试从原始文件名中提取MD5值
+                String[] parts = originalFilename.split("_");
+                String lastPart = parts[5];
+                if (lastPart.contains(".")) {
+                    lastPart = lastPart.substring(0, lastPart.indexOf("."));
+                }
+                
+                if (lastPart.matches("[a-fA-F0-9]{32}")) {
+                    md5 = lastPart;
+                } else {
+                    md5 = UUID.randomUUID().toString().replace("-", "").substring(0, 32);
+                }
+            } else {
+                md5 = UUID.randomUUID().toString().replace("-", "").substring(0, 32);
+            }
+            
+            // 生成标准格式的文件名
+            String dateStr = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+            
+            String extension = "";
+            if (originalFilename.contains(".")) {
+                extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            } else if (fileType != null && !fileType.equals("unknown")) {
+                extension = "." + fileType;
+            }
+            
+            String standardName = String.format("%s_%s_%s_%d_%d_%s%s", 
+                    deviceId, dateStr, userId, timestamp, duration, md5, extension);
+            
+            log.info("生成标准格式文件名: {}", standardName);
+            return standardName;
+        });
+    }
+    
+    private static final Pattern STANDARD_FILENAME_PATTERN = 
+            Pattern.compile("^.+_\\d{8}_.+_\\d+_\\d+_[a-fA-F0-9]{32}.*$");
+    
+    /**
+     * 检查文件名是否符合标准格式：设备ID_YYYYMMDD_用户ID_时间戳_时长_MD5值.扩展名
+     * 
+     * @param filename 文件名
+     * @return 是否符合标准格式
+     */
+    private boolean isStandardFilename(String filename) {
+        if (filename == null) {
+            return false;
+        }
+        
+        // 使用正则表达式验证文件名格式
+        return STANDARD_FILENAME_PATTERN.matcher(filename).matches();
+    }
+    
     @Override
     public void downloadFile(Long id, HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -450,6 +625,7 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
      */
     private File processFile(File originalFile, Integer isEncrypted, Integer isCompressed) {
         File processedFile = originalFile;
+        File intermediateFile = null;
         
         try {
             // 如果启用解密且文件是加密的
@@ -466,6 +642,9 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
                     decryptedFile, 
                     fileProperties.getStorage().getAesKey()
                 );
+                
+                // 记录中间文件，稍后删除
+                intermediateFile = decryptedFile;
             }
             
             // 如果启用解压缩且文件是压缩的
@@ -474,12 +653,38 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
                 
                 // 检查文件是否为GZIP格式
                 if (fileCompressUtil.isGzipFile(processedFile)) {
-                    // 创建解压后的文件，保持原文件命名格式
-                    String decompressedPath = getProcessedFilePath(originalFile, "decompressed");
+                    // 获取原始文件的真实扩展名（从缓存中或从名称猜测）
+                    String originalExtension = EXTENSION_CACHE.getOrDefault(
+                        originalFile.getName(), 
+                        getOriginalExtension(originalFile.getName())
+                    );
+                    
+                    log.info("解压缩使用的原始扩展名: {}", originalExtension);
+                    
+                    // 创建解压后的文件，确保保留原始扩展名
+                    String decompressedPath = getProcessedFilePathWithExt(processedFile, originalExtension);
                     File decompressedFile = new File(decompressedPath);
                     
                     // 解压文件
-                    processedFile = fileCompressUtil.decompressFile(processedFile, decompressedFile);
+                    File resultFile = fileCompressUtil.decompressFile(processedFile, decompressedFile);
+                    
+                    // 如果当前处理的文件不是原始文件，则可以删除中间文件
+                    if (processedFile != originalFile && intermediateFile == null) {
+                        intermediateFile = processedFile;
+                    }
+                    
+                    processedFile = resultFile;
+                }
+            }
+            
+            // 删除中间处理文件
+            if (intermediateFile != null && intermediateFile.exists() && intermediateFile != processedFile) {
+                boolean deleted = intermediateFile.delete();
+                if (deleted) {
+                    log.info("已删除中间处理文件: {}", intermediateFile.getAbsolutePath());
+                } else {
+                    log.warn("无法删除中间处理文件: {}", intermediateFile.getAbsolutePath());
+                    intermediateFile.deleteOnExit(); // 注册JVM退出时删除
                 }
             }
             
@@ -522,48 +727,82 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
     }
     
     /**
-     * 检查文件名是否符合标准格式：设备ID_YYYYMMDD_用户ID_时间戳_时长_MD5值.扩展名
+     * 获取处理后的文件路径，但使用指定的扩展名
      * 
-     * @param filename 文件名
-     * @return 是否符合标准格式
+     * @param originalFile 原始文件
+     * @param newExtension 新扩展名(不含".")
+     * @return 处理后的文件路径
      */
-    private boolean isStandardFilename(String filename) {
-        if (filename == null || !filename.contains("_")) {
-            return false;
+    private String getProcessedFilePathWithExt(File originalFile, String newExtension) {
+        String originalPath = originalFile.getAbsolutePath();
+        String parentDir = originalFile.getParent();
+        String fileName = originalFile.getName();
+        
+        // 移除所有处理标记和原扩展名
+        String nameWithoutExt = fileName;
+        if (fileName.contains(".")) {
+            nameWithoutExt = fileName.substring(0, fileName.indexOf("."));
         }
         
-        String nameWithoutExt = filename;
-        if (filename.contains(".")) {
-            nameWithoutExt = filename.substring(0, filename.lastIndexOf("."));
+        // 如果是标准文件名，提取最后一个下划线之前的部分作为基础名称
+        if (isStandardFilename(nameWithoutExt)) {
+            // 保留标准格式的文件名，即使它包含下划线
+            // 不需要额外处理
         }
         
-        String[] parts = nameWithoutExt.split("_");
-        
-        // 必须至少有6个部分
-        if (parts.length < 6) {
-            return false;
+        // 添加新扩展名
+        String newFileName = nameWithoutExt;
+        if (newExtension != null && !newExtension.isEmpty()) {
+            if (!newExtension.startsWith(".")) {
+                newExtension = "." + newExtension;
+            }
+            newFileName += newExtension;
         }
         
-        // 检查第二部分是否为8位日期格式
-        if (parts[1].length() != 8) {
-            return false;
+        return parentDir + File.separator + newFileName;
+    }
+    
+    /**
+     * 尝试获取压缩文件的原始扩展名
+     * 
+     * @param compressedFileName 压缩文件名
+     * @return 原始扩展名(带.)或空字符串
+     */
+    private String getOriginalExtension(String compressedFileName) {
+        if (compressedFileName == null) {
+            return "";
         }
         
-        try {
-            // 检查日期格式
-            Integer.parseInt(parts[1]);
+        // 获取文件名中的原始扩展名部分
+        // 1. 如果是.tar.gz格式，返回.tar
+        if (compressedFileName.toLowerCase().endsWith(".tar.gz")) {
+            return ".tar";
+        }
+        
+        // 2. 从客户端传递的originalFilename中获取
+        // (这部分需要客户端在上传时提供原始文件扩展名，我们这里只能猜测)
+        
+        // 3. 检查文件内容的前几个字节，识别常见文件类型
+        // 这需要额外的文件类型检测库
+        
+        // 4. 默认情况返回空扩展名
+        if (compressedFileName.toLowerCase().endsWith(".gz")) {
+            // 从文件名中猜测可能的扩展名
+            String nameWithoutGz = compressedFileName.substring(0, compressedFileName.length() - 3);
             
-            // 检查时间戳是否为数字
-            Long.parseLong(parts[3]);
+            // 检查常见的音频文件扩展名
+            String[] commonAudioExts = {".mp3", ".wav", ".aac", ".flac", ".ogg", ".m4a"};
+            for (String ext : commonAudioExts) {
+                if (nameWithoutGz.toLowerCase().endsWith(ext)) {
+                    return ext;
+                }
+            }
             
-            // 检查时长是否为数字
-            Long.parseLong(parts[4]);
-            
-            // 通过所有检查
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
+            // 也可能是.gz压缩前没有扩展名
+            return ".mp3"; // 默认音频格式为mp3
         }
+        
+        return "";
     }
     
     /**
@@ -641,6 +880,18 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
         } catch (Exception e) {
             log.error("文件存储失败: {}", e.getMessage(), e);
             throw new RuntimeException("文件存储失败", e);
+        }
+    }
+    
+    /**
+     * 清理文件名缓存
+     * 
+     * @param originalFilename 原始文件名
+     */
+    private void cleanupFilenameCache(String originalFilename) {
+        if (originalFilename != null && FILENAME_CACHE.containsKey(originalFilename)) {
+            String removedName = FILENAME_CACHE.remove(originalFilename);
+            log.info("从缓存中清理文件名映射: {} -> {}", originalFilename, removedName);
         }
     }
 } 

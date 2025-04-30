@@ -5368,3 +5368,443 @@ Caused by: java.lang.IllegalStateException: Duplicate key 文件管理 (attempted me
 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1766) ~[spring-beans-6.0.13.jar:6.0.13]
 	... 16 common frames omitted
 
+2025-04-30T15:51:59.766+08:00  INFO 2772 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 2772 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-30T15:51:59.769+08:00 DEBUG 2772 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-30T15:51:59.770+08:00  INFO 2772 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-30T15:52:00.786+08:00  INFO 2772 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-30T15:52:00.792+08:00  INFO 2772 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-30T15:52:00.793+08:00  INFO 2772 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-30T15:52:00.855+08:00  INFO 2772 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-30T15:52:00.856+08:00  INFO 2772 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1050 ms
+2025-04-30T15:52:02.053+08:00  INFO 2772 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2025-04-30T15:52:02.101+08:00  INFO 2772 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2025-04-30T15:52:02.111+08:00  INFO 2772 --- [main] com.goodsop.server.GoodsopApplication    : Started GoodsopApplication in 2.616 seconds (process running for 2.822)
+2025-04-30T15:52:12.093+08:00  INFO 2772 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-30T15:52:12.094+08:00  INFO 2772 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-04-30T15:52:12.095+08:00  INFO 2772 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
+2025-04-30T15:52:12.145+08:00  INFO 2772 --- [http-nio-8080-exec-1] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [fa451657c713] - 2025-04-30 15:52:12 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://192.168.1.30:8080/api/file/chunk/upload
+│ 请求方式 : POST
+│ 请求IP  : 192.168.1.30
+│ 类方法   : com.goodsop.file.controller.FileUploadController.uploadFileChunk
+│ 请求参数 : [org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@7cf56d7b, TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, TEST_DEVICE, 0, 4, 0, 1]
+└─────────────────────────────────────────────────────┘
+2025-04-30T15:52:12.147+08:00  INFO 2772 --- [http-nio-8080-exec-1] c.g.f.controller.FileUploadController    : 接收到分块上传请求: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=0/4, fileSize=1048576, deviceId=TEST_DEVICE
+2025-04-30T15:52:12.164+08:00  INFO 2772 --- [http-nio-8080-exec-1] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2025-04-30T15:52:12.283+08:00  INFO 2772 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 处理分块上传: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=1/4, size=1048576 bytes, deviceId=TEST_DEVICE
+2025-04-30T15:52:12.284+08:00  INFO 2772 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 分块上传的文件名不符合标准格式，将进行重命名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz
+2025-04-30T15:52:12.285+08:00  INFO 2772 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 生成标准文件名，原始文件名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, 设备ID: TEST_DEVICE, 文件类型: gz
+2025-04-30T15:52:12.285+08:00  WARN 2772 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时间戳，使用当前时间戳
+2025-04-30T15:52:12.285+08:00  WARN 2772 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时长，使用默认值0
+2025-04-30T15:52:12.286+08:00  INFO 2772 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 生成的标准文件名: TEST_DEVICE_20250430_20250430_1745999532285_0_b2734f10b6e61dc36c2ccab2fb733df3.gz
+2025-04-30T15:52:12.287+08:00  INFO 2772 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 生成标准格式文件名: TEST_DEVICE_20250430_20250430_1745999532285_0_b2734f10b6e61dc36c2ccab2fb733df3.gz
+2025-04-30T15:52:12.287+08:00  INFO 2772 --- [http-nio-8080-exec-1] com.goodsop.file.util.FileTransferUtil   : 处理后的安全文件名: TEST_DEVICE_20250430_20250430_1745999532285_0_b2734f10b6e61dc36c2ccab2fb733df3.gz
+2025-04-30T15:52:12.293+08:00  INFO 2772 --- [http-nio-8080-exec-1] com.goodsop.file.util.FileTransferUtil   : 保存分块文件 1/4: D:\file\20250430\temp\aad26c00b24d26ce9c3ba9e067477fc0\0.part
+2025-04-30T15:52:12.294+08:00  INFO 2772 --- [http-nio-8080-exec-1] com.goodsop.file.util.FileTransferUtil   : 当前已上传 1/4 个分块
+2025-04-30T15:52:12.294+08:00  INFO 2772 --- [http-nio-8080-exec-1] com.goodsop.file.util.FileTransferUtil   : 等待更多分块上传，当前进度: 1/4
+2025-04-30T15:52:12.295+08:00  INFO 2772 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 分块文件存储结果: targetFile=null
+2025-04-30T15:52:12.295+08:00  INFO 2772 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 分块 1/4 上传成功，等待后续分块上传
+2025-04-30T15:52:12.295+08:00  INFO 2772 --- [http-nio-8080-exec-1] c.g.f.controller.FileUploadController    : 部分分块上传完成: {chunk=0, completed=false}
+2025-04-30T15:52:12.323+08:00  INFO 2772 --- [http-nio-8080-exec-1] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [fa451657c713] - 2025-04-30 15:52:12 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 152ms
+│ 返回结果 : {"code":200,"msg":"success","data":{"success":true,"chunk":0,"completed":false}}
+└─────────────────────────────────────────────────────┘
+2025-04-30T15:52:12.350+08:00  INFO 2772 --- [http-nio-8080-exec-3] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [50a103d09a12] - 2025-04-30 15:52:12 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://192.168.1.30:8080/api/file/chunk/upload
+│ 请求方式 : POST
+│ 请求IP  : 192.168.1.30
+│ 类方法   : com.goodsop.file.controller.FileUploadController.uploadFileChunk
+│ 请求参数 : [org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@635f9a19, TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, TEST_DEVICE, 1, 4, 0, 1]
+└─────────────────────────────────────────────────────┘
+2025-04-30T15:52:12.352+08:00  INFO 2772 --- [http-nio-8080-exec-3] c.g.f.controller.FileUploadController    : 接收到分块上传请求: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=1/4, fileSize=1048576, deviceId=TEST_DEVICE
+2025-04-30T15:52:12.352+08:00  INFO 2772 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 处理分块上传: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=2/4, size=1048576 bytes, deviceId=TEST_DEVICE
+2025-04-30T15:52:12.352+08:00  INFO 2772 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 分块上传的文件名不符合标准格式，将进行重命名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz
+2025-04-30T15:52:12.353+08:00  INFO 2772 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 生成标准文件名，原始文件名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, 设备ID: TEST_DEVICE, 文件类型: gz
+2025-04-30T15:52:12.353+08:00  WARN 2772 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时间戳，使用当前时间戳
+2025-04-30T15:52:12.353+08:00  WARN 2772 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时长，使用默认值0
+2025-04-30T15:52:12.354+08:00  INFO 2772 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 生成的标准文件名: TEST_DEVICE_20250430_20250430_1745999532353_0_c05caeb1b6014ad358c055e5a6fc8b69.gz
+2025-04-30T15:52:12.354+08:00  INFO 2772 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 生成标准格式文件名: TEST_DEVICE_20250430_20250430_1745999532353_0_c05caeb1b6014ad358c055e5a6fc8b69.gz
+2025-04-30T15:52:12.354+08:00  INFO 2772 --- [http-nio-8080-exec-3] com.goodsop.file.util.FileTransferUtil   : 处理后的安全文件名: TEST_DEVICE_20250430_20250430_1745999532353_0_c05caeb1b6014ad358c055e5a6fc8b69.gz
+2025-04-30T15:52:12.356+08:00  INFO 2772 --- [http-nio-8080-exec-3] com.goodsop.file.util.FileTransferUtil   : 保存分块文件 2/4: D:\file\20250430\temp\6bcfb6b62116930c4c50a3afb6666f0f\1.part
+2025-04-30T15:52:12.357+08:00  INFO 2772 --- [http-nio-8080-exec-3] com.goodsop.file.util.FileTransferUtil   : 当前已上传 1/4 个分块
+2025-04-30T15:52:12.357+08:00  INFO 2772 --- [http-nio-8080-exec-3] com.goodsop.file.util.FileTransferUtil   : 等待更多分块上传，当前进度: 1/4
+2025-04-30T15:52:12.357+08:00  INFO 2772 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 分块文件存储结果: targetFile=null
+2025-04-30T15:52:12.358+08:00  INFO 2772 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 分块 2/4 上传成功，等待后续分块上传
+2025-04-30T15:52:12.358+08:00  INFO 2772 --- [http-nio-8080-exec-3] c.g.f.controller.FileUploadController    : 部分分块上传完成: {chunk=1, completed=false}
+2025-04-30T15:52:12.358+08:00  INFO 2772 --- [http-nio-8080-exec-3] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [50a103d09a12] - 2025-04-30 15:52:12 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 8ms
+│ 返回结果 : {"code":200,"msg":"success","data":{"success":true,"chunk":1,"completed":false}}
+└─────────────────────────────────────────────────────┘
+2025-04-30T15:52:12.380+08:00  INFO 2772 --- [http-nio-8080-exec-8] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [86360cd667fa] - 2025-04-30 15:52:12 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://192.168.1.30:8080/api/file/chunk/upload
+│ 请求方式 : POST
+│ 请求IP  : 192.168.1.30
+│ 类方法   : com.goodsop.file.controller.FileUploadController.uploadFileChunk
+│ 请求参数 : [org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@40932cec, TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, TEST_DEVICE, 2, 4, 0, 1]
+└─────────────────────────────────────────────────────┘
+2025-04-30T15:52:12.381+08:00  INFO 2772 --- [http-nio-8080-exec-8] c.g.f.controller.FileUploadController    : 接收到分块上传请求: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=2/4, fileSize=1048576, deviceId=TEST_DEVICE
+2025-04-30T15:52:12.382+08:00  INFO 2772 --- [http-nio-8080-exec-8] c.g.file.service.impl.FileServiceImpl    : 处理分块上传: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=3/4, size=1048576 bytes, deviceId=TEST_DEVICE
+2025-04-30T15:52:12.383+08:00  INFO 2772 --- [http-nio-8080-exec-8] c.g.file.service.impl.FileServiceImpl    : 分块上传的文件名不符合标准格式，将进行重命名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz
+2025-04-30T15:52:12.383+08:00  INFO 2772 --- [http-nio-8080-exec-8] c.g.file.service.impl.FileServiceImpl    : 生成标准文件名，原始文件名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, 设备ID: TEST_DEVICE, 文件类型: gz
+2025-04-30T15:52:12.383+08:00  WARN 2772 --- [http-nio-8080-exec-8] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时间戳，使用当前时间戳
+2025-04-30T15:52:12.383+08:00  WARN 2772 --- [http-nio-8080-exec-8] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时长，使用默认值0
+2025-04-30T15:52:12.384+08:00  INFO 2772 --- [http-nio-8080-exec-8] c.g.file.service.impl.FileServiceImpl    : 生成的标准文件名: TEST_DEVICE_20250430_20250430_1745999532383_0_2e81165bd66102bf90e3d7123e833530.gz
+2025-04-30T15:52:12.385+08:00  INFO 2772 --- [http-nio-8080-exec-8] c.g.file.service.impl.FileServiceImpl    : 生成标准格式文件名: TEST_DEVICE_20250430_20250430_1745999532383_0_2e81165bd66102bf90e3d7123e833530.gz
+2025-04-30T15:52:12.385+08:00  INFO 2772 --- [http-nio-8080-exec-8] com.goodsop.file.util.FileTransferUtil   : 处理后的安全文件名: TEST_DEVICE_20250430_20250430_1745999532383_0_2e81165bd66102bf90e3d7123e833530.gz
+2025-04-30T15:52:12.387+08:00  INFO 2772 --- [http-nio-8080-exec-8] com.goodsop.file.util.FileTransferUtil   : 保存分块文件 3/4: D:\file\20250430\temp\ace6cc068ff9aff75a6b004b4e772d77\2.part
+2025-04-30T15:52:12.388+08:00  INFO 2772 --- [http-nio-8080-exec-8] com.goodsop.file.util.FileTransferUtil   : 当前已上传 1/4 个分块
+2025-04-30T15:52:12.388+08:00  INFO 2772 --- [http-nio-8080-exec-8] com.goodsop.file.util.FileTransferUtil   : 等待更多分块上传，当前进度: 1/4
+2025-04-30T15:52:12.388+08:00  INFO 2772 --- [http-nio-8080-exec-8] c.g.file.service.impl.FileServiceImpl    : 分块文件存储结果: targetFile=null
+2025-04-30T15:52:12.388+08:00  INFO 2772 --- [http-nio-8080-exec-8] c.g.file.service.impl.FileServiceImpl    : 分块 3/4 上传成功，等待后续分块上传
+2025-04-30T15:52:12.388+08:00  INFO 2772 --- [http-nio-8080-exec-8] c.g.f.controller.FileUploadController    : 部分分块上传完成: {chunk=2, completed=false}
+2025-04-30T15:52:12.389+08:00  INFO 2772 --- [http-nio-8080-exec-8] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [86360cd667fa] - 2025-04-30 15:52:12 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 9ms
+│ 返回结果 : {"code":200,"msg":"success","data":{"success":true,"chunk":2,"completed":false}}
+└─────────────────────────────────────────────────────┘
+2025-04-30T15:52:12.411+08:00  INFO 2772 --- [http-nio-8080-exec-7] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [eed3e5c7ffcb] - 2025-04-30 15:52:12 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://192.168.1.30:8080/api/file/chunk/upload
+│ 请求方式 : POST
+│ 请求IP  : 192.168.1.30
+│ 类方法   : com.goodsop.file.controller.FileUploadController.uploadFileChunk
+│ 请求参数 : [org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@63f92637, TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, TEST_DEVICE, 3, 4, 0, 1]
+└─────────────────────────────────────────────────────┘
+2025-04-30T15:52:12.412+08:00  INFO 2772 --- [http-nio-8080-exec-7] c.g.f.controller.FileUploadController    : 接收到分块上传请求: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=3/4, fileSize=672956, deviceId=TEST_DEVICE
+2025-04-30T15:52:12.412+08:00  INFO 2772 --- [http-nio-8080-exec-7] c.g.file.service.impl.FileServiceImpl    : 处理分块上传: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=4/4, size=672956 bytes, deviceId=TEST_DEVICE
+2025-04-30T15:52:12.412+08:00  INFO 2772 --- [http-nio-8080-exec-7] c.g.file.service.impl.FileServiceImpl    : 分块上传的文件名不符合标准格式，将进行重命名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz
+2025-04-30T15:52:12.412+08:00  INFO 2772 --- [http-nio-8080-exec-7] c.g.file.service.impl.FileServiceImpl    : 生成标准文件名，原始文件名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, 设备ID: TEST_DEVICE, 文件类型: gz
+2025-04-30T15:52:12.413+08:00  WARN 2772 --- [http-nio-8080-exec-7] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时间戳，使用当前时间戳
+2025-04-30T15:52:12.413+08:00  WARN 2772 --- [http-nio-8080-exec-7] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时长，使用默认值0
+2025-04-30T15:52:12.413+08:00  INFO 2772 --- [http-nio-8080-exec-7] c.g.file.service.impl.FileServiceImpl    : 生成的标准文件名: TEST_DEVICE_20250430_20250430_1745999532413_0_1cc6e3079690e9fd2db8ce1118c456a6.gz
+2025-04-30T15:52:12.413+08:00  INFO 2772 --- [http-nio-8080-exec-7] c.g.file.service.impl.FileServiceImpl    : 生成标准格式文件名: TEST_DEVICE_20250430_20250430_1745999532413_0_1cc6e3079690e9fd2db8ce1118c456a6.gz
+2025-04-30T15:52:12.413+08:00  INFO 2772 --- [http-nio-8080-exec-7] com.goodsop.file.util.FileTransferUtil   : 处理后的安全文件名: TEST_DEVICE_20250430_20250430_1745999532413_0_1cc6e3079690e9fd2db8ce1118c456a6.gz
+2025-04-30T15:52:12.416+08:00  INFO 2772 --- [http-nio-8080-exec-7] com.goodsop.file.util.FileTransferUtil   : 保存分块文件 4/4: D:\file\20250430\temp\1d614f9b5e7322bbc533a8bc7fd960d3\3.part
+2025-04-30T15:52:12.417+08:00  INFO 2772 --- [http-nio-8080-exec-7] com.goodsop.file.util.FileTransferUtil   : 当前已上传 1/4 个分块
+2025-04-30T15:52:12.417+08:00  INFO 2772 --- [http-nio-8080-exec-7] com.goodsop.file.util.FileTransferUtil   : 等待更多分块上传，当前进度: 1/4
+2025-04-30T15:52:12.417+08:00  INFO 2772 --- [http-nio-8080-exec-7] c.g.file.service.impl.FileServiceImpl    : 分块文件存储结果: targetFile=null
+2025-04-30T15:52:12.418+08:00  INFO 2772 --- [http-nio-8080-exec-7] c.g.file.service.impl.FileServiceImpl    : 分块 4/4 上传成功，等待后续分块上传
+2025-04-30T15:52:12.418+08:00  INFO 2772 --- [http-nio-8080-exec-7] c.g.f.controller.FileUploadController    : 部分分块上传完成: {chunk=3, completed=false}
+2025-04-30T15:52:12.418+08:00  INFO 2772 --- [http-nio-8080-exec-7] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [eed3e5c7ffcb] - 2025-04-30 15:52:12 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 8ms
+│ 返回结果 : {"code":200,"msg":"success","data":{"success":true,"chunk":3,"completed":false}}
+└─────────────────────────────────────────────────────┘
+2025-04-30T15:57:37.190+08:00  INFO 14396 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 14396 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-30T15:57:37.192+08:00 DEBUG 14396 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-30T15:57:37.193+08:00  INFO 14396 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-30T15:57:38.178+08:00  INFO 14396 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-30T15:57:38.186+08:00  INFO 14396 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-30T15:57:38.186+08:00  INFO 14396 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-30T15:57:38.252+08:00  INFO 14396 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-30T15:57:38.252+08:00  INFO 14396 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1027 ms
+2025-04-30T15:57:39.420+08:00  INFO 14396 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2025-04-30T15:57:39.472+08:00  INFO 14396 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2025-04-30T15:57:39.482+08:00  INFO 14396 --- [main] com.goodsop.server.GoodsopApplication    : Started GoodsopApplication in 2.569 seconds (process running for 2.767)
+2025-04-30T15:57:59.672+08:00  INFO 14396 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-30T15:57:59.673+08:00  INFO 14396 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-04-30T15:57:59.674+08:00  INFO 14396 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-04-30T15:57:59.724+08:00  INFO 14396 --- [http-nio-8080-exec-1] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [772ffab0108a] - 2025-04-30 15:57:59 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://192.168.1.30:8080/api/file/chunk/upload
+│ 请求方式 : POST
+│ 请求IP  : 192.168.1.30
+│ 类方法   : com.goodsop.file.controller.FileUploadController.uploadFileChunk
+│ 请求参数 : [org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@1d957a46, TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, TEST_DEVICE, 0, 4, 0, 1]
+└─────────────────────────────────────────────────────┘
+2025-04-30T15:57:59.725+08:00  INFO 14396 --- [http-nio-8080-exec-1] c.g.f.controller.FileUploadController    : 接收到分块上传请求: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=0/4, fileSize=1048576, deviceId=TEST_DEVICE
+2025-04-30T15:57:59.742+08:00  INFO 14396 --- [http-nio-8080-exec-1] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2025-04-30T15:57:59.865+08:00  INFO 14396 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 处理分块上传: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=1/4, size=1048576 bytes, deviceId=TEST_DEVICE
+2025-04-30T15:57:59.866+08:00  INFO 14396 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 分块上传的文件名不符合标准格式，将进行重命名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz
+2025-04-30T15:57:59.867+08:00  INFO 14396 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 生成标准文件名，原始文件名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, 设备ID: TEST_DEVICE, 文件类型: gz
+2025-04-30T15:57:59.868+08:00  WARN 14396 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时间戳，使用当前时间戳
+2025-04-30T15:57:59.868+08:00  WARN 14396 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时长，使用默认值0
+2025-04-30T15:57:59.869+08:00  INFO 14396 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 生成的标准文件名: TEST_DEVICE_20250430_20250430_1745999879867_0_614569dd70a6fc9c3cfb763f312799fa.gz
+2025-04-30T15:57:59.870+08:00  INFO 14396 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 生成标准格式文件名: TEST_DEVICE_20250430_20250430_1745999879867_0_614569dd70a6fc9c3cfb763f312799fa.gz
+2025-04-30T15:57:59.870+08:00  INFO 14396 --- [http-nio-8080-exec-1] com.goodsop.file.util.FileTransferUtil   : 处理后的安全文件名: TEST_DEVICE_20250430_20250430_1745999879867_0_614569dd70a6fc9c3cfb763f312799fa.gz
+2025-04-30T15:57:59.877+08:00  INFO 14396 --- [http-nio-8080-exec-1] com.goodsop.file.util.FileTransferUtil   : 保存分块文件 1/4: D:\file\20250430\temp\3f16a0a4a6e7f7b11c8766aff15ead5a\0.part
+2025-04-30T15:57:59.878+08:00  INFO 14396 --- [http-nio-8080-exec-1] com.goodsop.file.util.FileTransferUtil   : 当前已上传 1/4 个分块
+2025-04-30T15:57:59.878+08:00  INFO 14396 --- [http-nio-8080-exec-1] com.goodsop.file.util.FileTransferUtil   : 等待更多分块上传，当前进度: 1/4
+2025-04-30T15:57:59.878+08:00  INFO 14396 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 分块文件存储结果: targetFile=null
+2025-04-30T15:57:59.878+08:00  INFO 14396 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 分块 1/4 上传成功，等待后续分块上传
+2025-04-30T15:57:59.879+08:00  INFO 14396 --- [http-nio-8080-exec-1] c.g.f.controller.FileUploadController    : 部分分块上传完成: {chunk=0, completed=false}
+2025-04-30T15:57:59.906+08:00  INFO 14396 --- [http-nio-8080-exec-1] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [772ffab0108a] - 2025-04-30 15:57:59 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 156ms
+│ 返回结果 : {"code":200,"msg":"success","data":{"success":true,"chunk":0,"completed":false}}
+└─────────────────────────────────────────────────────┘
+2025-04-30T15:57:59.934+08:00  INFO 14396 --- [http-nio-8080-exec-3] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [5234548af403] - 2025-04-30 15:57:59 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://192.168.1.30:8080/api/file/chunk/upload
+│ 请求方式 : POST
+│ 请求IP  : 192.168.1.30
+│ 类方法   : com.goodsop.file.controller.FileUploadController.uploadFileChunk
+│ 请求参数 : [org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@6c060e26, TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, TEST_DEVICE, 1, 4, 0, 1]
+└─────────────────────────────────────────────────────┘
+2025-04-30T15:57:59.935+08:00  INFO 14396 --- [http-nio-8080-exec-3] c.g.f.controller.FileUploadController    : 接收到分块上传请求: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=1/4, fileSize=1048576, deviceId=TEST_DEVICE
+2025-04-30T15:57:59.935+08:00  INFO 14396 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 处理分块上传: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=2/4, size=1048576 bytes, deviceId=TEST_DEVICE
+2025-04-30T15:57:59.936+08:00  INFO 14396 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 分块上传的文件名不符合标准格式，将进行重命名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz
+2025-04-30T15:57:59.936+08:00  INFO 14396 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 生成标准文件名，原始文件名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, 设备ID: TEST_DEVICE, 文件类型: gz
+2025-04-30T15:57:59.936+08:00  WARN 14396 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时间戳，使用当前时间戳
+2025-04-30T15:57:59.937+08:00  WARN 14396 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时长，使用默认值0
+2025-04-30T15:57:59.937+08:00  INFO 14396 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 生成的标准文件名: TEST_DEVICE_20250430_20250430_1745999879936_0_8f5d4138da3428fd70cb6db79ea93629.gz
+2025-04-30T15:57:59.938+08:00  INFO 14396 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 生成标准格式文件名: TEST_DEVICE_20250430_20250430_1745999879936_0_8f5d4138da3428fd70cb6db79ea93629.gz
+2025-04-30T15:57:59.938+08:00  INFO 14396 --- [http-nio-8080-exec-3] com.goodsop.file.util.FileTransferUtil   : 处理后的安全文件名: TEST_DEVICE_20250430_20250430_1745999879936_0_8f5d4138da3428fd70cb6db79ea93629.gz
+2025-04-30T15:57:59.941+08:00  INFO 14396 --- [http-nio-8080-exec-3] com.goodsop.file.util.FileTransferUtil   : 保存分块文件 2/4: D:\file\20250430\temp\c037d71015a1801964788f73ef509f06\1.part
+2025-04-30T15:57:59.941+08:00  INFO 14396 --- [http-nio-8080-exec-3] com.goodsop.file.util.FileTransferUtil   : 当前已上传 1/4 个分块
+2025-04-30T15:57:59.941+08:00  INFO 14396 --- [http-nio-8080-exec-3] com.goodsop.file.util.FileTransferUtil   : 等待更多分块上传，当前进度: 1/4
+2025-04-30T15:57:59.942+08:00  INFO 14396 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 分块文件存储结果: targetFile=null
+2025-04-30T15:57:59.942+08:00  INFO 14396 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 分块 2/4 上传成功，等待后续分块上传
+2025-04-30T15:57:59.942+08:00  INFO 14396 --- [http-nio-8080-exec-3] c.g.f.controller.FileUploadController    : 部分分块上传完成: {chunk=1, completed=false}
+2025-04-30T15:57:59.942+08:00  INFO 14396 --- [http-nio-8080-exec-3] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [5234548af403] - 2025-04-30 15:57:59 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 9ms
+│ 返回结果 : {"code":200,"msg":"success","data":{"success":true,"chunk":1,"completed":false}}
+└─────────────────────────────────────────────────────┘
+2025-04-30T15:57:59.954+08:00  INFO 14396 --- [http-nio-8080-exec-8] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [d7557fe7ae47] - 2025-04-30 15:57:59 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://192.168.1.30:8080/api/file/chunk/upload
+│ 请求方式 : POST
+│ 请求IP  : 192.168.1.30
+│ 类方法   : com.goodsop.file.controller.FileUploadController.uploadFileChunk
+│ 请求参数 : [org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@724b0b94, TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, TEST_DEVICE, 2, 4, 0, 1]
+└─────────────────────────────────────────────────────┘
+2025-04-30T15:57:59.955+08:00  INFO 14396 --- [http-nio-8080-exec-8] c.g.f.controller.FileUploadController    : 接收到分块上传请求: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=2/4, fileSize=1048576, deviceId=TEST_DEVICE
+2025-04-30T15:57:59.956+08:00  INFO 14396 --- [http-nio-8080-exec-8] c.g.file.service.impl.FileServiceImpl    : 处理分块上传: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=3/4, size=1048576 bytes, deviceId=TEST_DEVICE
+2025-04-30T15:57:59.956+08:00  INFO 14396 --- [http-nio-8080-exec-8] c.g.file.service.impl.FileServiceImpl    : 分块上传的文件名不符合标准格式，将进行重命名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz
+2025-04-30T15:57:59.956+08:00  INFO 14396 --- [http-nio-8080-exec-8] c.g.file.service.impl.FileServiceImpl    : 生成标准文件名，原始文件名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, 设备ID: TEST_DEVICE, 文件类型: gz
+2025-04-30T15:57:59.957+08:00  WARN 14396 --- [http-nio-8080-exec-8] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时间戳，使用当前时间戳
+2025-04-30T15:57:59.957+08:00  WARN 14396 --- [http-nio-8080-exec-8] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时长，使用默认值0
+2025-04-30T15:57:59.957+08:00  INFO 14396 --- [http-nio-8080-exec-8] c.g.file.service.impl.FileServiceImpl    : 生成的标准文件名: TEST_DEVICE_20250430_20250430_1745999879957_0_2055583f617c609f62317ab50dc00916.gz
+2025-04-30T15:57:59.957+08:00  INFO 14396 --- [http-nio-8080-exec-8] c.g.file.service.impl.FileServiceImpl    : 生成标准格式文件名: TEST_DEVICE_20250430_20250430_1745999879957_0_2055583f617c609f62317ab50dc00916.gz
+2025-04-30T15:57:59.957+08:00  INFO 14396 --- [http-nio-8080-exec-8] com.goodsop.file.util.FileTransferUtil   : 处理后的安全文件名: TEST_DEVICE_20250430_20250430_1745999879957_0_2055583f617c609f62317ab50dc00916.gz
+2025-04-30T15:57:59.960+08:00  INFO 14396 --- [http-nio-8080-exec-8] com.goodsop.file.util.FileTransferUtil   : 保存分块文件 3/4: D:\file\20250430\temp\f17b86c6e436c63a94f8df4e9d9d61f8\2.part
+2025-04-30T15:57:59.960+08:00  INFO 14396 --- [http-nio-8080-exec-8] com.goodsop.file.util.FileTransferUtil   : 当前已上传 1/4 个分块
+2025-04-30T15:57:59.960+08:00  INFO 14396 --- [http-nio-8080-exec-8] com.goodsop.file.util.FileTransferUtil   : 等待更多分块上传，当前进度: 1/4
+2025-04-30T15:57:59.961+08:00  INFO 14396 --- [http-nio-8080-exec-8] c.g.file.service.impl.FileServiceImpl    : 分块文件存储结果: targetFile=null
+2025-04-30T15:57:59.961+08:00  INFO 14396 --- [http-nio-8080-exec-8] c.g.file.service.impl.FileServiceImpl    : 分块 3/4 上传成功，等待后续分块上传
+2025-04-30T15:57:59.961+08:00  INFO 14396 --- [http-nio-8080-exec-8] c.g.f.controller.FileUploadController    : 部分分块上传完成: {chunk=2, completed=false}
+2025-04-30T15:57:59.961+08:00  INFO 14396 --- [http-nio-8080-exec-8] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [d7557fe7ae47] - 2025-04-30 15:57:59 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 7ms
+│ 返回结果 : {"code":200,"msg":"success","data":{"success":true,"chunk":2,"completed":false}}
+└─────────────────────────────────────────────────────┘
+2025-04-30T15:57:59.972+08:00  INFO 14396 --- [http-nio-8080-exec-5] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [350a48a540d1] - 2025-04-30 15:57:59 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://192.168.1.30:8080/api/file/chunk/upload
+│ 请求方式 : POST
+│ 请求IP  : 192.168.1.30
+│ 类方法   : com.goodsop.file.controller.FileUploadController.uploadFileChunk
+│ 请求参数 : [org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@10216365, TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, TEST_DEVICE, 3, 4, 0, 1]
+└─────────────────────────────────────────────────────┘
+2025-04-30T15:57:59.973+08:00  INFO 14396 --- [http-nio-8080-exec-5] c.g.f.controller.FileUploadController    : 接收到分块上传请求: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=3/4, fileSize=672956, deviceId=TEST_DEVICE
+2025-04-30T15:57:59.974+08:00  INFO 14396 --- [http-nio-8080-exec-5] c.g.file.service.impl.FileServiceImpl    : 处理分块上传: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=4/4, size=672956 bytes, deviceId=TEST_DEVICE
+2025-04-30T15:57:59.974+08:00  INFO 14396 --- [http-nio-8080-exec-5] c.g.file.service.impl.FileServiceImpl    : 分块上传的文件名不符合标准格式，将进行重命名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz
+2025-04-30T15:57:59.974+08:00  INFO 14396 --- [http-nio-8080-exec-5] c.g.file.service.impl.FileServiceImpl    : 生成标准文件名，原始文件名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, 设备ID: TEST_DEVICE, 文件类型: gz
+2025-04-30T15:57:59.974+08:00  WARN 14396 --- [http-nio-8080-exec-5] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时间戳，使用当前时间戳
+2025-04-30T15:57:59.975+08:00  WARN 14396 --- [http-nio-8080-exec-5] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时长，使用默认值0
+2025-04-30T15:57:59.975+08:00  INFO 14396 --- [http-nio-8080-exec-5] c.g.file.service.impl.FileServiceImpl    : 生成的标准文件名: TEST_DEVICE_20250430_20250430_1745999879974_0_0b26496a4d098bc8d0561a6a634a3b76.gz
+2025-04-30T15:57:59.975+08:00  INFO 14396 --- [http-nio-8080-exec-5] c.g.file.service.impl.FileServiceImpl    : 生成标准格式文件名: TEST_DEVICE_20250430_20250430_1745999879974_0_0b26496a4d098bc8d0561a6a634a3b76.gz
+2025-04-30T15:57:59.975+08:00  INFO 14396 --- [http-nio-8080-exec-5] com.goodsop.file.util.FileTransferUtil   : 处理后的安全文件名: TEST_DEVICE_20250430_20250430_1745999879974_0_0b26496a4d098bc8d0561a6a634a3b76.gz
+2025-04-30T15:57:59.978+08:00  INFO 14396 --- [http-nio-8080-exec-5] com.goodsop.file.util.FileTransferUtil   : 保存分块文件 4/4: D:\file\20250430\temp\2edad470537bf86d732ce4d829425a48\3.part
+2025-04-30T15:57:59.978+08:00  INFO 14396 --- [http-nio-8080-exec-5] com.goodsop.file.util.FileTransferUtil   : 当前已上传 1/4 个分块
+2025-04-30T15:57:59.978+08:00  INFO 14396 --- [http-nio-8080-exec-5] com.goodsop.file.util.FileTransferUtil   : 等待更多分块上传，当前进度: 1/4
+2025-04-30T15:57:59.978+08:00  INFO 14396 --- [http-nio-8080-exec-5] c.g.file.service.impl.FileServiceImpl    : 分块文件存储结果: targetFile=null
+2025-04-30T15:57:59.979+08:00  INFO 14396 --- [http-nio-8080-exec-5] c.g.file.service.impl.FileServiceImpl    : 分块 4/4 上传成功，等待后续分块上传
+2025-04-30T15:57:59.979+08:00  INFO 14396 --- [http-nio-8080-exec-5] c.g.f.controller.FileUploadController    : 部分分块上传完成: {chunk=3, completed=false}
+2025-04-30T15:57:59.979+08:00  INFO 14396 --- [http-nio-8080-exec-5] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [350a48a540d1] - 2025-04-30 15:57:59 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 7ms
+│ 返回结果 : {"code":200,"msg":"success","data":{"success":true,"chunk":3,"completed":false}}
+└─────────────────────────────────────────────────────┘
+2025-04-30T16:01:46.445+08:00  INFO 20808 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 20808 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-30T16:01:46.447+08:00 DEBUG 20808 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-30T16:01:46.447+08:00  INFO 20808 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-30T16:01:47.413+08:00  INFO 20808 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-30T16:01:47.423+08:00  INFO 20808 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-30T16:01:47.424+08:00  INFO 20808 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-30T16:01:47.502+08:00  INFO 20808 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-30T16:01:47.503+08:00  INFO 20808 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1023 ms
+2025-04-30T16:01:48.697+08:00  INFO 20808 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2025-04-30T16:01:48.742+08:00  INFO 20808 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2025-04-30T16:01:48.752+08:00  INFO 20808 --- [main] com.goodsop.server.GoodsopApplication    : Started GoodsopApplication in 2.584 seconds (process running for 2.781)
+2025-04-30T16:04:21.098+08:00  INFO 20808 --- [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-30T16:04:21.100+08:00  INFO 20808 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-04-30T16:04:21.102+08:00  INFO 20808 --- [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2025-04-30T16:04:21.150+08:00  INFO 20808 --- [http-nio-8080-exec-1] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [3be959c69bc8] - 2025-04-30 16:04:21 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://192.168.1.30:8080/api/file/chunk/upload
+│ 请求方式 : POST
+│ 请求IP  : 192.168.1.30
+│ 类方法   : com.goodsop.file.controller.FileUploadController.uploadFileChunk
+│ 请求参数 : [org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@2e04704d, TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, TEST_DEVICE, 0, 4, 0, 1]
+└─────────────────────────────────────────────────────┘
+2025-04-30T16:04:21.151+08:00  INFO 20808 --- [http-nio-8080-exec-1] c.g.f.controller.FileUploadController    : 接收到分块上传请求: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=0/4, fileSize=1048576, deviceId=TEST_DEVICE
+2025-04-30T16:04:21.169+08:00  INFO 20808 --- [http-nio-8080-exec-1] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2025-04-30T16:04:21.291+08:00  INFO 20808 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 处理分块上传: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=1/4, size=1048576 bytes, deviceId=TEST_DEVICE
+2025-04-30T16:04:21.292+08:00  INFO 20808 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 分块上传的文件名不符合标准格式，将进行重命名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz
+2025-04-30T16:04:21.293+08:00  INFO 20808 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 生成标准文件名，原始文件名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, 设备ID: TEST_DEVICE, 文件类型: gz
+2025-04-30T16:04:21.293+08:00  WARN 20808 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时间戳，使用当前时间戳
+2025-04-30T16:04:21.293+08:00  WARN 20808 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时长，使用默认值0
+2025-04-30T16:04:21.294+08:00  INFO 20808 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 生成的标准文件名: TEST_DEVICE_20250430_20250430_1746000261293_0_780778354c6af2e919a65609044d3a43.gz
+2025-04-30T16:04:21.294+08:00  INFO 20808 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 生成标准格式文件名: TEST_DEVICE_20250430_20250430_1746000261293_0_780778354c6af2e919a65609044d3a43.gz
+2025-04-30T16:04:21.294+08:00  INFO 20808 --- [http-nio-8080-exec-1] com.goodsop.file.util.FileTransferUtil   : 处理后的安全文件名: TEST_DEVICE_20250430_20250430_1746000261293_0_780778354c6af2e919a65609044d3a43.gz
+2025-04-30T16:04:21.305+08:00  INFO 20808 --- [http-nio-8080-exec-1] com.goodsop.file.util.FileTransferUtil   : 保存分块文件 1/4: D:\file\20250430\temp\d5b0ee5057f66af7ab99bacfe78450f3\0.part
+2025-04-30T16:04:21.307+08:00  INFO 20808 --- [http-nio-8080-exec-1] com.goodsop.file.util.FileTransferUtil   : 当前已上传 1/4 个分块
+2025-04-30T16:04:21.307+08:00  INFO 20808 --- [http-nio-8080-exec-1] com.goodsop.file.util.FileTransferUtil   : 等待更多分块上传，当前进度: 1/4
+2025-04-30T16:04:21.307+08:00  INFO 20808 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 分块文件存储结果: targetFile=null
+2025-04-30T16:04:21.308+08:00  INFO 20808 --- [http-nio-8080-exec-1] c.g.file.service.impl.FileServiceImpl    : 分块 1/4 上传成功，等待后续分块上传
+2025-04-30T16:04:21.308+08:00  INFO 20808 --- [http-nio-8080-exec-1] c.g.f.controller.FileUploadController    : 部分分块上传完成: {chunk=0, completed=false}
+2025-04-30T16:04:21.335+08:00  INFO 20808 --- [http-nio-8080-exec-1] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [3be959c69bc8] - 2025-04-30 16:04:21 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 160ms
+│ 返回结果 : {"code":200,"msg":"success","data":{"success":true,"chunk":0,"completed":false}}
+└─────────────────────────────────────────────────────┘
+2025-04-30T16:04:21.362+08:00  INFO 20808 --- [http-nio-8080-exec-3] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [f8f34ee6897c] - 2025-04-30 16:04:21 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://192.168.1.30:8080/api/file/chunk/upload
+│ 请求方式 : POST
+│ 请求IP  : 192.168.1.30
+│ 类方法   : com.goodsop.file.controller.FileUploadController.uploadFileChunk
+│ 请求参数 : [org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@393eaf4e, TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, TEST_DEVICE, 1, 4, 0, 1]
+└─────────────────────────────────────────────────────┘
+2025-04-30T16:04:21.363+08:00  INFO 20808 --- [http-nio-8080-exec-3] c.g.f.controller.FileUploadController    : 接收到分块上传请求: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=1/4, fileSize=1048576, deviceId=TEST_DEVICE
+2025-04-30T16:04:21.364+08:00  INFO 20808 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 处理分块上传: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=2/4, size=1048576 bytes, deviceId=TEST_DEVICE
+2025-04-30T16:04:21.364+08:00  INFO 20808 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 分块上传的文件名不符合标准格式，将进行重命名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz
+2025-04-30T16:04:21.364+08:00  INFO 20808 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 生成标准文件名，原始文件名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, 设备ID: TEST_DEVICE, 文件类型: gz
+2025-04-30T16:04:21.365+08:00  WARN 20808 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时间戳，使用当前时间戳
+2025-04-30T16:04:21.365+08:00  WARN 20808 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时长，使用默认值0
+2025-04-30T16:04:21.366+08:00  INFO 20808 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 生成的标准文件名: TEST_DEVICE_20250430_20250430_1746000261365_0_0d2a9f690d7b97197cd63511b1264cf2.gz
+2025-04-30T16:04:21.366+08:00  INFO 20808 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 生成标准格式文件名: TEST_DEVICE_20250430_20250430_1746000261365_0_0d2a9f690d7b97197cd63511b1264cf2.gz
+2025-04-30T16:04:21.366+08:00  INFO 20808 --- [http-nio-8080-exec-3] com.goodsop.file.util.FileTransferUtil   : 处理后的安全文件名: TEST_DEVICE_20250430_20250430_1746000261365_0_0d2a9f690d7b97197cd63511b1264cf2.gz
+2025-04-30T16:04:21.368+08:00  INFO 20808 --- [http-nio-8080-exec-3] com.goodsop.file.util.FileTransferUtil   : 保存分块文件 2/4: D:\file\20250430\temp\9807aac900d225718bf6bfb370571c6e\1.part
+2025-04-30T16:04:21.369+08:00  INFO 20808 --- [http-nio-8080-exec-3] com.goodsop.file.util.FileTransferUtil   : 当前已上传 1/4 个分块
+2025-04-30T16:04:21.370+08:00  INFO 20808 --- [http-nio-8080-exec-3] com.goodsop.file.util.FileTransferUtil   : 等待更多分块上传，当前进度: 1/4
+2025-04-30T16:04:21.370+08:00  INFO 20808 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 分块文件存储结果: targetFile=null
+2025-04-30T16:04:21.370+08:00  INFO 20808 --- [http-nio-8080-exec-3] c.g.file.service.impl.FileServiceImpl    : 分块 2/4 上传成功，等待后续分块上传
+2025-04-30T16:04:21.371+08:00  INFO 20808 --- [http-nio-8080-exec-3] c.g.f.controller.FileUploadController    : 部分分块上传完成: {chunk=1, completed=false}
+2025-04-30T16:04:21.371+08:00  INFO 20808 --- [http-nio-8080-exec-3] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [f8f34ee6897c] - 2025-04-30 16:04:21 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 9ms
+│ 返回结果 : {"code":200,"msg":"success","data":{"success":true,"chunk":1,"completed":false}}
+└─────────────────────────────────────────────────────┘
+2025-04-30T16:04:21.383+08:00  INFO 20808 --- [http-nio-8080-exec-5] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [f978bb3b0b52] - 2025-04-30 16:04:21 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://192.168.1.30:8080/api/file/chunk/upload
+│ 请求方式 : POST
+│ 请求IP  : 192.168.1.30
+│ 类方法   : com.goodsop.file.controller.FileUploadController.uploadFileChunk
+│ 请求参数 : [org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@5324f1ae, TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, TEST_DEVICE, 2, 4, 0, 1]
+└─────────────────────────────────────────────────────┘
+2025-04-30T16:04:21.384+08:00  INFO 20808 --- [http-nio-8080-exec-5] c.g.f.controller.FileUploadController    : 接收到分块上传请求: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=2/4, fileSize=1048576, deviceId=TEST_DEVICE
+2025-04-30T16:04:21.385+08:00  INFO 20808 --- [http-nio-8080-exec-5] c.g.file.service.impl.FileServiceImpl    : 处理分块上传: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=3/4, size=1048576 bytes, deviceId=TEST_DEVICE
+2025-04-30T16:04:21.385+08:00  INFO 20808 --- [http-nio-8080-exec-5] c.g.file.service.impl.FileServiceImpl    : 分块上传的文件名不符合标准格式，将进行重命名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz
+2025-04-30T16:04:21.386+08:00  INFO 20808 --- [http-nio-8080-exec-5] c.g.file.service.impl.FileServiceImpl    : 生成标准文件名，原始文件名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, 设备ID: TEST_DEVICE, 文件类型: gz
+2025-04-30T16:04:21.386+08:00  WARN 20808 --- [http-nio-8080-exec-5] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时间戳，使用当前时间戳
+2025-04-30T16:04:21.386+08:00  WARN 20808 --- [http-nio-8080-exec-5] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时长，使用默认值0
+2025-04-30T16:04:21.387+08:00  INFO 20808 --- [http-nio-8080-exec-5] c.g.file.service.impl.FileServiceImpl    : 生成的标准文件名: TEST_DEVICE_20250430_20250430_1746000261386_0_3beaff4350896b27979b35fb6c2c2366.gz
+2025-04-30T16:04:21.387+08:00  INFO 20808 --- [http-nio-8080-exec-5] c.g.file.service.impl.FileServiceImpl    : 生成标准格式文件名: TEST_DEVICE_20250430_20250430_1746000261386_0_3beaff4350896b27979b35fb6c2c2366.gz
+2025-04-30T16:04:21.387+08:00  INFO 20808 --- [http-nio-8080-exec-5] com.goodsop.file.util.FileTransferUtil   : 处理后的安全文件名: TEST_DEVICE_20250430_20250430_1746000261386_0_3beaff4350896b27979b35fb6c2c2366.gz
+2025-04-30T16:04:21.390+08:00  INFO 20808 --- [http-nio-8080-exec-5] com.goodsop.file.util.FileTransferUtil   : 保存分块文件 3/4: D:\file\20250430\temp\19b8a2b50434ea0bf589ead11cde6d6a\2.part
+2025-04-30T16:04:21.392+08:00  INFO 20808 --- [http-nio-8080-exec-5] com.goodsop.file.util.FileTransferUtil   : 当前已上传 1/4 个分块
+2025-04-30T16:04:21.392+08:00  INFO 20808 --- [http-nio-8080-exec-5] com.goodsop.file.util.FileTransferUtil   : 等待更多分块上传，当前进度: 1/4
+2025-04-30T16:04:21.392+08:00  INFO 20808 --- [http-nio-8080-exec-5] c.g.file.service.impl.FileServiceImpl    : 分块文件存储结果: targetFile=null
+2025-04-30T16:04:21.392+08:00  INFO 20808 --- [http-nio-8080-exec-5] c.g.file.service.impl.FileServiceImpl    : 分块 3/4 上传成功，等待后续分块上传
+2025-04-30T16:04:21.393+08:00  INFO 20808 --- [http-nio-8080-exec-5] c.g.f.controller.FileUploadController    : 部分分块上传完成: {chunk=2, completed=false}
+2025-04-30T16:04:21.393+08:00  INFO 20808 --- [http-nio-8080-exec-5] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [f978bb3b0b52] - 2025-04-30 16:04:21 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 10ms
+│ 返回结果 : {"code":200,"msg":"success","data":{"success":true,"chunk":2,"completed":false}}
+└─────────────────────────────────────────────────────┘
+2025-04-30T16:04:21.403+08:00  INFO 20808 --- [http-nio-8080-exec-10] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [0cae98803a49] - 2025-04-30 16:04:21 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://192.168.1.30:8080/api/file/chunk/upload
+│ 请求方式 : POST
+│ 请求IP  : 192.168.1.30
+│ 类方法   : com.goodsop.file.controller.FileUploadController.uploadFileChunk
+│ 请求参数 : [org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@43acdc28, TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, TEST_DEVICE, 3, 4, 0, 1]
+└─────────────────────────────────────────────────────┘
+2025-04-30T16:04:21.404+08:00  INFO 20808 --- [http-nio-8080-exec-10] c.g.f.controller.FileUploadController    : 接收到分块上传请求: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=3/4, fileSize=672956, deviceId=TEST_DEVICE
+2025-04-30T16:04:21.405+08:00  INFO 20808 --- [http-nio-8080-exec-10] c.g.file.service.impl.FileServiceImpl    : 处理分块上传: fileName=TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, chunk=4/4, size=672956 bytes, deviceId=TEST_DEVICE
+2025-04-30T16:04:21.406+08:00  INFO 20808 --- [http-nio-8080-exec-10] c.g.file.service.impl.FileServiceImpl    : 分块上传的文件名不符合标准格式，将进行重命名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz
+2025-04-30T16:04:21.406+08:00  INFO 20808 --- [http-nio-8080-exec-10] c.g.file.service.impl.FileServiceImpl    : 生成标准文件名，原始文件名: TEST_DEVICE_20250430_TEST_USER_1745981877207_239595_2072231eee8912e4312bd92b077be16b.gz, 设备ID: TEST_DEVICE, 文件类型: gz
+2025-04-30T16:04:21.406+08:00  WARN 20808 --- [http-nio-8080-exec-10] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时间戳，使用当前时间戳
+2025-04-30T16:04:21.407+08:00  WARN 20808 --- [http-nio-8080-exec-10] c.g.file.service.impl.FileServiceImpl    : 无法从原始文件名解析时长，使用默认值0
+2025-04-30T16:04:21.407+08:00  INFO 20808 --- [http-nio-8080-exec-10] c.g.file.service.impl.FileServiceImpl    : 生成的标准文件名: TEST_DEVICE_20250430_20250430_1746000261406_0_c627a97c3ec12e4bea50845c9d9832fc.gz
+2025-04-30T16:04:21.407+08:00  INFO 20808 --- [http-nio-8080-exec-10] c.g.file.service.impl.FileServiceImpl    : 生成标准格式文件名: TEST_DEVICE_20250430_20250430_1746000261406_0_c627a97c3ec12e4bea50845c9d9832fc.gz
+2025-04-30T16:04:21.408+08:00  INFO 20808 --- [http-nio-8080-exec-10] com.goodsop.file.util.FileTransferUtil   : 处理后的安全文件名: TEST_DEVICE_20250430_20250430_1746000261406_0_c627a97c3ec12e4bea50845c9d9832fc.gz
+2025-04-30T16:04:21.409+08:00  INFO 20808 --- [http-nio-8080-exec-10] com.goodsop.file.util.FileTransferUtil   : 保存分块文件 4/4: D:\file\20250430\temp\6167fd3693a31f01530c850b75934143\3.part
+2025-04-30T16:04:21.411+08:00  INFO 20808 --- [http-nio-8080-exec-10] com.goodsop.file.util.FileTransferUtil   : 当前已上传 1/4 个分块
+2025-04-30T16:04:21.411+08:00  INFO 20808 --- [http-nio-8080-exec-10] com.goodsop.file.util.FileTransferUtil   : 等待更多分块上传，当前进度: 1/4
+2025-04-30T16:04:21.411+08:00  INFO 20808 --- [http-nio-8080-exec-10] c.g.file.service.impl.FileServiceImpl    : 分块文件存储结果: targetFile=null
+2025-04-30T16:04:21.411+08:00  INFO 20808 --- [http-nio-8080-exec-10] c.g.file.service.impl.FileServiceImpl    : 分块 4/4 上传成功，等待后续分块上传
+2025-04-30T16:04:21.411+08:00  INFO 20808 --- [http-nio-8080-exec-10] c.g.f.controller.FileUploadController    : 部分分块上传完成: {chunk=3, completed=false}
+2025-04-30T16:04:21.412+08:00  INFO 20808 --- [http-nio-8080-exec-10] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [0cae98803a49] - 2025-04-30 16:04:21 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 10ms
+│ 返回结果 : {"code":200,"msg":"success","data":{"success":true,"chunk":3,"completed":false}}
+└─────────────────────────────────────────────────────┘
+2025-04-30T16:15:45.071+08:00  INFO 17964 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 17964 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3\goodsop-server)
+2025-04-30T16:15:45.073+08:00 DEBUG 17964 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-30T16:15:45.074+08:00  INFO 17964 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-30T16:15:46.046+08:00  INFO 17964 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-30T16:15:46.054+08:00  INFO 17964 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-30T16:15:46.054+08:00  INFO 17964 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-30T16:15:46.116+08:00  INFO 17964 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-30T16:15:46.116+08:00  INFO 17964 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1009 ms
+2025-04-30T16:15:47.299+08:00  INFO 17964 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2025-04-30T16:15:47.346+08:00  INFO 17964 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2025-04-30T16:15:47.356+08:00  INFO 17964 --- [main] com.goodsop.server.GoodsopApplication    : Started GoodsopApplication in 2.559 seconds (process running for 2.76)

@@ -142,21 +142,64 @@ public class FileTransferUtil {
     public File storeFileChunk(MultipartFile file, String directory, String fileName, 
                                Integer chunk, Integer chunks) {
         try {
+            // 确保路径中使用一致的分隔符
+            directory = directory.replace('\\', '/');
+            
             // 确保目录存在
             Path dirPath = Paths.get(directory);
             Path tempDirPath = Paths.get(directory, "temp", fileName);
+            
+            log.info("目录检查 - 主目录: {}", dirPath.toAbsolutePath());
+            log.info("目录检查 - 临时目录: {}", tempDirPath.toAbsolutePath());
+            
+            // 先创建主目录
+            if (!Files.exists(dirPath)) {
+                try {
+                    Files.createDirectories(dirPath);
+                    log.info("主目录不存在，已创建: {}", dirPath.toAbsolutePath());
+                } catch (Exception e) {
+                    log.error("创建主目录失败: {}, 错误: {}", dirPath.toAbsolutePath(), e.getMessage());
+                    throw e;
+                }
+            } else {
+                log.info("主目录已存在: {}", dirPath.toAbsolutePath());
+            }
+            
+            // 然后创建临时目录
             if (!Files.exists(tempDirPath)) {
-                Files.createDirectories(tempDirPath);
+                try {
+                    Files.createDirectories(tempDirPath);
+                    log.info("临时目录不存在，已创建: {}", tempDirPath.toAbsolutePath());
+                } catch (Exception e) {
+                    log.error("创建临时目录失败: {}, 错误: {}", tempDirPath.toAbsolutePath(), e.getMessage());
+                    throw e;
+                }
+            } else {
+                log.info("临时目录已存在: {}", tempDirPath.toAbsolutePath());
             }
             
             // 存储分块文件
             String chunkFileName = chunk + ".part";
             Path chunkPath = tempDirPath.resolve(chunkFileName);
             File chunkFile = chunkPath.toFile();
-            file.transferTo(chunkFile);
             
-            // 检查是否为最后一块，如果是则合并文件
-            if (chunk == chunks - 1) {
+            try {
+                file.transferTo(chunkFile);
+                log.info("分块文件已保存: {}", chunkPath.toAbsolutePath());
+            } catch (Exception e) {
+                log.error("保存分块文件失败: {}, 错误: {}", chunkPath.toAbsolutePath(), e.getMessage());
+                throw e;
+            }
+            
+            log.info("分块文件上传: chunk {}/{}, 大小: {}", chunk + 1, chunks, file.getSize());
+            
+            // 检查是否已上传所有分块
+            int uploadedCount = getUploadedChunkCount(tempDirPath.toFile());
+            boolean allUploaded = uploadedCount == chunks;
+            log.info("分块上传状态 - 已上传: {}/{}, 是否全部上传: {}", uploadedCount, chunks, allUploaded);
+            
+            // 只有当所有分块都上传完成时才合并文件
+            if (allUploaded) {
                 // 检查文件名是否符合规范，否则重命名
                 String finalFileName = fileName;
                 if (!isStandardFilename(fileName)) {
@@ -173,21 +216,64 @@ public class FileTransferUtil {
                 
                 Path targetPath = dirPath.resolve(finalFileName);
                 File targetFile = targetPath.toFile();
-                mergeChunks(tempDirPath.toFile(), targetFile, chunks);
+                log.info("准备合并文件到: {}", targetPath.toAbsolutePath());
                 
-                // 删除临时分块文件
-                deleteDirectory(tempDirPath.toFile());
+                try {
+                    mergeChunks(tempDirPath.toFile(), targetFile, chunks);
+                    log.info("合并文件成功: {}, 大小: {}", targetPath.toAbsolutePath(), targetFile.length());
+                } catch (Exception e) {
+                    log.error("合并文件失败: {}, 错误: {}", targetPath.toAbsolutePath(), e.getMessage());
+                    throw e;
+                }
+                
+                // 删除临时分块文件和目录
+                boolean deleted = deleteDirectory(tempDirPath.toFile());
+                if (!deleted) {
+                    log.warn("临时目录删除不完全，将在JVM退出时尝试再次删除: {}", tempDirPath.toAbsolutePath());
+                    // 注册JVM退出时删除
+                    tempDirPath.toFile().deleteOnExit();
+                    
+                    // 尝试使用File类的delete方法再删除一次
+                    File parentTempDir = new File(directory, "temp");
+                    if (parentTempDir.exists()) {
+                        boolean parentDeleted = parentTempDir.delete();
+                        if (parentDeleted) {
+                            log.info("成功删除父临时目录: {}", parentTempDir.getAbsolutePath());
+                        }
+                    }
+                } else {
+                    log.info("临时目录删除成功: {}", tempDirPath.toAbsolutePath());
+                }
+                
+                // 从文件名缓存中移除当前文件(在FileServiceImpl中实现)
                 
                 log.info("分块文件上传完成并合并: {}", targetFile.getAbsolutePath());
+                
+                if (!targetFile.exists()) {
+                    log.error("合并后的文件不存在: {}", targetFile.getAbsolutePath());
+                    throw new RuntimeException("合并后的文件不存在: " + targetFile.getAbsolutePath());
+                }
+                
                 return targetFile;
             } else {
-                log.info("分块文件上传: chunk {}/{}", chunk + 1, chunks);
+                log.info("分块文件上传进度: {}/{}", uploadedCount, chunks);
                 return null;
             }
         } catch (IOException e) {
             log.error("分块文件上传失败: {}", e.getMessage(), e);
             throw new RuntimeException("分块文件上传失败", e);
         }
+    }
+    
+    /**
+     * 获取已上传的分块数量
+     * 
+     * @param tempDir 临时目录
+     * @return 已上传的分块数量
+     */
+    private int getUploadedChunkCount(File tempDir) {
+        File[] files = tempDir.listFiles((dir, name) -> name.endsWith(".part"));
+        return files != null ? files.length : 0;
     }
     
     /**
@@ -201,7 +287,7 @@ public class FileTransferUtil {
         try (FileOutputStream fos = new FileOutputStream(targetFile);
              BufferedOutputStream bos = new BufferedOutputStream(fos)) {
             
-            byte[] buffer = new byte[1024];
+            byte[] buffer = new byte[8192]; // 增大缓冲区，提高性能
             for (int i = 0; i < chunks; i++) {
                 File chunkFile = new File(tempDir, i + ".part");
                 if (chunkFile.exists()) {
@@ -212,8 +298,14 @@ public class FileTransferUtil {
                             bos.write(buffer, 0, len);
                         }
                     }
+                } else {
+                    log.warn("缺少分块文件: {}", chunkFile.getAbsolutePath());
+                    throw new IOException("缺少分块文件: " + chunkFile.getAbsolutePath());
                 }
             }
+            
+            // 确保所有数据都写入磁盘
+            bos.flush();
         }
     }
     
@@ -221,21 +313,36 @@ public class FileTransferUtil {
      * 递归删除目录
      * 
      * @param directory 要删除的目录
+     * @return 是否成功删除
      */
-    private void deleteDirectory(File directory) {
+    private boolean deleteDirectory(File directory) {
+        boolean success = true;
         if (directory.exists()) {
             File[] files = directory.listFiles();
             if (files != null) {
                 for (File file : files) {
                     if (file.isDirectory()) {
-                        deleteDirectory(file);
+                        success = deleteDirectory(file) && success;
                     } else {
-                        file.delete();
+                        boolean deleted = file.delete();
+                        if (!deleted) {
+                            log.warn("无法删除文件: {}", file.getAbsolutePath());
+                            success = false;
+                        } else {
+                            log.info("成功删除文件: {}", file.getAbsolutePath());
+                        }
                     }
                 }
             }
-            directory.delete();
+            boolean deleted = directory.delete();
+            if (!deleted) {
+                log.warn("无法删除目录: {}", directory.getAbsolutePath());
+                success = false;
+            } else {
+                log.info("成功删除目录: {}", directory.getAbsolutePath());
+            }
         }
+        return success;
     }
     
     /**

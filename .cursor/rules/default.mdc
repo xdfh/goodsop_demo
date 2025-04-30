@@ -9,9 +9,15 @@ alwaysApply: true
 - 集成 对应稳定版本的 MyBatis-Plus + postgreSql 1.17
 - 
 
+# 注意事项
+- 开发环境是win10
+- powerShell不支持&&作为分隔符
+- mkdir指令需要单行执行
+- 使用IDE或文本编辑器直接创建文件，而不是通过echo命令生成长文本
+
 
 # 技术约束
-- 开发环境win10，powerShell不支持&&作为分隔符，mkdir指令需要单行执行，使用IDE或文本编辑器直接创建文件，而不是通过echo命令生成长文本
+
 - 构建pom.xml需要注意标签问题
 - 整个项目必须使用UTF-8编码集
 - 读取系统的JDK/MAVEN/GIT配置信息使用
