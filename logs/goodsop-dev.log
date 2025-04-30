@@ -1,0 +1,251 @@
+2025-04-30T09:44:13.019+08:00  INFO 11852 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 11852 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3)
+2025-04-30T09:44:13.026+08:00 DEBUG 11852 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-30T09:44:13.027+08:00  INFO 11852 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-30T09:44:14.212+08:00  INFO 11852 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-30T09:44:14.219+08:00  INFO 11852 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-30T09:44:14.219+08:00  INFO 11852 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-30T09:44:14.285+08:00  INFO 11852 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-30T09:44:14.285+08:00  INFO 11852 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1217 ms
+2025-04-30T09:44:15.688+08:00  INFO 11852 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2025-04-30T09:44:15.743+08:00  INFO 11852 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2025-04-30T09:44:15.753+08:00  INFO 11852 --- [main] com.goodsop.server.GoodsopApplication    : Started GoodsopApplication in 3.16 seconds (process running for 4.08)
+2025-04-30T09:44:15.908+08:00  INFO 11852 --- [RMI TCP Connection(2)-192.168.80.1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-30T09:44:15.909+08:00  INFO 11852 --- [RMI TCP Connection(2)-192.168.80.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-04-30T09:44:15.911+08:00  INFO 11852 --- [RMI TCP Connection(2)-192.168.80.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2025-04-30T09:44:15.933+08:00  INFO 11852 --- [RMI TCP Connection(3)-192.168.80.1] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2025-04-30T09:44:30.709+08:00  WARN 11852 --- [http-nio-8080-exec-3] c.g.x.k.s.e.OpenApiExtensionResolver     : (Ignores) Failed to read Markdown files,Error Message:class path resource [markdown/] cannot be resolved to URL because it does not exist 
+2025-04-30T09:44:30.710+08:00  INFO 11852 --- [http-nio-8080-exec-3] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 67 ms
+2025-04-30T09:44:33.702+08:00  WARN 11852 --- [http-nio-8080-exec-7] c.g.x.k.s.e.OpenApiExtensionResolver     : (Ignores) Failed to read Markdown files,Error Message:class path resource [markdown/] cannot be resolved to URL because it does not exist 
+2025-04-30T09:44:33.702+08:00  INFO 11852 --- [http-nio-8080-exec-7] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 93 ms
+2025-04-30T09:44:51.392+08:00  INFO 11852 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2025-04-30T09:44:51.396+08:00  INFO 11852 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2025-04-30T09:59:31.895+08:00  INFO 2204 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 2204 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3)
+2025-04-30T09:59:31.897+08:00 DEBUG 2204 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-30T09:59:31.897+08:00  INFO 2204 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-30T09:59:33.035+08:00  INFO 2204 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-30T09:59:33.042+08:00  INFO 2204 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-30T09:59:33.042+08:00  INFO 2204 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-30T09:59:33.103+08:00  INFO 2204 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-30T09:59:33.103+08:00  INFO 2204 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1169 ms
+2025-04-30T09:59:34.557+08:00  INFO 2204 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2025-04-30T09:59:34.608+08:00  INFO 2204 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2025-04-30T09:59:34.619+08:00  INFO 2204 --- [main] com.goodsop.server.GoodsopApplication    : Started GoodsopApplication in 3.397 seconds (process running for 4.011)
+2025-04-30T09:59:35.152+08:00  INFO 2204 --- [RMI TCP Connection(4)-192.168.80.1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-30T09:59:35.152+08:00  INFO 2204 --- [RMI TCP Connection(4)-192.168.80.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-04-30T09:59:35.154+08:00  INFO 2204 --- [RMI TCP Connection(4)-192.168.80.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+2025-04-30T09:59:35.157+08:00  INFO 2204 --- [RMI TCP Connection(1)-192.168.80.1] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2025-04-30T09:59:39.510+08:00  WARN 2204 --- [http-nio-8080-exec-3] c.g.x.k.s.e.OpenApiExtensionResolver     : (Ignores) Failed to read Markdown files,Error Message:class path resource [markdown/] cannot be resolved to URL because it does not exist 
+2025-04-30T09:59:39.512+08:00  INFO 2204 --- [http-nio-8080-exec-3] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 142 ms
+2025-04-30T09:59:47.801+08:00  INFO 2204 --- [http-nio-8080-exec-4] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [e9035e1c98b7] - 2025-04-30 09:59:47 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://192.168.1.30:8080/api/file/upload
+│ 请求方式 : POST
+│ 请求IP  : 192.168.1.30
+│ 类方法   : com.goodsop.file.controller.FileUploadController.uploadFile
+│ 请求参数 : [org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@7f95ea11, unknown, 0, 0]
+└─────────────────────────────────────────────────────┘
+2025-04-30T09:59:47.802+08:00  INFO 2204 --- [http-nio-8080-exec-4] c.g.f.controller.FileUploadController    : 接收到文件上传请求: fileName=ASD111_20250429_333_1745921269_10001000_a98b56f513cc95932141567aa4c0524d.tgz, fileSize=375170, deviceId=unknown, isEncrypted=0, isCompressed=0
+2025-04-30T09:59:47.807+08:00  INFO 2204 --- [http-nio-8080-exec-4] com.goodsop.file.util.FileTransferUtil   : 文件存储成功: D:\file\20250430\625fa0ac-298e-4b57-acc1-4faa53f9d684.tgz
+2025-04-30T09:59:47.853+08:00 DEBUG 2204 --- [http-nio-8080-exec-4] c.g.file.mapper.FileInfoMapper.insert    : ==>  Preparing: INSERT INTO t_file_info ( device_id, user_id, file_name, file_path, access_url, file_size, file_type, file_md5, record_date, record_start_time, record_duration, upload_time, status, create_time, update_time, deleted ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2025-04-30T09:59:47.863+08:00 DEBUG 2204 --- [http-nio-8080-exec-4] c.g.file.mapper.FileInfoMapper.insert    : ==> Parameters: unknown(String), 333(String), ASD111_20250429_333_1745921269_10001000_a98b56f513cc95932141567aa4c0524d.tgz(String), D:\file\20250430\625fa0ac-298e-4b57-acc1-4faa53f9d684.tgz(String), /files/20250430/625fa0ac-298e-4b57-acc1-4faa53f9d684.tgz(String), 375170(Long), tgz(String), a98b56f513cc95932141567aa4c0524d(String), 2025-04-29(LocalDate), 1970-01-21T12:58:41.269(LocalDateTime), 10001000(Long), 2025-04-30T09:59:47.813639400(LocalDateTime), 1(Integer), 2025-04-30T09:59:47.813639400(LocalDateTime), 2025-04-30T09:59:47.813639400(LocalDateTime), 0(Integer)
+2025-04-30T09:59:47.867+08:00 DEBUG 2204 --- [http-nio-8080-exec-4] c.g.file.mapper.FileInfoMapper.insert    : <==    Updates: 1
+2025-04-30T09:59:47.870+08:00  INFO 2204 --- [http-nio-8080-exec-4] c.g.file.service.impl.FileServiceImpl    : 文件上传成功: FileInfo(id=34, deviceId=unknown, userId=333, fileName=ASD111_20250429_333_1745921269_10001000_a98b56f513cc95932141567aa4c0524d.tgz, filePath=D:\file\20250430\625fa0ac-298e-4b57-acc1-4faa53f9d684.tgz, accessUrl=/files/20250430/625fa0ac-298e-4b57-acc1-4faa53f9d684.tgz, domainPrefix=null, fileSize=375170, fileType=tgz, fileMd5=a98b56f513cc95932141567aa4c0524d, recordDate=2025-04-29, recordStartTime=1970-01-21T12:58:41.269, recordDuration=10001000, uploadTime=2025-04-30T09:59:47.813639400, status=1, createTime=2025-04-30T09:59:47.813639400, updateTime=2025-04-30T09:59:47.813639400, deleted=0)
+2025-04-30T09:59:47.879+08:00  INFO 2204 --- [http-nio-8080-exec-4] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [e9035e1c98b7] - 2025-04-30 09:59:47 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 78ms
+│ 返回结果 : {"fileName":"ASD111_20250429_333_1745921269_10001000_a98b56f513cc95932141567aa4c0524d.tgz","fileSize":375170,"accessUrl":"/files/20250430/625fa0ac-298e-4b57-acc1-4faa53f9d684.tgz","success":true,"filePath":"D:\\file\\20250430\\625fa0ac-298e-4b57-acc1-4faa53f9d684.tgz","uploadTime":"2025-04-30 09:59:47.813","fileType":"tgz","fileId":34}
+└─────────────────────────────────────────────────────┘
+2025-04-30T10:01:10.423+08:00  WARN 2204 --- [http-nio-8080-exec-8] c.g.x.k.s.e.OpenApiExtensionResolver     : (Ignores) Failed to read Markdown files,Error Message:class path resource [markdown/] cannot be resolved to URL because it does not exist 
+2025-04-30T10:01:10.423+08:00  INFO 2204 --- [http-nio-8080-exec-8] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 67 ms
+2025-04-30T10:01:16.650+08:00  INFO 2204 --- [http-nio-8080-exec-9] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [165ff263d46d] - 2025-04-30 10:01:16 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://192.168.1.30:8080/api/user/page
+│ 请求方式 : GET
+│ 请求IP  : 192.168.1.30
+│ 类方法   : com.goodsop.user.controller.UserController.pageUsers
+│ 请求参数 : [1, 10, null, desc, User(id=null, username=null, password=null, email=null, phone=null, status=null, createTime=null, updateTime=null, createBy=null, updateBy=null, isDeleted=null)]
+└─────────────────────────────────────────────────────┘
+2025-04-30T10:01:16.672+08:00 DEBUG 2204 --- [http-nio-8080-exec-9] c.g.user.mapper.UserMapper.selectList    : ==>  Preparing: SELECT id,username,password,email,phone,status,create_time,update_time,create_by,update_by,is_deleted FROM t_user WHERE is_deleted=0 ORDER BY create_time DESC
+2025-04-30T10:01:16.672+08:00 DEBUG 2204 --- [http-nio-8080-exec-9] c.g.user.mapper.UserMapper.selectList    : ==> Parameters: 
+2025-04-30T10:01:16.689+08:00 DEBUG 2204 --- [http-nio-8080-exec-9] c.g.user.mapper.UserMapper.selectList    : <==      Total: 9
+2025-04-30T10:01:16.690+08:00  INFO 2204 --- [http-nio-8080-exec-9] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [165ff263d46d] - 2025-04-30 10:01:16 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 42ms
+│ 返回结果 : {"code":200,"msg":"success","data":{"records":[{"id":102,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":98,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":99,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":100,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":101,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":97,"username":"asd","password":"51156","email":"","phone":"15612356748","status":0,"createTime":"2025-04-25 14:39:50.547","updateTime":"2025-04-25 14:39:50.548","createBy":"system","updateBy":"system","isDeleted":0},{"id":94,"username":"test1","password":"password1","email":"test1@example.com","phone":"13800138001","status":1,"createTime":"2025-04-25 14:37:07.834","updateTime":"2025-04-25 14:37:07.834","createBy":"system","updateBy":"system","isDeleted":0},{"id":95,"username":"test2","password":"password2","email":"test2@example.com","phone":"13800138002","status":1,"createTime":"2025-04-25 14:37:07.834","updateTime":"2025-04-25 14:37:07.834","createBy":"system","updateBy":"system","isDeleted":0},{"id":96,"username":"test3","password":"password3","email":"test3@example.com","phone":"13800138003","status":0,"createTime":"2025-04-25 14:37:07.834","updateTime":"2025-04-25 14:37:07.834","createBy":"system","updateBy":"system","isDeleted":0}],"total":0,"size":10,"current":1,"pages":0}}
+└─────────────────────────────────────────────────────┘
+2025-04-30T10:01:47.044+08:00  INFO 2204 --- [http-nio-8080-exec-10] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [1d5767004a80] - 2025-04-30 10:01:47 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://192.168.1.30:8080/api/file/url/34
+│ 请求方式 : GET
+│ 请求IP  : 192.168.1.30
+│ 类方法   : com.goodsop.file.controller.FilePreviewController.getFileUrl
+│ 请求参数 : [34]
+└─────────────────────────────────────────────────────┘
+2025-04-30T10:01:47.044+08:00  INFO 2204 --- [http-nio-8080-exec-10] c.g.f.controller.FilePreviewController   : 获取文件URL: fileId=34
+2025-04-30T10:01:47.044+08:00 DEBUG 2204 --- [http-nio-8080-exec-10] c.g.f.mapper.FileInfoMapper.selectById   : ==>  Preparing: SELECT id,device_id,user_id,file_name,file_path,access_url,domain_prefix,file_size,file_type,file_md5,record_date,record_start_time,record_duration,upload_time,status,create_time,update_time,deleted FROM t_file_info WHERE id=? AND deleted=0
+2025-04-30T10:01:47.044+08:00 DEBUG 2204 --- [http-nio-8080-exec-10] c.g.f.mapper.FileInfoMapper.selectById   : ==> Parameters: 34(Long)
+2025-04-30T10:01:47.047+08:00 DEBUG 2204 --- [http-nio-8080-exec-10] c.g.f.mapper.FileInfoMapper.selectById   : <==      Total: 1
+2025-04-30T10:01:47.047+08:00  INFO 2204 --- [http-nio-8080-exec-10] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [1d5767004a80] - 2025-04-30 10:01:47 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 3ms
+│ 返回结果 : {"fileName":"ASD111_20250429_333_1745921269_10001000_a98b56f513cc95932141567aa4c0524d.tgz","accessUrl":"/files/20250430/625fa0ac-298e-4b57-acc1-4faa53f9d684.tgz","success":true,"filePath":"D:\\file\\20250430\\625fa0ac-298e-4b57-acc1-4faa53f9d684.tgz","fileType":"tgz","fileId":34}
+└─────────────────────────────────────────────────────┘
+2025-04-30T10:03:56.075+08:00  INFO 2204 --- [http-nio-8080-exec-2] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [0a7965e44a77] - 2025-04-30 10:03:56 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://192.168.1.30:8080/api/file/preview/34
+│ 请求方式 : GET
+│ 请求IP  : 192.168.1.30
+│ 类方法   : com.goodsop.file.controller.FilePreviewController.previewFile
+│ 请求参数 : [34, org.apache.catalina.connector.RequestFacade@791fbbdc, org.apache.catalina.connector.ResponseFacade@151d462]
+└─────────────────────────────────────────────────────┘
+2025-04-30T10:03:56.076+08:00  INFO 2204 --- [http-nio-8080-exec-2] c.g.f.controller.FilePreviewController   : 接收到文件预览请求: fileId=34
+2025-04-30T10:03:56.077+08:00 DEBUG 2204 --- [http-nio-8080-exec-2] c.g.f.mapper.FileInfoMapper.selectById   : ==>  Preparing: SELECT id,device_id,user_id,file_name,file_path,access_url,domain_prefix,file_size,file_type,file_md5,record_date,record_start_time,record_duration,upload_time,status,create_time,update_time,deleted FROM t_file_info WHERE id=? AND deleted=0
+2025-04-30T10:03:56.078+08:00 DEBUG 2204 --- [http-nio-8080-exec-2] c.g.f.mapper.FileInfoMapper.selectById   : ==> Parameters: 34(Long)
+2025-04-30T10:03:56.081+08:00 DEBUG 2204 --- [http-nio-8080-exec-2] c.g.f.mapper.FileInfoMapper.selectById   : <==      Total: 1
+2025-04-30T10:03:56.083+08:00  INFO 2204 --- [http-nio-8080-exec-2] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [0a7965e44a77] - 2025-04-30 10:03:56 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 8ms
+└─────────────────────────────────────────────────────┘
+2025-04-30T10:06:55.325+08:00  INFO 2204 --- [http-nio-8080-exec-4] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [09020f856435] - 2025-04-30 10:06:55 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://192.168.1.30:8080/api/user/page
+│ 请求方式 : GET
+│ 请求IP  : 192.168.1.30
+│ 类方法   : com.goodsop.user.controller.UserController.pageUsers
+│ 请求参数 : [1, 10, null, desc, User(id=null, username=null, password=null, email=null, phone=null, status=null, createTime=null, updateTime=null, createBy=null, updateBy=null, isDeleted=null)]
+└─────────────────────────────────────────────────────┘
+2025-04-30T10:06:55.328+08:00 DEBUG 2204 --- [http-nio-8080-exec-4] c.g.user.mapper.UserMapper.selectList    : ==>  Preparing: SELECT id,username,password,email,phone,status,create_time,update_time,create_by,update_by,is_deleted FROM t_user WHERE is_deleted=0 ORDER BY create_time DESC
+2025-04-30T10:06:55.328+08:00 DEBUG 2204 --- [http-nio-8080-exec-4] c.g.user.mapper.UserMapper.selectList    : ==> Parameters: 
+2025-04-30T10:06:55.332+08:00 DEBUG 2204 --- [http-nio-8080-exec-4] c.g.user.mapper.UserMapper.selectList    : <==      Total: 9
+2025-04-30T10:06:55.332+08:00  INFO 2204 --- [http-nio-8080-exec-4] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [09020f856435] - 2025-04-30 10:06:55 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 7ms
+│ 返回结果 : {"code":200,"msg":"success","data":{"records":[{"id":102,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":98,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":99,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":100,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":101,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":97,"username":"asd","password":"51156","email":"","phone":"15612356748","status":0,"createTime":"2025-04-25 14:39:50.547","updateTime":"2025-04-25 14:39:50.548","createBy":"system","updateBy":"system","isDeleted":0},{"id":94,"username":"test1","password":"password1","email":"test1@example.com","phone":"13800138001","status":1,"createTime":"2025-04-25 14:37:07.834","updateTime":"2025-04-25 14:37:07.834","createBy":"system","updateBy":"system","isDeleted":0},{"id":95,"username":"test2","password":"password2","email":"test2@example.com","phone":"13800138002","status":1,"createTime":"2025-04-25 14:37:07.834","updateTime":"2025-04-25 14:37:07.834","createBy":"system","updateBy":"system","isDeleted":0},{"id":96,"username":"test3","password":"password3","email":"test3@example.com","phone":"13800138003","status":0,"createTime":"2025-04-25 14:37:07.834","updateTime":"2025-04-25 14:37:07.834","createBy":"system","updateBy":"system","isDeleted":0}],"total":0,"size":10,"current":1,"pages":0}}
+└─────────────────────────────────────────────────────┘
+2025-04-30T10:43:58.083+08:00  INFO 2204 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2025-04-30T10:43:58.084+08:00  INFO 2204 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2025-04-30T10:44:11.403+08:00  INFO 9048 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 9048 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3)
+2025-04-30T10:44:11.404+08:00 DEBUG 9048 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-30T10:44:11.405+08:00  INFO 9048 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-30T10:44:12.599+08:00  INFO 9048 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-30T10:44:12.607+08:00  INFO 9048 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-30T10:44:12.607+08:00  INFO 9048 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-30T10:44:12.667+08:00  INFO 9048 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-30T10:44:12.668+08:00  INFO 9048 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1221 ms
+2025-04-30T10:44:14.037+08:00  INFO 9048 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2025-04-30T10:44:14.091+08:00  INFO 9048 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2025-04-30T10:44:14.103+08:00  INFO 9048 --- [main] com.goodsop.server.GoodsopApplication    : Started GoodsopApplication in 3.407 seconds (process running for 3.943)
+2025-04-30T10:44:14.405+08:00  INFO 9048 --- [RMI TCP Connection(3)-192.168.80.1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-30T10:44:14.405+08:00  INFO 9048 --- [RMI TCP Connection(3)-192.168.80.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-04-30T10:44:14.409+08:00  INFO 9048 --- [RMI TCP Connection(3)-192.168.80.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2025-04-30T10:44:14.434+08:00  INFO 9048 --- [RMI TCP Connection(2)-192.168.80.1] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2025-04-30T10:44:25.918+08:00  WARN 9048 --- [http-nio-8080-exec-3] c.g.x.k.s.e.OpenApiExtensionResolver     : (Ignores) Failed to read Markdown files,Error Message:class path resource [markdown/] cannot be resolved to URL because it does not exist 
+2025-04-30T10:44:25.919+08:00  INFO 9048 --- [http-nio-8080-exec-3] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 163 ms
+2025-04-30T10:44:33.969+08:00  INFO 9048 --- [http-nio-8080-exec-9] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [e7cce75a5a59] - 2025-04-30 10:44:33 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://192.168.1.30:8080/api/file/upload
+│ 请求方式 : POST
+│ 请求IP  : 192.168.1.30
+│ 类方法   : com.goodsop.file.controller.FileUploadController.uploadFile
+│ 请求参数 : [org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@20703f1d, unknown, 0, 0]
+└─────────────────────────────────────────────────────┘
+2025-04-30T10:44:33.970+08:00  INFO 9048 --- [http-nio-8080-exec-9] c.g.f.controller.FileUploadController    : 接收到文件上传请求: fileName=ASD111_20250429_333_1745921269_10001000_a98b56f513cc95932141567aa4c0524d.tgz, fileSize=375170, deviceId=unknown, isEncrypted=0, isCompressed=0
+2025-04-30T10:44:33.991+08:00  INFO 9048 --- [http-nio-8080-exec-9] com.goodsop.file.util.FileTransferUtil   : 文件存储成功: D:\file\20250430\79323c9b-6fa7-41a0-b3be-dfe9ad9f02b1.tgz
+2025-04-30T10:44:34.039+08:00 DEBUG 9048 --- [http-nio-8080-exec-9] c.g.file.mapper.FileInfoMapper.insert    : ==>  Preparing: INSERT INTO t_file_info ( device_id, user_id, file_name, file_path, access_url, domain_prefix, file_size, file_type, file_md5, record_date, record_start_time, record_duration, upload_time, status, create_time, update_time, deleted ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2025-04-30T10:44:34.052+08:00 DEBUG 9048 --- [http-nio-8080-exec-9] c.g.file.mapper.FileInfoMapper.insert    : ==> Parameters: unknown(String), 333(String), ASD111_20250429_333_1745921269_10001000_a98b56f513cc95932141567aa4c0524d.tgz(String), D:\file\20250430\79323c9b-6fa7-41a0-b3be-dfe9ad9f02b1.tgz(String), http://192.168.1.30:8080/api/files/20250430/79323c9b-6fa7-41a0-b3be-dfe9ad9f02b1.tgz(String), 192.168.1.30(String), 375170(Long), tgz(String), a98b56f513cc95932141567aa4c0524d(String), 2025-04-29(LocalDate), 1970-01-21T12:58:41.269(LocalDateTime), 10001000(Long), 2025-04-30T10:44:33.996258700(LocalDateTime), 1(Integer), 2025-04-30T10:44:33.996258700(LocalDateTime), 2025-04-30T10:44:33.996258700(LocalDateTime), 0(Integer)
+2025-04-30T10:44:34.055+08:00 DEBUG 9048 --- [http-nio-8080-exec-9] c.g.file.mapper.FileInfoMapper.insert    : <==    Updates: 1
+2025-04-30T10:44:34.058+08:00  INFO 9048 --- [http-nio-8080-exec-9] c.g.file.service.impl.FileServiceImpl    : 文件上传成功: FileInfo(id=35, deviceId=unknown, userId=333, fileName=ASD111_20250429_333_1745921269_10001000_a98b56f513cc95932141567aa4c0524d.tgz, filePath=D:\file\20250430\79323c9b-6fa7-41a0-b3be-dfe9ad9f02b1.tgz, accessUrl=http://192.168.1.30:8080/api/files/20250430/79323c9b-6fa7-41a0-b3be-dfe9ad9f02b1.tgz, domainPrefix=192.168.1.30, fileSize=375170, fileType=tgz, fileMd5=a98b56f513cc95932141567aa4c0524d, recordDate=2025-04-29, recordStartTime=1970-01-21T12:58:41.269, recordDuration=10001000, uploadTime=2025-04-30T10:44:33.996258700, status=1, createTime=2025-04-30T10:44:33.996258700, updateTime=2025-04-30T10:44:33.996258700, deleted=0)
+2025-04-30T10:44:34.067+08:00  INFO 9048 --- [http-nio-8080-exec-9] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [e7cce75a5a59] - 2025-04-30 10:44:34 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 98ms
+│ 返回结果 : {"code":200,"msg":"success","data":{"fileName":"ASD111_20250429_333_1745921269_10001000_a98b56f513cc95932141567aa4c0524d.tgz","fileSize":375170,"accessUrl":"http://192.168.1.30:8080/api/files/20250430/79323c9b-6fa7-41a0-b3be-dfe9ad9f02b1.tgz","success":true,"filePath":"D:\\file\\20250430\\79323c9b-6fa7-41a0-b3be-dfe9ad9f02b1.tgz","uploadTime":"2025-04-30 10:44:33.996","fileType":"tgz","fileId":35}}
+└─────────────────────────────────────────────────────┘
+2025-04-30T10:59:37.170+08:00  INFO 9048 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2025-04-30T10:59:37.171+08:00  INFO 9048 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed
+2025-04-30T11:10:20.013+08:00  INFO 3540 --- [main] com.goodsop.server.GoodsopApplication    : Starting GoodsopApplication using Java 17.0.12 with PID 3540 (D:\work\cursor\goodsop3\goodsop-server\target\classes started by pc in D:\work\cursor\goodsop3)
+2025-04-30T11:10:20.014+08:00 DEBUG 3540 --- [main] com.goodsop.server.GoodsopApplication    : Running with Spring Boot v3.1.5, Spring v6.0.13
+2025-04-30T11:10:20.015+08:00  INFO 3540 --- [main] com.goodsop.server.GoodsopApplication    : The following 1 profile is active: "dev"
+2025-04-30T11:10:21.187+08:00  INFO 3540 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2025-04-30T11:10:21.194+08:00  INFO 3540 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-04-30T11:10:21.195+08:00  INFO 3540 --- [main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.15]
+2025-04-30T11:10:21.260+08:00  INFO 3540 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2025-04-30T11:10:21.261+08:00  INFO 3540 --- [main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1212 ms
+2025-04-30T11:10:22.690+08:00  INFO 3540 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 1 endpoint(s) beneath base path '/actuator'
+2025-04-30T11:10:22.745+08:00  INFO 3540 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/api'
+2025-04-30T11:10:22.756+08:00  INFO 3540 --- [main] com.goodsop.server.GoodsopApplication    : Started GoodsopApplication in 3.34 seconds (process running for 4.447)
+2025-04-30T11:10:23.299+08:00  INFO 3540 --- [RMI TCP Connection(4)-192.168.80.1] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-30T11:10:23.299+08:00  INFO 3540 --- [RMI TCP Connection(4)-192.168.80.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-04-30T11:10:23.302+08:00  INFO 3540 --- [RMI TCP Connection(4)-192.168.80.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2025-04-30T11:10:23.310+08:00  INFO 3540 --- [RMI TCP Connection(3)-192.168.80.1] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} inited
+2025-04-30T11:10:27.015+08:00  WARN 3540 --- [http-nio-8080-exec-3] c.g.x.k.s.e.OpenApiExtensionResolver     : (Ignores) Failed to read Markdown files,Error Message:class path resource [markdown/] cannot be resolved to URL because it does not exist 
+2025-04-30T11:10:27.016+08:00  INFO 3540 --- [http-nio-8080-exec-3] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 165 ms
+2025-04-30T11:10:34.537+08:00  INFO 3540 --- [http-nio-8080-exec-4] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [e5556888fa9a] - 2025-04-30 11:10:34 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://192.168.1.30:8080/api/file/upload
+│ 请求方式 : POST
+│ 请求IP  : 192.168.1.30
+│ 类方法   : com.goodsop.file.controller.FileUploadController.uploadFile
+│ 请求参数 : [org.springframework.web.multipart.support.StandardMultipartHttpServletRequest$StandardMultipartFile@626f2190, unknown, 0, 0]
+└─────────────────────────────────────────────────────┘
+2025-04-30T11:10:34.538+08:00  INFO 3540 --- [http-nio-8080-exec-4] c.g.f.controller.FileUploadController    : 接收到文件上传请求: fileName=ASD222_20250429_333_1745921269_10001000_a98b56f513cc95932141567aa4c0524d.tgz, fileSize=3818768, deviceId=unknown, isEncrypted=0, isCompressed=0
+2025-04-30T11:10:34.599+08:00 DEBUG 3540 --- [http-nio-8080-exec-4] c.g.file.mapper.FileInfoMapper.insert    : ==>  Preparing: INSERT INTO t_file_info ( device_id, user_id, file_name, file_path, access_url, domain_prefix, file_size, file_type, file_md5, record_date, record_start_time, record_duration, upload_time, status, create_time, update_time, deleted ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+2025-04-30T11:10:34.610+08:00 DEBUG 3540 --- [http-nio-8080-exec-4] c.g.file.mapper.FileInfoMapper.insert    : ==> Parameters: unknown(String), 333(String), ASD222_20250429_333_1745921269_10001000_a98b56f513cc95932141567aa4c0524d.tgz(String), D:\file\20250430\ASD222_20250429_333_1745921269_10001000_a98b56f513cc95932141567aa4c0524d.tgz(String), http://192.168.1.30:8080/api/files/20250430/ASD222_20250429_333_1745921269_10001000_a98b56f513cc95932141567aa4c0524d.tgz(String), 192.168.1.30(String), 3818768(Long), tgz(String), eee5cfb8cd797385837f5e3945f6f8fe(String), 2025-04-29(LocalDate), 1970-01-21T12:58:41.269(LocalDateTime), 10001000(Long), 2025-04-30T11:10:34.558548900(LocalDateTime), 1(Integer), 2025-04-30T11:10:34.558548900(LocalDateTime), 2025-04-30T11:10:34.558548900(LocalDateTime), 0(Integer)
+2025-04-30T11:10:34.614+08:00 DEBUG 3540 --- [http-nio-8080-exec-4] c.g.file.mapper.FileInfoMapper.insert    : <==    Updates: 1
+2025-04-30T11:10:34.617+08:00  INFO 3540 --- [http-nio-8080-exec-4] c.g.file.service.impl.FileServiceImpl    : 文件上传成功: FileInfo(id=36, deviceId=unknown, userId=333, fileName=ASD222_20250429_333_1745921269_10001000_a98b56f513cc95932141567aa4c0524d.tgz, filePath=D:\file\20250430\ASD222_20250429_333_1745921269_10001000_a98b56f513cc95932141567aa4c0524d.tgz, accessUrl=http://192.168.1.30:8080/api/files/20250430/ASD222_20250429_333_1745921269_10001000_a98b56f513cc95932141567aa4c0524d.tgz, domainPrefix=192.168.1.30, fileSize=3818768, fileType=tgz, fileMd5=eee5cfb8cd797385837f5e3945f6f8fe, recordDate=2025-04-29, recordStartTime=1970-01-21T12:58:41.269, recordDuration=10001000, uploadTime=2025-04-30T11:10:34.558548900, status=1, createTime=2025-04-30T11:10:34.558548900, updateTime=2025-04-30T11:10:34.558548900, deleted=0)
+2025-04-30T11:10:34.627+08:00  INFO 3540 --- [http-nio-8080-exec-4] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [e5556888fa9a] - 2025-04-30 11:10:34 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 90ms
+│ 返回结果 : {"code":200,"msg":"success","data":{"fileName":"ASD222_20250429_333_1745921269_10001000_a98b56f513cc95932141567aa4c0524d.tgz","fileSize":3818768,"accessUrl":"http://192.168.1.30:8080/api/files/20250430/ASD222_20250429_333_1745921269_10001000_a98b56f513cc95932141567aa4c0524d.tgz","success":true,"filePath":"D:\\file\\20250430\\ASD222_20250429_333_1745921269_10001000_a98b56f513cc95932141567aa4c0524d.tgz","uploadTime":"2025-04-30 11:10:34.558","fileType":"tgz","fileId":36}}
+└─────────────────────────────────────────────────────┘
+2025-04-30T11:11:06.882+08:00  WARN 3540 --- [http-nio-8080-exec-5] c.g.x.k.s.e.OpenApiExtensionResolver     : (Ignores) Failed to read Markdown files,Error Message:class path resource [markdown/] cannot be resolved to URL because it does not exist 
+2025-04-30T11:11:06.882+08:00  INFO 3540 --- [http-nio-8080-exec-5] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 62 ms
+2025-04-30T11:11:11.779+08:00  INFO 3540 --- [http-nio-8080-exec-6] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求开始 - [8c9684601825] - 2025-04-30 11:11:11 │
+├─────────────────────────────────────────────────────┤
+│ 请求URL : http://192.168.1.30:8080/api/user/page
+│ 请求方式 : GET
+│ 请求IP  : 192.168.1.30
+│ 类方法   : com.goodsop.user.controller.UserController.pageUsers
+│ 请求参数 : [1, 10, null, desc, User(id=null, username=null, password=null, email=null, phone=null, status=null, createTime=null, updateTime=null, createBy=null, updateBy=null, isDeleted=null)]
+└─────────────────────────────────────────────────────┘
+2025-04-30T11:11:11.800+08:00 DEBUG 3540 --- [http-nio-8080-exec-6] c.g.user.mapper.UserMapper.selectList    : ==>  Preparing: SELECT id,username,password,email,phone,status,create_time,update_time,create_by,update_by,is_deleted FROM t_user WHERE is_deleted=0 ORDER BY create_time DESC
+2025-04-30T11:11:11.801+08:00 DEBUG 3540 --- [http-nio-8080-exec-6] c.g.user.mapper.UserMapper.selectList    : ==> Parameters: 
+2025-04-30T11:11:11.815+08:00 DEBUG 3540 --- [http-nio-8080-exec-6] c.g.user.mapper.UserMapper.selectList    : <==      Total: 9
+2025-04-30T11:11:11.816+08:00  INFO 3540 --- [http-nio-8080-exec-6] com.goodsop.common.aop.LogAspect         : 
+┌─────────────────────────────────────────────────────┐
+│ 请求结束 - [8c9684601825] - 2025-04-30 11:11:11 │
+├─────────────────────────────────────────────────────┤
+│ 执行时间 : 40ms
+│ 返回结果 : {"code":200,"msg":"success","data":{"records":[{"id":102,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":98,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":99,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":100,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":101,"username":"是的是的所","password":"16665","email":null,"phone":null,"status":1,"createTime":null,"updateTime":null,"createBy":null,"updateBy":null,"isDeleted":0},{"id":97,"username":"asd","password":"51156","email":"","phone":"15612356748","status":0,"createTime":"2025-04-25 14:39:50.547","updateTime":"2025-04-25 14:39:50.548","createBy":"system","updateBy":"system","isDeleted":0},{"id":94,"username":"test1","password":"password1","email":"test1@example.com","phone":"13800138001","status":1,"createTime":"2025-04-25 14:37:07.834","updateTime":"2025-04-25 14:37:07.834","createBy":"system","updateBy":"system","isDeleted":0},{"id":95,"username":"test2","password":"password2","email":"test2@example.com","phone":"13800138002","status":1,"createTime":"2025-04-25 14:37:07.834","updateTime":"2025-04-25 14:37:07.834","createBy":"system","updateBy":"system","isDeleted":0},{"id":96,"username":"test3","password":"password3","email":"test3@example.com","phone":"13800138003","status":0,"createTime":"2025-04-25 14:37:07.834","updateTime":"2025-04-25 14:37:07.834","createBy":"system","updateBy":"system","isDeleted":0}],"total":0,"size":10,"current":1,"pages":0}}
+└─────────────────────────────────────────────────────┘
+2025-04-30T11:11:15.895+08:00  INFO 3540 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closing ...
+2025-04-30T11:11:15.897+08:00  INFO 3540 --- [SpringApplicationShutdownHook] com.alibaba.druid.pool.DruidDataSource   : {dataSource-1} closed

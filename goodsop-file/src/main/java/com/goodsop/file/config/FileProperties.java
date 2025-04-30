@@ -51,6 +51,21 @@ public class FileProperties {
          * AES加密密钥
          */
         private String aesKey;
+        
+        /**
+         * 服务器主机地址
+         */
+        private String serverHost = "localhost";
+        
+        /**
+         * 服务器端口
+         */
+        private Integer serverPort = 8080;
+        
+        /**
+         * 上下文路径
+         */
+        private String contextPath = "";
     }
     
     /**

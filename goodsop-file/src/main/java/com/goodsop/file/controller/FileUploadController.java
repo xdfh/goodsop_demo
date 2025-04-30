@@ -1,5 +1,6 @@
 package com.goodsop.file.controller;
 
+import com.goodsop.common.core.model.Result;
 import com.goodsop.file.constant.FileConstant;
 import com.goodsop.file.entity.FileInfo;
 import com.goodsop.file.service.FileService;
@@ -34,7 +35,7 @@ public class FileUploadController {
      */
     @PostMapping("/upload")
     @Operation(summary = "上传文件")
-    public Map<String, Object> uploadFile(
+    public Result<Map<String, Object>> uploadFile(
             @Parameter(description = "文件", required = true) @RequestParam("file") MultipartFile file,
             @Parameter(description = "设备ID") @RequestParam(required = false, defaultValue = "unknown") String deviceId,
             @Parameter(description = "是否加密(0-否，1-是)") @RequestParam(required = false, defaultValue = "0") Integer isEncrypted,
@@ -52,17 +53,14 @@ public class FileUploadController {
             result.put("fileSize", fileInfo.getFileSize());
             result.put("fileType", fileInfo.getFileType());
             result.put("uploadTime", fileInfo.getUploadTime());
+            result.put("filePath", fileInfo.getFilePath());
+            result.put("accessUrl", fileInfo.getAccessUrl());
             result.put("success", true);
             
-            return result;
+            return Result.success(result);
         } catch (Exception e) {
             log.error("文件上传失败: {}", e.getMessage(), e);
-            
-            Map<String, Object> error = new HashMap<>();
-            error.put("success", false);
-            error.put("message", "文件上传失败: " + e.getMessage());
-            
-            return error;
+            return Result.error("文件上传失败: " + e.getMessage());
         }
     }
     
@@ -71,7 +69,7 @@ public class FileUploadController {
      */
     @PostMapping("/chunk/upload")
     @Operation(summary = "分块上传文件(断点续传)")
-    public Map<String, Object> uploadFileChunk(
+    public Result<Map<String, Object>> uploadFileChunk(
             @Parameter(description = "文件块", required = true) @RequestParam("file") MultipartFile file,
             @Parameter(description = "文件名", required = true) @RequestParam("fileName") String fileName,
             @Parameter(description = "设备ID") @RequestParam(required = false, defaultValue = "unknown") String deviceId,
@@ -96,6 +94,8 @@ public class FileUploadController {
                 result.put("fileSize", fileInfo.getFileSize());
                 result.put("fileType", fileInfo.getFileType());
                 result.put("uploadTime", fileInfo.getUploadTime());
+                result.put("filePath", fileInfo.getFilePath());
+                result.put("accessUrl", fileInfo.getAccessUrl());
                 result.put("completed", true);
             } else {
                 // 部分分块上传完成
@@ -105,14 +105,10 @@ public class FileUploadController {
             
             result.put("success", true);
             
-            return result;
+            return Result.success(result);
         } catch (Exception e) {
             log.error("分块上传失败: {}", e.getMessage(), e);
-            
-            result.put("success", false);
-            result.put("message", "分块上传失败: " + e.getMessage());
-            
-            return result;
+            return Result.error("分块上传失败: " + e.getMessage());
         }
     }
 } 

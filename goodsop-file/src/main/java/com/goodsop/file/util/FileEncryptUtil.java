@@ -139,6 +139,28 @@ public class FileEncryptUtil {
     }
     
     /**
+     * 计算字符串的MD5值
+     * 
+     * @param text 文本字符串
+     * @return MD5值
+     */
+    public String calculateMD5(String text) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            byte[] mdBytes = md.digest(text.getBytes(StandardCharsets.UTF_8));
+            
+            StringBuilder sb = new StringBuilder();
+            for (byte mdByte : mdBytes) {
+                sb.append(String.format("%02x", mdByte));
+            }
+            return sb.toString();
+        } catch (Exception e) {
+            log.error("计算字符串MD5失败: {}", e.getMessage(), e);
+            throw new RuntimeException("计算字符串MD5失败", e);
+        }
+    }
+    
+    /**
      * Base64编码
      * 
      * @param data 原始数据

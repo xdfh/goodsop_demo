@@ -38,13 +38,24 @@ public class FileTransferUtil {
                 Files.createDirectories(dirPath);
             }
             
-            // 生成文件名
+            // 获取原始文件名
             String originalFilename = file.getOriginalFilename();
+            String filename;
             String extension = "";
-            if (originalFilename != null && originalFilename.contains(".")) {
-                extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            
+            // 检查是否符合规范的文件名格式（设备ID_日期_用户ID_时间戳_时长_MD5值）
+            if (originalFilename != null && isStandardFilename(originalFilename)) {
+                // 直接使用原始文件名，因为它已经符合格式要求
+                filename = originalFilename;
+                log.info("使用原始格式化文件名: {}", filename);
+            } else {
+                // 如果不符合格式，使用UUID作为文件名
+                if (originalFilename != null && originalFilename.contains(".")) {
+                    extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+                }
+                filename = UUID.randomUUID().toString() + extension;
+                log.info("使用随机文件名: {}", filename);
             }
-            String filename = UUID.randomUUID().toString() + extension;
             
             // 保存文件
             Path targetPath = dirPath.resolve(filename);
@@ -56,6 +67,51 @@ public class FileTransferUtil {
         } catch (IOException e) {
             log.error("文件存储失败: {}", e.getMessage(), e);
             throw new RuntimeException("文件存储失败", e);
+        }
+    }
+    
+    /**
+     * 检查文件名是否符合标准格式：设备ID_YYYYMMDD_用户ID_时间戳_时长_MD5值.扩展名
+     * 
+     * @param filename 文件名
+     * @return 是否符合标准格式
+     */
+    private boolean isStandardFilename(String filename) {
+        if (filename == null || !filename.contains("_")) {
+            return false;
+        }
+        
+        String nameWithoutExt = filename;
+        if (filename.contains(".")) {
+            nameWithoutExt = filename.substring(0, filename.lastIndexOf("."));
+        }
+        
+        String[] parts = nameWithoutExt.split("_");
+        
+        // 必须至少有6个部分
+        if (parts.length < 6) {
+            return false;
+        }
+        
+        // 检查第二部分是否为8位日期格式
+        if (parts[1].length() != 8) {
+            return false;
+        }
+        
+        try {
+            // 检查日期格式
+            Integer.parseInt(parts[1]);
+            
+            // 检查时间戳是否为数字
+            Long.parseLong(parts[3]);
+            
+            // 检查时长是否为数字
+            Long.parseLong(parts[4]);
+            
+            // 通过所有检查
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
     
@@ -101,7 +157,21 @@ public class FileTransferUtil {
             
             // 检查是否为最后一块，如果是则合并文件
             if (chunk == chunks - 1) {
-                Path targetPath = dirPath.resolve(fileName);
+                // 检查文件名是否符合规范，否则重命名
+                String finalFileName = fileName;
+                if (!isStandardFilename(fileName)) {
+                    // 如果不符合规范，生成随机名称
+                    String extension = "";
+                    if (fileName.contains(".")) {
+                        extension = fileName.substring(fileName.lastIndexOf("."));
+                    }
+                    finalFileName = UUID.randomUUID().toString() + extension;
+                    log.info("分块上传使用随机文件名: {}", finalFileName);
+                } else {
+                    log.info("分块上传使用标准文件名: {}", finalFileName);
+                }
+                
+                Path targetPath = dirPath.resolve(finalFileName);
                 File targetFile = targetPath.toFile();
                 mergeChunks(tempDirPath.toFile(), targetFile, chunks);
                 
@@ -254,17 +324,18 @@ public class FileTransferUtil {
                     }
                 }
             } else {
-                // 普通下载（非断点续传）
+                // 普通下载
                 response.setHeader("Content-Length", String.valueOf(fileLength));
                 
+                // 写入文件数据
                 try (FileInputStream fis = new FileInputStream(file);
                      BufferedInputStream bis = new BufferedInputStream(fis);
                      OutputStream os = response.getOutputStream()) {
                     
                     byte[] buffer = new byte[4096];
-                    int read;
-                    while ((read = bis.read(buffer)) != -1) {
-                        os.write(buffer, 0, read);
+                    int bytesRead;
+                    while ((bytesRead = bis.read(buffer)) != -1) {
+                        os.write(buffer, 0, bytesRead);
                     }
                 }
             }

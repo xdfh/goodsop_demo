@@ -2,6 +2,7 @@ package com.goodsop.file.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.goodsop.common.core.model.Result;
 import com.goodsop.file.entity.FileInfo;
 import com.goodsop.file.service.FileService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,7 +32,7 @@ public class FileManageController {
      */
     @GetMapping("/list")
     @Operation(summary = "分页查询文件列表")
-    public Map<String, Object> listFiles(
+    public Result<Map<String, Object>> listFiles(
             @Parameter(description = "页码") @RequestParam(defaultValue = "1") Integer current,
             @Parameter(description = "每页大小") @RequestParam(defaultValue = "10") Integer size,
             @Parameter(description = "设备ID") @RequestParam(required = false) String deviceId,
@@ -65,7 +66,7 @@ public class FileManageController {
         map.put("current", result.getCurrent());
         map.put("pages", result.getPages());
         
-        return map;
+        return Result.success(map);
     }
     
     /**
@@ -73,9 +74,14 @@ public class FileManageController {
      */
     @GetMapping("/{id}")
     @Operation(summary = "获取文件详情")
-    public FileInfo getFileDetail(@Parameter(description = "文件ID") @PathVariable Long id) {
+    public Result<FileInfo> getFileDetail(@Parameter(description = "文件ID") @PathVariable Long id) {
         log.info("获取文件详情: id={}", id);
-        return fileService.getFileById(id);
+        FileInfo fileInfo = fileService.getFileById(id);
+        if (fileInfo != null) {
+            return Result.success(fileInfo);
+        } else {
+            return Result.error("文件不存在");
+        }
     }
     
     /**
@@ -83,15 +89,15 @@ public class FileManageController {
      */
     @DeleteMapping("/{id}")
     @Operation(summary = "删除文件")
-    public Map<String, Object> deleteFile(@Parameter(description = "文件ID") @PathVariable Long id) {
+    public Result<Boolean> deleteFile(@Parameter(description = "文件ID") @PathVariable Long id) {
         log.info("删除文件: id={}", id);
         
         boolean success = fileService.deleteFile(id);
         
-        Map<String, Object> result = new HashMap<>();
-        result.put("success", success);
-        result.put("message", success ? "文件删除成功" : "文件删除失败");
-        
-        return result;
+        if (success) {
+            return Result.success("文件删除成功", true);
+        } else {
+            return Result.error("文件删除失败");
+        }
     }
 } 
