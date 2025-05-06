@@ -80,8 +80,35 @@ public class FileUploadController {
             @Parameter(description = "是否压缩(0-否，1-是)") @RequestParam(required = false, defaultValue = "0") Integer isCompressed,
             @Parameter(description = "原始文件扩展名") @RequestParam(required = false) String originalExtension) {
         
-        log.info("接收到分块上传请求: fileName={}, chunk={}/{}, fileSize={}, deviceId={}, originalExtension={}",
-                fileName, chunk + 1, chunks, file.getSize(), deviceId, originalExtension);
+        log.info("接收到分块上传请求: fileName={}, chunk={}/{}, fileSize={}, deviceId={}, isEncrypted={}, isCompressed={}, originalExtension={}",
+                fileName, chunk + 1, chunks, file.getSize(), deviceId, isEncrypted, isCompressed, originalExtension);
+        
+        // 参数校验
+        if (file.isEmpty()) {
+            log.error("分块上传失败: 文件块为空");
+            return Result.error("文件块不能为空");
+        }
+        
+        if (fileName == null || fileName.trim().isEmpty()) {
+            log.error("分块上传失败: 文件名为空");
+            return Result.error("文件名不能为空");
+        }
+        
+        if (chunk < 0 || chunks <= 0 || chunk >= chunks) {
+            log.error("分块上传失败: 分块参数无效 chunk={}, chunks={}", chunk, chunks);
+            return Result.error("分块参数无效");
+        }
+        
+        // 确保isEncrypted和isCompressed是有效值
+        if (isEncrypted != null && (isEncrypted != 0 && isEncrypted != 1)) {
+            log.warn("接收到无效的isEncrypted值: {}, 默认使用0(未加密)", isEncrypted);
+            isEncrypted = 0;
+        }
+        
+        if (isCompressed != null && (isCompressed != 0 && isCompressed != 1)) {
+            log.warn("接收到无效的isCompressed值: {}, 默认使用0(未压缩)", isCompressed);
+            isCompressed = 0;
+        }
         
         Map<String, Object> result = new HashMap<>();
         
@@ -105,12 +132,17 @@ public class FileUploadController {
                 result.put("uploadTime", fileInfo.getUploadTime());
                 result.put("filePath", fileInfo.getFilePath());
                 result.put("accessUrl", fileInfo.getAccessUrl());
+                result.put("isEncrypted", isEncrypted);
+                result.put("isCompressed", isCompressed);
                 result.put("completed", true);
                 result.put("message", "文件上传完成");
+                log.info("分块上传完成: fileId={}, filePath={}, accessUrl={}", 
+                         fileInfo.getId(), fileInfo.getFilePath(), fileInfo.getAccessUrl());
             } else {
                 // 部分分块上传完成，返回当前进度
                 result.put("completed", false);
                 result.put("message", "分块" + (chunk + 1) + "上传成功，请继续上传");
+                log.info("分块{}上传成功，等待继续上传", chunk + 1);
             }
             
             return Result.success(result);

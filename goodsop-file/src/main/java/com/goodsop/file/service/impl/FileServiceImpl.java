@@ -230,11 +230,15 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
             log.info("今日日期格式化: {}", dateDir);
             log.info("实际存储目录: {}", storageDir);
             
+            // 确保加密文件有正确的后缀
+            String processedFileName = ensureCorrectFileSuffix(fileName, isEncrypted);
+            log.info("处理后的文件名: {} -> {}", fileName, processedFileName);
+            
             // 保存原始扩展名，用于解压缩后恢复
             if (originalExtension != null && !originalExtension.isEmpty()) {
                 // 保存原始扩展名到缓存中，供解压缩使用
-                EXTENSION_CACHE.put(fileName, originalExtension);
-                log.info("保存原始文件扩展名: {} -> {}", fileName, originalExtension);
+                EXTENSION_CACHE.put(processedFileName, originalExtension);
+                log.info("保存原始文件扩展名: {} -> {}", processedFileName, originalExtension);
             }
             
             // 检查目录是否存在，不存在则创建
@@ -247,7 +251,7 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
             }
             
             // 将原始文件名保存到线程本地变量，用于后续分块使用同一文件名
-            String originalFileName = fileName;
+            String originalFileName = processedFileName;
             
             // 检查文件名是否符合标准格式，如果不符合则重命名
             // 重要修复：使用原始文件名作为key，获取已经生成的标准文件名
@@ -628,23 +632,51 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
         File intermediateFile = null;
         
         try {
+            log.info("开始处理文件: {}, 加密状态: {}, 压缩状态: {}", 
+                    originalFile.getAbsolutePath(), isEncrypted, isCompressed);
+            
+            // 检测文件是否实际为加密文件
+            boolean detectedAsEncrypted = fileEncryptUtil.isEncryptedFile(originalFile);
+            if (detectedAsEncrypted && !Objects.equals(isEncrypted, FileConstant.FLAG_TRUE)) {
+                log.warn("文件被检测为加密文件，但isEncrypted参数为0，自动调整为1: {}", originalFile.getName());
+                isEncrypted = FileConstant.FLAG_TRUE;
+            } else if (Objects.equals(isEncrypted, FileConstant.FLAG_TRUE) && !detectedAsEncrypted) {
+                log.warn("文件标记为加密，但未检测到加密特征，请确认加密状态: {}", originalFile.getName());
+            }
+            
             // 如果启用解密且文件是加密的
             if (fileProperties.getStorage().getEnableDecrypt() && 
                 Objects.equals(isEncrypted, FileConstant.FLAG_TRUE)) {
+                
+                log.info("准备解密文件，AES密钥长度: {}", fileProperties.getStorage().getAesKey().length());
                 
                 // 创建解密后的文件，保持原文件命名格式
                 String decryptedPath = getProcessedFilePath(originalFile, "decrypted");
                 File decryptedFile = new File(decryptedPath);
                 
                 // 解密文件
-                processedFile = fileEncryptUtil.decryptFile(
-                    originalFile, 
-                    decryptedFile, 
-                    fileProperties.getStorage().getAesKey()
-                );
+                try {
+                    log.info("开始解密文件: {} -> {}", originalFile.getAbsolutePath(), decryptedFile.getAbsolutePath());
+                    processedFile = fileEncryptUtil.decryptFile(
+                        originalFile, 
+                        decryptedFile, 
+                        fileProperties.getStorage().getAesKey()
+                    );
+                    log.info("文件解密完成: {}, 文件大小: {}", processedFile.getAbsolutePath(), processedFile.length());
+                } catch (Exception e) {
+                    log.error("文件解密失败，详细错误: {}", e.getMessage(), e);
+                    // 如果解密失败，直接使用原始文件
+                    log.warn("解密失败，将使用原始文件: {}", originalFile.getAbsolutePath());
+                    processedFile = originalFile;
+                }
                 
                 // 记录中间文件，稍后删除
                 intermediateFile = decryptedFile;
+            } else {
+                log.info("跳过解密，原因: {}启用解密={}, 文件是否加密={}",
+                        fileProperties.getStorage().getEnableDecrypt() ? "" : "未", 
+                        fileProperties.getStorage().getEnableDecrypt(),
+                        isEncrypted);
             }
             
             // 如果启用解压缩且文件是压缩的
@@ -652,7 +684,10 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
                 Objects.equals(isCompressed, FileConstant.FLAG_TRUE)) {
                 
                 // 检查文件是否为GZIP格式
-                if (fileCompressUtil.isGzipFile(processedFile)) {
+                boolean isGzip = fileCompressUtil.isGzipFile(processedFile);
+                log.info("文件是否为GZIP格式: {}", isGzip);
+                
+                if (isGzip) {
                     // 获取原始文件的真实扩展名（从缓存中或从名称猜测）
                     String originalExtension = EXTENSION_CACHE.getOrDefault(
                         originalFile.getName(), 
@@ -666,15 +701,30 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
                     File decompressedFile = new File(decompressedPath);
                     
                     // 解压文件
-                    File resultFile = fileCompressUtil.decompressFile(processedFile, decompressedFile);
-                    
-                    // 如果当前处理的文件不是原始文件，则可以删除中间文件
-                    if (processedFile != originalFile && intermediateFile == null) {
-                        intermediateFile = processedFile;
+                    try {
+                        log.info("开始解压文件: {} -> {}", processedFile.getAbsolutePath(), decompressedFile.getAbsolutePath());
+                        File resultFile = fileCompressUtil.decompressFile(processedFile, decompressedFile);
+                        log.info("文件解压完成: {}, 文件大小: {}", resultFile.getAbsolutePath(), resultFile.length());
+                        
+                        // 如果当前处理的文件不是原始文件，则可以删除中间文件
+                        if (processedFile != originalFile && intermediateFile == null) {
+                            intermediateFile = processedFile;
+                        }
+                        
+                        processedFile = resultFile;
+                    } catch (Exception e) {
+                        log.error("文件解压失败，详细错误: {}", e.getMessage(), e);
+                        // 如果解压失败但已解密成功，仍使用解密后的文件
+                        log.warn("解压失败，将使用解密后的文件: {}", processedFile.getAbsolutePath());
                     }
-                    
-                    processedFile = resultFile;
+                } else {
+                    log.info("文件不是GZIP格式，跳过解压");
                 }
+            } else {
+                log.info("跳过解压缩，原因: {}启用解压缩={}, 文件是否压缩={}",
+                        fileProperties.getStorage().getEnableDecompress() ? "" : "未", 
+                        fileProperties.getStorage().getEnableDecompress(), 
+                        isCompressed);
             }
             
             // 删除中间处理文件
@@ -688,6 +738,7 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
                 }
             }
             
+            log.info("文件处理完成: {}", processedFile.getAbsolutePath());
             return processedFile;
         } catch (Exception e) {
             log.error("文件处理失败: {}", e.getMessage(), e);
@@ -893,5 +944,28 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
             String removedName = FILENAME_CACHE.remove(originalFilename);
             log.info("从缓存中清理文件名映射: {} -> {}", originalFilename, removedName);
         }
+    }
+    
+    /**
+     * 确保文件名后缀正确，用于加密/解密处理
+     * 
+     * @param filename 原始文件名
+     * @param isEncrypted 是否加密
+     * @return 处理后的文件名
+     */
+    private String ensureCorrectFileSuffix(String filename, Integer isEncrypted) {
+        if (filename == null) {
+            return null;
+        }
+        
+        // 如果文件已加密，但文件名不以.enc结尾，则添加后缀
+        if (Objects.equals(isEncrypted, FileConstant.FLAG_TRUE)) {
+            if (!filename.toLowerCase().endsWith(".enc")) {
+                log.info("添加加密标识后缀(.enc)到文件名: {}", filename);
+                return filename + ".enc";
+            }
+        }
+        
+        return filename;
     }
 } 
