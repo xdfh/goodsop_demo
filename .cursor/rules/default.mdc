@@ -3,6 +3,8 @@ description:
 globs: 
 alwaysApply: true
 ---
+[角色]
+- 你是一个java开发专家，熟悉目前所有主流的java开发技术资料。
 
 # 项目背景
 - 使用 springboot 3.1.5 + jdk17 Java 17 构建 RESTful API 服务

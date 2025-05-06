@@ -6,8 +6,11 @@ import org.junit.jupiter.api.io.TempDir;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockMultipartFile;
+import jakarta.servlet.http.HttpServletResponse;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,7 +18,7 @@ import java.nio.file.Path;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * 文件传输工具类单元测试
+ * 文件传输工具类测试
  */
 class FileTransferUtilTest {
     
@@ -45,7 +48,7 @@ class FileTransferUtilTest {
         
         // 断言文件存在且内容正确
         assertTrue(storedFile.exists());
-        assertEquals(testContent, new String(Files.readAllBytes(storedFile.toPath()), StandardCharsets.UTF_8));
+        assertEquals(testContent, Files.readString(storedFile.toPath(), StandardCharsets.UTF_8));
     }
     
     @Test
@@ -64,7 +67,7 @@ class FileTransferUtilTest {
         
         // 断言文件存在且内容正确
         assertTrue(storedFile.exists());
-        assertEquals(testContent, new String(Files.readAllBytes(storedFile.toPath()), StandardCharsets.UTF_8));
+        assertEquals(testContent, Files.readString(storedFile.toPath(), StandardCharsets.UTF_8));
     }
     
     @Test
@@ -98,7 +101,7 @@ class FileTransferUtilTest {
         // 断言文件存在且内容是两块合并的内容
         assertTrue(result2.exists());
         String expectedContent = chunk1Content + chunk2Content;
-        assertEquals(expectedContent, new String(Files.readAllBytes(result2.toPath()), StandardCharsets.UTF_8));
+        assertEquals(expectedContent, Files.readString(result2.toPath(), StandardCharsets.UTF_8));
     }
     
     @Test
@@ -119,31 +122,38 @@ class FileTransferUtilTest {
     void downloadWithRange() throws IOException {
         // 创建测试文件
         String testContent = "这是一个测试文件，用于测试断点续传下载功能。";
-        File testFile = tempDir.resolve("download_test.txt").toFile();
+        byte[] contentBytes = testContent.getBytes(StandardCharsets.UTF_8);
+        File testFile = tempDir.resolve("test.txt").toFile();
         try (FileOutputStream fos = new FileOutputStream(testFile)) {
-            fos.write(testContent.getBytes(StandardCharsets.UTF_8));
+            fos.write(contentBytes);
         }
         
-        // 创建模拟请求和响应
+        // 测试范围下载 - 获取前12个字节（"这是一个"的UTF-8编码长度）
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
+        request.addHeader("Range", "bytes=0-11");  // 修改为正确的UTF-8字节范围
         
-        // 测试完整下载
-        fileTransferUtil.downloadWithRange(request, response, testFile, "download_test.txt");
+        fileTransferUtil.downloadWithRange(request, response, testFile, "test.txt");
         
-        // 断言响应内容正确
-        assertEquals(testContent, response.getContentAsString(StandardCharsets.UTF_8));
+        // 验证响应头
         assertEquals("bytes", response.getHeader("Accept-Ranges"));
+        assertEquals("bytes 0-11/" + testFile.length(), response.getHeader("Content-Range"));
+        assertEquals("12", response.getHeader("Content-Length"));
+        assertEquals(HttpServletResponse.SC_PARTIAL_CONTENT, response.getStatus());
         
-        // 测试范围下载
+        // 验证响应内容
+        String content = response.getContentAsString(StandardCharsets.UTF_8);
+        assertEquals("这是一个", content);
+        
+        // 测试范围下载 - 获取中间部分
         request = new MockHttpServletRequest();
         response = new MockHttpServletResponse();
-        request.addHeader("Range", "bytes=0-5"); // 只请求前6个字节
+        request.addHeader("Range", "bytes=12-23");  // 修改为正确的UTF-8字节范围，只获取"测试文件"
         
-        fileTransferUtil.downloadWithRange(request, response, testFile, "download_test.txt");
+        fileTransferUtil.downloadWithRange(request, response, testFile, "test.txt");
         
-        // 断言响应内容是前6个字节
-        assertEquals(testContent.substring(0, 6), response.getContentAsString(StandardCharsets.UTF_8));
-        assertEquals(206, response.getStatus()); // 206 Partial Content
+        // 验证响应内容
+        content = response.getContentAsString(StandardCharsets.UTF_8);
+        assertEquals("测试文件", content);
     }
 } 

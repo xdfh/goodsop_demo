@@ -124,4 +124,34 @@ public class FileInfo {
     @TableLogic
     @TableField("deleted")
     private Integer deleted;
+
+    /**
+     * 文件是否加密
+     */
+    @TableField("is_encrypted")
+    private Boolean isEncrypted;
+
+    /**
+     * 文件是否压缩
+     */
+    @TableField("is_compressed")
+    private Boolean isCompressed;
+
+    /**
+     * 加密类型（如AES-128/AES-256）
+     */
+    @TableField("encryption_type")
+    private String encryptionType;
+
+    /**
+     * 压缩类型（如GZIP）
+     */
+    @TableField("compression_type")
+    private String compressionType;
+
+    /**
+     * 解压/解密前的原始大小（字节）
+     */
+    @TableField("original_size")
+    private Long originalSize;
 } 

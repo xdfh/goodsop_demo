@@ -9,10 +9,14 @@ import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -85,7 +89,36 @@ public class LogAspect {
                     
             // 根据配置决定是否记录请求参数
             if (logProperties.isIncludeRequestParams()) {
-                requestLog.append("│ 请求参数 : ").append(Arrays.toString(joinPoint.getArgs())).append(LINE_SEPARATOR);
+                try {
+                    // 尝试获取请求参数，使用更安全的方式处理不同类型的参数
+                    String params = Arrays.toString(joinPoint.getArgs());
+                    // 处理特殊类型的参数，避免序列化大文件或流式数据
+                    for (int i = 0; i < joinPoint.getArgs().length; i++) {
+                        Object arg = joinPoint.getArgs()[i];
+                        if (arg instanceof MultipartFile) {
+                            MultipartFile file = (MultipartFile) arg;
+                            // 替换文件内容为文件信息摘要
+                            Map<String, Object> fileInfo = new HashMap<>();
+                            fileInfo.put("fileName", file.getOriginalFilename());
+                            fileInfo.put("fileSize", file.getSize());
+                            fileInfo.put("contentType", file.getContentType());
+                            joinPoint.getArgs()[i] = fileInfo;
+                        } else if (arg instanceof InputStream || arg instanceof OutputStream) {
+                            // 流数据不进行序列化
+                            joinPoint.getArgs()[i] = "【流数据】";
+                        } else if (arg instanceof byte[] && ((byte[]) arg).length > 1024) {
+                            // 大型字节数组不完全序列化
+                            joinPoint.getArgs()[i] = "【字节数组，大小: " + ((byte[]) arg).length + " 字节】";
+                        }
+                    }
+                    
+                    // 将处理后的参数转换为JSON格式
+                    params = objectMapper.writeValueAsString(joinPoint.getArgs());
+                    requestLog.append("│ 请求参数 : ").append(params).append(LINE_SEPARATOR);
+                } catch (Exception e) {
+                    requestLog.append("│ 请求参数 : ").append(Arrays.toString(joinPoint.getArgs())).append(LINE_SEPARATOR);
+                    log.warn("无法将请求参数转换为JSON格式: {}", e.getMessage());
+                }
             }
             
             requestLog.append("└─────────────────────────────────────────────────────┘");

@@ -14,7 +14,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 文件传输工具类
@@ -22,6 +24,11 @@ import java.util.UUID;
 @Slf4j
 @Component
 public class FileTransferUtil {
+
+    /**
+     * 扩展名缓存，用于存储原始文件扩展名
+     */
+    private static final Map<String, String> EXTENSION_CACHE = new ConcurrentHashMap<>();
 
     /**
      * 存储上传的文件
@@ -207,11 +214,31 @@ public class FileTransferUtil {
                     String extension = "";
                     if (fileName.contains(".")) {
                         extension = fileName.substring(fileName.lastIndexOf("."));
+                    } else {
+                        // 如果文件名中没有扩展名，尝试从原始文件名获取
+                        String originalExtension = getOriginalExtensionFromCache(fileName);
+                        if (originalExtension != null && !originalExtension.isEmpty()) {
+                            // 确保扩展名以.开头
+                            extension = originalExtension.startsWith(".") ? originalExtension : "." + originalExtension;
+                            log.info("从缓存获取到原始扩展名: {}", extension);
+                        }
                     }
                     finalFileName = UUID.randomUUID().toString() + extension;
                     log.info("分块上传使用随机文件名: {}", finalFileName);
                 } else {
                     log.info("分块上传使用标准文件名: {}", finalFileName);
+                    
+                    // 即使是标准文件名，也检查是否包含扩展名
+                    if (!finalFileName.contains(".")) {
+                        // 尝试从缓存获取原始扩展名
+                        String originalExtension = getOriginalExtensionFromCache(fileName);
+                        if (originalExtension != null && !originalExtension.isEmpty()) {
+                            // 确保扩展名以.开头
+                            String extension = originalExtension.startsWith(".") ? originalExtension : "." + originalExtension;
+                            finalFileName += extension;
+                            log.info("为标准格式文件名添加扩展名: {}", finalFileName);
+                        }
+                    }
                 }
                 
                 Path targetPath = dirPath.resolve(finalFileName);
@@ -385,70 +412,73 @@ public class FileTransferUtil {
             response.setHeader("Content-Disposition", "attachment; filename=\"" + 
                     URLEncoder.encode(filename, "UTF-8").replaceAll("\\+", "%20") + "\"");
             
-            // 分块下载
+            // 处理范围请求
+            long start = 0;
+            long end = fileLength - 1;
+            
             if (range != null && range.startsWith("bytes=")) {
-                range = range.substring("bytes=".length());
-                long start = 0, end = fileLength - 1;
-                
-                if (range.startsWith("-")) {
-                    // 如果范围是 -100，表示最后100个字节
-                    start = fileLength - Long.parseLong(range.substring(1));
-                } else {
-                    String[] parts = range.split("-");
-                    start = Long.parseLong(parts[0]);
-                    if (parts.length > 1 && !parts[1].isEmpty()) {
-                        end = Long.parseLong(parts[1]);
-                    }
-                }
-                
-                // 检查范围有效性
-                if (start < 0 || end >= fileLength || start > end) {
-                    response.setStatus(HttpServletResponse.SC_REQUESTED_RANGE_NOT_SATISFIABLE);
-                    response.setHeader("Content-Range", "bytes */" + fileLength);
-                    return;
-                }
-                
-                // 设置分块下载响应头
-                response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
-                response.setHeader("Content-Range", "bytes " + start + "-" + end + "/" + fileLength);
-                response.setHeader("Content-Length", String.valueOf(end - start + 1));
-                
-                // 写入文件数据
-                try (RandomAccessFile randomAccessFile = new RandomAccessFile(file, "r");
-                     OutputStream os = response.getOutputStream()) {
-                    
-                    randomAccessFile.seek(start);
-                    long remaining = end - start + 1;
-                    byte[] buffer = new byte[4096];
-                    
-                    while (remaining > 0) {
-                        int read = randomAccessFile.read(buffer, 0, (int) Math.min(buffer.length, remaining));
-                        if (read == -1) {
-                            break;
-                        }
-                        os.write(buffer, 0, read);
-                        remaining -= read;
-                    }
-                }
-            } else {
-                // 普通下载
-                response.setHeader("Content-Length", String.valueOf(fileLength));
-                
-                // 写入文件数据
-                try (FileInputStream fis = new FileInputStream(file);
-                     BufferedInputStream bis = new BufferedInputStream(fis);
-                     OutputStream os = response.getOutputStream()) {
-                    
-                    byte[] buffer = new byte[4096];
-                    int bytesRead;
-                    while ((bytesRead = bis.read(buffer)) != -1) {
-                        os.write(buffer, 0, bytesRead);
-                    }
+                String[] ranges = range.substring(6).split("-");
+                start = Long.parseLong(ranges[0]);
+                if (ranges.length > 1 && !ranges[1].isEmpty()) {
+                    end = Long.parseLong(ranges[1]);
                 }
             }
-        } catch (IOException e) {
+            
+            // 确保范围有效
+            if (start < 0) start = 0;
+            if (end >= fileLength) end = fileLength - 1;
+            if (start > end) start = end;
+            
+            long contentLength = end - start + 1;
+            response.setHeader("Content-Length", String.valueOf(contentLength));
+            response.setHeader("Content-Range", String.format("bytes %d-%d/%d", start, end, fileLength));
+            response.setStatus(HttpServletResponse.SC_PARTIAL_CONTENT);
+            
+            // 写入文件内容
+            try (RandomAccessFile raf = new RandomAccessFile(file, "r");
+                 OutputStream out = new BufferedOutputStream(response.getOutputStream())) {
+                
+                byte[] buffer = new byte[4096];
+                raf.seek(start);
+                long remaining = contentLength;
+                
+                while (remaining > 0) {
+                    int read = raf.read(buffer, 0, (int) Math.min(buffer.length, remaining));
+                    if (read == -1) break;
+                    out.write(buffer, 0, read);
+                    remaining -= read;
+                }
+                out.flush();
+            }
+            
+        } catch (Exception e) {
             log.error("文件下载失败: {}", e.getMessage(), e);
-            throw new RuntimeException("文件下载失败", e);
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
+    }
+    
+    /**
+     * 保存原始文件扩展名到缓存
+     * 
+     * @param fileName 文件名
+     * @param extension 扩展名
+     */
+    public void saveOriginalExtension(String fileName, String extension) {
+        if (fileName != null && extension != null && !extension.isEmpty()) {
+            EXTENSION_CACHE.put(fileName, extension);
+            log.info("保存原始文件扩展名到缓存: {} -> {}", fileName, extension);
+        }
+    }
+    
+    /**
+     * 从缓存中获取原始文件扩展名
+     * 
+     * @param fileName 文件名
+     * @return 原始扩展名，如果不存在则返回null
+     */
+    private String getOriginalExtensionFromCache(String fileName) {
+        String extension = EXTENSION_CACHE.get(fileName);
+        log.info("从缓存获取原始文件扩展名: {} -> {}", fileName, extension);
+        return extension;
     }
 } 

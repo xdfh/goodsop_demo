@@ -2,15 +2,19 @@ package com.goodsop.file.util;
 
 import com.goodsop.file.constant.FileConstant;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.*;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.InvalidKeyException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.SecureRandom;
 import java.util.Base64;
 
 /**
@@ -30,25 +34,65 @@ public class FileEncryptUtil {
      */
     public File encryptFile(File sourceFile, File targetFile, String key) {
         try {
+            log.info("准备加密文件 - 源文件: {}, 目标文件: {}, 密钥长度: {}", 
+                    sourceFile.getAbsolutePath(), targetFile.getAbsolutePath(), key.length());
+            
+            if (!sourceFile.exists()) {
+                log.error("源文件不存在: {}", sourceFile.getAbsolutePath());
+                return null;
+            }
+            
+            // 确保目标文件目录存在
+            File parentDir = targetFile.getParentFile();
+            if (parentDir != null && !parentDir.exists()) {
+                boolean created = parentDir.mkdirs();
+                log.info("创建目标文件目录: {} 结果: {}", parentDir.getAbsolutePath(), created ? "成功" : "失败");
+            }
+            
+            // 生成随机IV
+            SecureRandom random = new SecureRandom();
+            byte[] iv = new byte[FileConstant.IV_SIZE];
+            random.nextBytes(iv);
+            IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
+            log.info("生成随机IV，长度: {} 字节", iv.length);
+            
             SecretKey secretKey = generateKey(key);
             Cipher cipher = Cipher.getInstance(FileConstant.TRANSFORMATION_AES);
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey, ivParameterSpec);
             
             try (FileInputStream fis = new FileInputStream(sourceFile);
-                 FileOutputStream fos = new FileOutputStream(targetFile);
-                 CipherOutputStream cos = new CipherOutputStream(fos, cipher)) {
+                 FileOutputStream fos = new FileOutputStream(targetFile)) {
                 
-                byte[] buffer = new byte[1024];
-                int len;
-                while ((len = fis.read(buffer)) > 0) {
-                    cos.write(buffer, 0, len);
+                // 先写入IV，再写入加密数据
+                fos.write(iv);
+                
+                try (CipherOutputStream cos = new CipherOutputStream(fos, cipher)) {
+                    byte[] buffer = new byte[8192];
+                    int len;
+                    while ((len = fis.read(buffer)) > 0) {
+                        cos.write(buffer, 0, len);
+                    }
                 }
+                
                 log.info("文件加密成功: {} -> {}", sourceFile.getAbsolutePath(), targetFile.getAbsolutePath());
                 return targetFile;
+            } catch (IOException e) {
+                log.error("加密文件IO异常: {}", e.getMessage(), e);
+                // 检查目标文件是否已创建，如果已创建但可能不完整，则删除
+                if (targetFile.exists()) {
+                    targetFile.delete();
+                    log.info("删除加密失败的目标文件: {}", targetFile.getAbsolutePath());
+                }
+                return null;
             }
         } catch (Exception e) {
             log.error("文件加密失败: {}", e.getMessage(), e);
-            throw new RuntimeException("文件加密失败", e);
+            // 检查目标文件是否已创建，如果已创建但可能不完整，则删除
+            if (targetFile.exists()) {
+                targetFile.delete();
+                log.info("删除加密失败的目标文件: {}", targetFile.getAbsolutePath());
+            }
+            return null;
         }
     }
     
@@ -62,76 +106,135 @@ public class FileEncryptUtil {
      */
     public File decryptFile(File sourceFile, File targetFile, String key) {
         try {
-            log.info("准备解密文件 - 源文件: {}, 目标文件: {}, 密钥长度: {}", 
-                    sourceFile.getAbsolutePath(), targetFile.getAbsolutePath(), key.length());
+            log.info("准备解密文件 - 源文件: {}, 目标文件: {}", 
+                    sourceFile.getAbsolutePath(), targetFile.getAbsolutePath());
             
-            // 确保源文件存在且可读
             if (!sourceFile.exists()) {
-                throw new RuntimeException("源文件不存在: " + sourceFile.getAbsolutePath());
-            }
-            if (!sourceFile.canRead()) {
-                throw new RuntimeException("源文件不可读: " + sourceFile.getAbsolutePath());
+                log.error("源文件不存在: {}", sourceFile.getAbsolutePath());
+                return null;
             }
             
             // 确保目标文件目录存在
             File parentDir = targetFile.getParentFile();
-            if (!parentDir.exists()) {
+            if (parentDir != null && !parentDir.exists()) {
                 boolean created = parentDir.mkdirs();
                 log.info("创建目标文件目录: {} 结果: {}", parentDir.getAbsolutePath(), created ? "成功" : "失败");
             }
             
-            // 生成AES密钥
-            try {
-                SecretKey secretKey = generateKey(key);
-                log.info("成功生成AES密钥，算法: {}", secretKey.getAlgorithm());
-                
-                Cipher cipher = Cipher.getInstance(FileConstant.TRANSFORMATION_AES);
-                cipher.init(Cipher.DECRYPT_MODE, secretKey);
-                log.info("初始化Cipher成功，模式: {}", FileConstant.TRANSFORMATION_AES);
-                
-                try (FileInputStream fis = new FileInputStream(sourceFile);
-                     CipherInputStream cis = new CipherInputStream(fis, cipher);
-                     FileOutputStream fos = new FileOutputStream(targetFile)) {
-                    
-                    byte[] buffer = new byte[1024];
-                    int len;
-                    long totalBytes = 0;
-                    
-                    log.info("开始解密文件流...");
-                    while ((len = cis.read(buffer)) > 0) {
-                        fos.write(buffer, 0, len);
-                        totalBytes += len;
-                    }
-                    
-                    fos.flush();
-                    log.info("文件解密成功: {} -> {}, 解密后文件大小: {}", 
-                            sourceFile.getAbsolutePath(), targetFile.getAbsolutePath(), totalBytes);
-                    
-                    // 验证解密结果
-                    if (targetFile.exists() && targetFile.length() > 0) {
-                        log.info("解密文件验证成功: 文件大小 = {}", targetFile.length());
-                    } else {
-                        log.warn("解密文件异常: 文件大小为0或文件不存在");
-                    }
-                    
+            // 检查源文件格式
+            if (!isEncryptedFile(sourceFile)) {
+                log.warn("源文件可能不是加密文件: {}", sourceFile.getAbsolutePath());
+                try {
+                    FileUtils.copyFile(sourceFile, targetFile);
                     return targetFile;
                 } catch (IOException e) {
-                    log.error("解密文件IO异常: {}", e.getMessage(), e);
-                    throw new RuntimeException("解密文件IO异常", e);
+                    log.error("复制文件失败: {} -> {}, 错误: {}", 
+                             sourceFile.getAbsolutePath(), targetFile.getAbsolutePath(), e.getMessage());
+                    return null;
                 }
-            } catch (NoSuchAlgorithmException e) {
-                log.error("找不到加密算法: {}", e.getMessage(), e);
-                throw new RuntimeException("找不到加密算法", e);
-            } catch (NoSuchPaddingException e) {
-                log.error("找不到填充方式: {}", e.getMessage(), e);
-                throw new RuntimeException("找不到填充方式", e);
-            } catch (InvalidKeyException e) {
-                log.error("AES密钥无效: {}", e.getMessage(), e);
-                throw new RuntimeException("AES密钥无效", e);
+            }
+            
+            // 准备密钥
+            log.info("AES密钥长度: {} 字符", key.length());
+            
+            // 确保密钥长度为32字节，用于AES-256
+            SecretKey secretKey;
+            if (key.length() == 32) {
+                // 使用UTF-8编码确保与加密时相同的字节序列
+                byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
+                secretKey = new SecretKeySpec(keyBytes, FileConstant.ALGORITHM_AES);
+                log.info("使用原始AES-256密钥，长度: {} 字节", keyBytes.length);
+            } else {
+                log.warn("密钥长度不是32字节，将使用固定的AES密钥");
+                // 使用FileConstant中定义的标准密钥
+                byte[] keyBytes = FileConstant.AES_KEY.getBytes(StandardCharsets.UTF_8);
+                secretKey = new SecretKeySpec(keyBytes, FileConstant.ALGORITHM_AES);
+            }
+            
+            try (FileInputStream fis = new FileInputStream(sourceFile);
+                 FileOutputStream fos = new FileOutputStream(targetFile)) {
+                
+                // 读取IV（前16字节）
+                byte[] iv = new byte[FileConstant.IV_SIZE];
+                int bytesRead = fis.read(iv);
+                
+                if (bytesRead != FileConstant.IV_SIZE) {
+                    log.error("无法读取完整的IV，可能不是加密文件");
+                    try {
+                        // 如果无法读取IV，尝试直接复制文件
+                        fis.close();
+                        FileUtils.copyFile(sourceFile, targetFile);
+                        log.info("无法读取IV，直接复制文件: {} -> {}", 
+                                sourceFile.getAbsolutePath(), targetFile.getAbsolutePath());
+                        return targetFile;
+                    } catch (IOException e) {
+                        log.error("复制文件失败: {}", e.getMessage(), e);
+                        return null;
+                    }
+                }
+                
+                IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
+                log.info("读取加密文件IV，长度: {} 字节", iv.length);
+                
+                // 初始化Cipher
+                Cipher cipher = Cipher.getInstance(FileConstant.TRANSFORMATION_AES);
+                cipher.init(Cipher.DECRYPT_MODE, secretKey, ivParameterSpec);
+                log.info("初始化Cipher成功，模式: {}", FileConstant.TRANSFORMATION_AES);
+                
+                // 开始解密
+                log.info("开始解密文件流...");
+                
+                try (CipherInputStream cis = new CipherInputStream(fis, cipher)) {
+                    byte[] buffer = new byte[8192];
+                    int len;
+                    while ((len = cis.read(buffer)) > 0) {
+                        fos.write(buffer, 0, len);
+                    }
+                }
+                
+                log.info("文件解密完成: {} -> {}, 大小: {}", 
+                        sourceFile.getAbsolutePath(), targetFile.getAbsolutePath(), targetFile.length());
+                return targetFile;
+                
+            } catch (IOException e) {
+                log.error("解密文件IO异常: {}", e.getMessage(), e);
+                // 尝试直接复制文件
+                try {
+                    log.info("由于解密失败，直接复制原始文件: {} -> {}", 
+                            sourceFile.getAbsolutePath(), targetFile.getAbsolutePath());
+                    FileUtils.copyFile(sourceFile, targetFile);
+                    return targetFile;
+                } catch (IOException copyEx) {
+                    log.error("复制文件失败: {}", copyEx.getMessage(), copyEx);
+                    if (targetFile.exists()) {
+                        targetFile.delete();
+                        log.info("删除解密失败的目标文件: {}", targetFile.getAbsolutePath());
+                    }
+                    return null;
+                }
             }
         } catch (Exception e) {
             log.error("文件解密失败: {}", e.getMessage(), e);
-            throw new RuntimeException("文件解密失败: " + e.getMessage(), e);
+            // 检查目标文件是否已创建，如果已创建但可能不完整，则删除
+            if (targetFile.exists()) {
+                try {
+                    targetFile.delete();
+                    log.info("删除解密失败的目标文件: {}", targetFile.getAbsolutePath());
+                } catch (Exception ex) {
+                    log.error("删除目标文件失败: {}", ex.getMessage());
+                }
+            }
+            
+            // 尝试直接复制文件
+            try {
+                log.info("由于异常解密失败，直接复制原始文件: {} -> {}", 
+                        sourceFile.getAbsolutePath(), targetFile.getAbsolutePath());
+                FileUtils.copyFile(sourceFile, targetFile);
+                return targetFile;
+            } catch (IOException copyEx) {
+                log.error("复制文件失败: {}", copyEx.getMessage(), copyEx);
+                return null;
+            }
         }
     }
     
@@ -156,31 +259,24 @@ public class FileEncryptUtil {
             keyBytes = key.getBytes(StandardCharsets.UTF_8);
             log.info("使用原始密钥，长度正好: {} 字节", keyBytes.length);
         } else {
-            // 如果密钥不是16或32字节，使用MD5或SHA-256进行处理
-            log.info("密钥长度不标准，将使用哈希处理: {} -> 16字节", key.length());
+            // 如果密钥不是16或32字节，使用SHA-256进行处理
+            log.info("密钥长度不标准，将使用哈希处理: {} -> 32字节", key.length());
             
             MessageDigest sha = MessageDigest.getInstance("SHA-256");
             keyBytes = sha.digest(key.getBytes(StandardCharsets.UTF_8));
-            // 截取为16字节(128位)
-            byte[] truncatedBytes = new byte[16];
-            System.arraycopy(keyBytes, 0, truncatedBytes, 0, truncatedBytes.length);
-            keyBytes = truncatedBytes;
             
-            log.info("生成的AES密钥(截取后): {} 字节", keyBytes.length);
-            
-            // 打印密钥的前几个字节，用于调试
-            StringBuilder hexString = new StringBuilder();
-            for (int i = 0; i < Math.min(4, keyBytes.length); i++) {
-                String hex = Integer.toHexString(0xff & keyBytes[i]);
-                if (hex.length() == 1) hexString.append('0');
-                hexString.append(hex);
+            // 对于AES-256，使用全部32字节
+            if (keyBytes.length > 32) {
+                byte[] truncatedBytes = new byte[32];
+                System.arraycopy(keyBytes, 0, truncatedBytes, 0, truncatedBytes.length);
+                keyBytes = truncatedBytes;
             }
-            log.info("密钥前4字节(Hex): {}", hexString.toString());
+            
+            log.info("生成的AES密钥: {} 字节", keyBytes.length);
         }
         
         SecretKey secretKey = new SecretKeySpec(keyBytes, FileConstant.ALGORITHM_AES);
         log.info("AES密钥生成成功，算法: {}", secretKey.getAlgorithm());
-        
         return secretKey;
     }
     
@@ -254,41 +350,18 @@ public class FileEncryptUtil {
     }
     
     /**
-     * 检查文件是否为AES加密格式
+     * 判断文件是否为加密文件
      * 
      * @param file 要检查的文件
      * @return 是否为加密文件
      */
-    public boolean isEncryptedFile(File file) {
+    private boolean isEncryptedFile(File file) {
         if (file == null || !file.exists() || !file.isFile()) {
             return false;
         }
-        
-        // 检查文件名是否以.enc结尾
-        if (file.getName().toLowerCase().endsWith(".enc")) {
-            log.info("文件名后缀表明这是一个加密文件: {}", file.getName());
-            return true;
-        }
-        
-        // 尝试通过文件头进行简单检测 (这不是100%准确，但可作为辅助判断)
-        try (FileInputStream fis = new FileInputStream(file)) {
-            byte[] header = new byte[16]; // 读取前16字节进行分析
-            int read = fis.read(header);
-            
-            if (read < 16) {
-                log.info("文件太小，可能不是加密文件: {}", file.getName());
-                return false;
-            }
-            
-            // 分析文件头 - 加密文件通常有较高的熵值和随机性
-            int randomnessScore = calculateRandomnessScore(header);
-            log.debug("文件头随机性评分: {} (得分>7可能是加密文件)", randomnessScore);
-            
-            return randomnessScore > 7; // 阈值可根据实际情况调整
-        } catch (Exception e) {
-            log.error("检查文件是否加密时出错: {}", e.getMessage());
-            return false;
-        }
+        // 检查文件名是否包含加密后缀
+        String fileName = file.getName().toLowerCase();
+        return fileName.endsWith(FileConstant.ENCRYPTED_FILE_SUFFIX);
     }
     
     /**

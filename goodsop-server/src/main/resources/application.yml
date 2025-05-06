@@ -1,3 +1,19 @@
 spring:
   profiles:
     active: dev 
+
+goodsop:
+  file:
+    storage:
+      path: storage/files
+      base-url: http://localhost:8080/files
+      server-host: localhost
+      server-port: 8080
+      context-path: /api
+      default-encryption-type: AES-256
+      default-compression-type: GZIP
+    processing:
+      enable-decrypt: true
+      enable-decompress: true
+      encryption-key: your-base64-encoded-key
+      max-file-size: 104857600  # 100MB 

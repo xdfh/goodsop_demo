@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * 文件模块配置属性
+ * 文件服务配置
  */
 @Data
 @Component
@@ -30,30 +30,15 @@ public class FileProperties {
         /**
          * 存储路径
          */
-        private String path;
+        private String path = "D:/file/";
         
         /**
-         * 访问基础URL
+         * 基础URL
          */
         private String baseUrl;
         
         /**
-         * 是否启用解密
-         */
-        private Boolean enableDecrypt = true;
-        
-        /**
-         * 是否启用解压缩
-         */
-        private Boolean enableDecompress = true;
-        
-        /**
-         * AES加密密钥
-         */
-        private String aesKey;
-        
-        /**
-         * 服务器主机地址
+         * 服务器主机名
          */
         private String serverHost = "localhost";
         
@@ -66,6 +51,31 @@ public class FileProperties {
          * 上下文路径
          */
         private String contextPath = "";
+        
+        /**
+         * 默认加密类型 (如果未指定)
+         */
+        private String defaultEncryptionType = "AES";
+        
+        /**
+         * 默认压缩类型 (如果未指定)
+         */
+        private String defaultCompressionType = "GZIP";
+        
+        /**
+         * AES密钥 (用于加密/解密文件)
+         */
+        private String aesKey = "1234567890abcdef1234567890abcdef";
+        
+        /**
+         * 是否启用解密 (将尝试解密带有.enc后缀的文件)
+         */
+        private Boolean enableDecrypt = true;
+        
+        /**
+         * 是否启用解压缩 (将尝试解压缩带有.gz后缀的文件)
+         */
+        private Boolean enableDecompress = true;
     }
     
     /**
