@@ -120,4 +120,8 @@ goodsop:
       server-port: 8080
       context-path: /api
     upload:
-      max-size: 100MB 
+      max-size: 100MB
+    cleanup:
+      enabled: true
+      cron: "0 0 1 * * ?"  # 每天凌晨1点执行
+      temp-file-max-age: 24  # 临时文件最大保留时间（小时） 

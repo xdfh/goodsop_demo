@@ -58,4 +58,8 @@ goodsop:
       enable-decompress: true
       aes-key: 1234567890abcdef1234567890abcdef
     upload:
-      max-size: 100MB 
+      max-size: 100MB
+    cleanup:
+      enabled: true
+      cron: "0 0 1 * * ?"  # 每天凌晨1点执行
+      temp-file-max-age: 24  # 临时文件最大保留时间（小时） 

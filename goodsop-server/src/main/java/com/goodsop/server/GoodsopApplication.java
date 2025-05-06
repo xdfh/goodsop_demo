@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * 应用程序启动类
@@ -13,6 +14,7 @@ import org.mybatis.spring.annotation.MapperScan;
 @EnableConfigurationProperties
 @ComponentScan(basePackages = {"com.goodsop"})
 @MapperScan(basePackages = {"com.goodsop.**.mapper"})
+@EnableScheduling
 public class GoodsopApplication {
 
     public static void main(String[] args) {

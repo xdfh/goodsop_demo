@@ -23,6 +23,11 @@ public class FileProperties {
     private Upload upload = new Upload();
     
     /**
+     * 清理配置
+     */
+    private Cleanup cleanup = new Cleanup();
+    
+    /**
      * 存储配置
      */
     @Data
@@ -87,5 +92,26 @@ public class FileProperties {
          * 最大文件大小
          */
         private String maxSize;
+    }
+    
+    /**
+     * 清理配置
+     */
+    @Data
+    public static class Cleanup {
+        /**
+         * 是否启用清理
+         */
+        private Boolean enabled = true;
+        
+        /**
+         * 定时任务表达式
+         */
+        private String cron = "0 0 1 * * ?";  // 默认每天凌晨1点执行
+        
+        /**
+         * 临时文件最大保留时间（小时）
+         */
+        private Integer tempFileMaxAge = 24;
     }
 } 
