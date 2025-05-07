@@ -34,6 +34,12 @@
             <artifactId>spring-boot-starter</artifactId>
         </dependency>
         
+        <!-- Spring Boot Web依赖，包含了jakarta.servlet -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        
         <!-- 工具类依赖 -->
         <dependency>
             <groupId>org.projectlombok</groupId>
