@@ -196,17 +196,25 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
             fileInfo.setFileMd5(md5);
             fileInfo.setUploadTime(LocalDateTime.now());
             
-            // 设置新增的加密和压缩状态字段
-            // 即使解密失败也保留原始的加密标识
-            fileInfo.setIsEncrypted(isEncrypted != null && isEncrypted == 1);
-            fileInfo.setIsCompressed(isCompressed != null && isCompressed == 1);
+            // 设置加密和压缩状态字段
+            // 存储文件是否仍然处于加密状态 - 如果客户端标记为加密但未解密，或解密失败
+            boolean stillEncrypted = (isEncrypted != null && isEncrypted == 1) && !processedFile.equals(tempFile);
+            // 存储文件是否仍然处于压缩状态 - 如果客户端标记为压缩但未解压，或解压失败
+            boolean stillCompressed = (isCompressed != null && isCompressed == 1) && !processedFile.equals(tempFile);
+            
+            fileInfo.setIsEncrypted(stillEncrypted);
+            fileInfo.setIsCompressed(stillCompressed);
+            
+            log.info("文件最终状态: 是否加密={}, 是否压缩={}", stillEncrypted, stillCompressed);
             
             // 设置加密和压缩类型
             if (fileInfo.getIsEncrypted()) {
                 fileInfo.setEncryptionType(fileProperties.getStorage().getDefaultEncryptionType());
+                log.info("文件保持加密状态，设置加密类型: {}", fileInfo.getEncryptionType());
             }
             if (fileInfo.getIsCompressed()) {
                 fileInfo.setCompressionType(fileProperties.getStorage().getDefaultCompressionType());
+                log.info("文件保持压缩状态，设置压缩类型: {}", fileInfo.getCompressionType());
             }
             
             // 设置原始文件大小
@@ -271,6 +279,13 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
     public FileInfo uploadFileChunk(MultipartFile file, String fileName, String deviceId, 
                                   Integer chunk, Integer chunks, Integer isEncrypted, Integer isCompressed, String originalExtension) {
         try {
+            // 记录配置项值，便于排查问题
+            log.info("===== 文件上传配置检查 =====");
+            log.info("解密配置: fileProperties.getStorage().getEnableDecrypt()={}", fileProperties.getStorage().getEnableDecrypt());
+            log.info("解压配置: fileProperties.getStorage().getEnableDecompress()={}", fileProperties.getStorage().getEnableDecompress());
+            log.info("上传参数: isEncrypted={}, isCompressed={}", isEncrypted, isCompressed);
+            log.info("===========================");
+            
             // 获取当前日期作为子目录
             String dateDir = LocalDate.now().format(DateTimeFormatter.ofPattern(FileConstant.DATE_FORMAT_YYYYMMDD));
             // 确保路径分隔符正确
@@ -342,6 +357,14 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
             
             // 处理合并后的文件（解密和解压缩）
             File processedFile = tempFile;
+            // 记录是否真的处理了文件
+            boolean actuallyDecrypted = false;
+            boolean actuallyDecompressed = false;
+            
+            log.info("检查文件是否需要处理: isEncrypted={}, configEnableDecrypt={}, isCompressed={}, configEnableDecompress={}",
+                    isEncrypted, fileProperties.getStorage().getEnableDecrypt(),
+                    isCompressed, fileProperties.getStorage().getEnableDecompress());
+            
             if ((isEncrypted != null && isEncrypted == 1 && fileProperties.getStorage().getEnableDecrypt()) ||
                 (isCompressed != null && isCompressed == 1 && fileProperties.getStorage().getEnableDecompress())) {
                 
@@ -356,6 +379,7 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
                         File decryptedResult = fileEncryptUtil.decryptFile(tempFile, decryptedFile, fileProperties.getStorage().getAesKey());
                         if (decryptedResult != null && decryptedResult.exists()) {
                             processedFile = decryptedResult;
+                            actuallyDecrypted = true;
                             log.info("文件解密完成: {}, 大小: {}", processedFile.getAbsolutePath(), processedFile.length());
                         } else {
                             log.warn("文件解密失败或解密结果文件不存在，将保留原始加密文件: {}", tempFile.getAbsolutePath());
@@ -367,6 +391,8 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
                         // 确保processedFile是tempFile，而不是null
                         processedFile = tempFile;
                     }
+                } else if (isEncrypted != null && isEncrypted == 1) {
+                    log.info("文件标记为加密(isEncrypted=1)，但系统配置禁用解密(enable-decrypt=false)，不进行解密处理");
                 }
                 
                 if (isCompressed != null && isCompressed == 1 && fileProperties.getStorage().getEnableDecompress()) {
@@ -378,6 +404,7 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
                         File decompressedResult = fileCompressUtil.decompressFile(tempProcessedFile, decompressedFile);
                         if (decompressedResult != null && decompressedResult.exists()) {
                             processedFile = decompressedResult;
+                            actuallyDecompressed = true;
                             log.info("文件解压完成: {}, 大小: {}", processedFile.getAbsolutePath(), processedFile.length());
                             
                             // 如果解压后文件与解密后文件不同，可以删除中间文件
@@ -393,11 +420,15 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
                         log.warn("文件解压过程出现异常，将保留原始压缩文件: {}, 异常: {}", processedFile.getAbsolutePath(), e.getMessage());
                         // processedFile保持不变
                     }
+                } else if (isCompressed != null && isCompressed == 1) {
+                    log.info("文件标记为压缩(isCompressed=1)，但系统配置禁用解压(enable-decompress=false)，不进行解压处理");
                 }
+            } else {
+                log.info("文件不需要处理，或者系统配置禁用了相应的处理");
             }
             
             // 确定最终文件名（如果已经解密，原始文件名可能包含.enc后缀，需要移除）
-            if (isEncrypted != null && isEncrypted == 1 && fileProperties.getStorage().getEnableDecrypt()
+            if (isEncrypted != null && isEncrypted == 1 && actuallyDecrypted
                 && finalFileName.toLowerCase().endsWith(".enc") && !processedFile.equals(tempFile)) {
                 // 只有解密成功的情况下才移除.enc后缀
                 finalFileName = finalFileName.substring(0, finalFileName.length() - 4);
@@ -405,7 +436,7 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
             }
             
             // 移除压缩后缀
-            if (isCompressed != null && isCompressed == 1 && fileProperties.getStorage().getEnableDecompress()) {
+            if (isCompressed != null && isCompressed == 1 && actuallyDecompressed) {
                 // 检查是否是压缩格式的后缀，如果是则移除
                 String lcFilename = finalFileName.toLowerCase();
                 if (lcFilename.endsWith(".gz") || lcFilename.endsWith(".gzip")) {
@@ -450,17 +481,25 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
             fileInfo.setFileMd5(calculateFileMd5(targetFile));
             fileInfo.setUploadTime(LocalDateTime.now());
             
-            // 设置新增的加密和压缩状态字段
-            // 即使解密失败也保留原始的加密标识
-            fileInfo.setIsEncrypted(isEncrypted != null && isEncrypted == 1);
-            fileInfo.setIsCompressed(isCompressed != null && isCompressed == 1);
+            // 设置加密和压缩状态字段
+            // 存储文件是否仍然处于加密状态 - 如果客户端标记为加密但未解密，或解密失败
+            boolean stillEncrypted = (isEncrypted != null && isEncrypted == 1) && !actuallyDecrypted;
+            // 存储文件是否仍然处于压缩状态 - 如果客户端标记为压缩但未解压，或解压失败
+            boolean stillCompressed = (isCompressed != null && isCompressed == 1) && !actuallyDecompressed;
+            
+            fileInfo.setIsEncrypted(stillEncrypted);
+            fileInfo.setIsCompressed(stillCompressed);
+            
+            log.info("文件最终状态: 是否加密={}, 是否压缩={}", stillEncrypted, stillCompressed);
             
             // 设置加密和压缩类型
             if (fileInfo.getIsEncrypted()) {
                 fileInfo.setEncryptionType(fileProperties.getStorage().getDefaultEncryptionType());
+                log.info("文件保持加密状态，设置加密类型: {}", fileInfo.getEncryptionType());
             }
             if (fileInfo.getIsCompressed()) {
                 fileInfo.setCompressionType(fileProperties.getStorage().getDefaultCompressionType());
+                log.info("文件保持压缩状态，设置压缩类型: {}", fileInfo.getCompressionType());
             }
             
             // 记录原始文件大小（如果有）

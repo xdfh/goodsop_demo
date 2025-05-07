@@ -122,7 +122,7 @@ goodsop:
     storage:
       path: D:/file/
       enable-decrypt: true
-      enable-decompress: false
+      enable-decompress: true
       aes-key: 1234567890abcdef1234567890abcdef
       server-host: 192.168.1.30
       server-port: 8080
