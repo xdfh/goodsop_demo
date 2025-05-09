@@ -1,8 +1,16 @@
 spring:
   profiles:
-    active: dev 
+    active: dev
+    include: iot
+  kafka:
+    bootstrap-servers: localhost:29092,localhost:39092
+    listener:
+      missing-topics-fatal: true
+    auto-startup: true
 
 goodsop:
+  iot:
+    enabled: true
   file:
     storage:
       path: storage/files

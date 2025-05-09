@@ -1,36 +1,6 @@
-
-docker network create emqx-cluster-net
-
-docker network create --subnet=192.168.100.0/24 emqx-cluster-net
-
-docker run -d --name emqx-node1 -e "EMQX_NODE_NAME=emqx@node1.emqx-cluster"   --network emqx-cluster-net  --network-alias node1.emqx-cluster   -p 1883:1883 -p 8083:8083 -p 18083:18083   emqx/emqx:5.8.6
-
-docker run -d --name emqx-node2   -e "EMQX_NODE_NAME=emqx@node2.emqx-cluster"   --network emqx-cluster-net   --network-alias node2.emqx-cluster   emqx/emqx:5.8.6
-
-docker run -d --name emqx-node3   -e "EMQX_NODE_NAME=emqx@node3.emqx-cluster"   --network emqx-cluster-net   --network-alias node3.emqx-cluster   emqx/emqx:5.8.6
-
-docker exec emqx-node2  emqx ctl cluster join emqx@node1.emqx-cluster
-
-docker exec emqx-node3  emqx ctl cluster join emqx@node1.emqx-cluster
-
-====================================================
-
-docker run -d --name postgres-win  -p 65432:5432  -e POSTGRES_USER=post  -e POSTGRES_PASSWORD='admin@2025' -v D:\docker_data\postgres:/var/lib/postgresql/data  postgres:latest
-
-=====================================================
-
-docker-compose.yml 
 networks:
   kafka-net:
     driver: bridge
-
-volumes:
-  kafka1_data:
-    driver: local
-  kafka2_data:
-    driver: local
-  kafka3_data:
-    driver: local
 
 services:
   kafka1:
@@ -40,7 +10,7 @@ services:
     ports:
       - "39092:29092"  # External client port for kafka1
     volumes:
-      - kafka1_data:/bitnami/kafka
+      - D:\docker\kafka_cluster\node1:/bitnami/kafka
     environment:
       - KAFKA_CFG_PROCESS_ROLES=broker,controller
       - KAFKA_CFG_NODE_ID=1
@@ -69,7 +39,7 @@ services:
     ports:
       - "39093:29092" # External client port for kafka2
     volumes:
-      - kafka2_data:/bitnami/kafka
+      - D:\docker\kafka_cluster\node2:/bitnami/kafka
     environment:
       - KAFKA_CFG_PROCESS_ROLES=broker,controller
       - KAFKA_CFG_NODE_ID=2
@@ -100,7 +70,7 @@ services:
     ports:
       - "39094:29092" # External client port for kafka3
     volumes:
-      - kafka3_data:/bitnami/kafka
+      - D:\docker\kafka_cluster\node3:/bitnami/kafka
     environment:
       - KAFKA_CFG_PROCESS_ROLES=broker,controller
       - KAFKA_CFG_NODE_ID=3
