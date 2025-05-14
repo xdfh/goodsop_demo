@@ -132,4 +132,18 @@ goodsop:
     cleanup:
       enabled: true
       cron: "0 0 1 * * ?"  # 每天凌晨1点执行
-      temp-file-max-age: 24  # 临时文件最大保留时间（小时） 
+      temp-file-max-age: 24  # 临时文件最大保留时间（小时）
+
+
+# EMQX配置
+emqx:
+  mqtt:
+    host: tcp://192.168.1.30:1883
+    username: admin
+    password: admin@2025
+    client-id: goodsop-iot-${random.value}
+    # Topic配置
+    topics:
+      status: /dev/+/+/+/+/base/status
+      event: /dev/+/+/+/+/base/event
+      command-response: /dev/+/+/+/+/base/command/response
