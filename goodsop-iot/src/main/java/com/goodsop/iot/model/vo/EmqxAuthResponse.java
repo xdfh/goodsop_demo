@@ -6,6 +6,5 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public class EmqxAuthResponse {
-    private boolean result;
-    private boolean is_superuser;
-} 
+    private String result;
+}

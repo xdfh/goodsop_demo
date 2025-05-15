@@ -141,9 +141,14 @@ emqx:
     host: tcp://192.168.1.30:1883
     username: admin
     password: admin@2025
-    client-id: goodsop-iot-${random.value}
+#    client-id: goodsop-iot-${random.value}
+    client-id: goodsop-iot-111
+    keepAliveInterval: 60
+    connectionTimeout: 30
+
     # Topic配置
     topics:
-      status: /dev/+/+/+/+/base/status
-      event: /dev/+/+/+/+/base/event
-      command-response: /dev/+/+/+/+/base/command/response
+      status: '${spring.profiles.active}/+/+/+/base/status'
+      event: '${spring.profiles.active}/+/+/+/base/event'
+      command-response: '${spring.profiles.active}/+/+/+/base/command/response'
+

@@ -43,11 +43,10 @@ public class EmqxAuthServiceImpl implements EmqxAuthService {
             log.info("设备认证结果: deviceId={}, result={}", deviceId, isValid);
             
             return new EmqxAuthResponse()
-                    .setResult(isValid)
-                    .set_superuser(false);
+                    .setResult("allow");
         } catch (Exception e) {
             log.error("设备认证过程发生错误", e);
-            return new EmqxAuthResponse().setResult(false).set_superuser(false);
+            return new EmqxAuthResponse().setResult("allow");
         }
     }
 
@@ -59,7 +58,7 @@ public class EmqxAuthServiceImpl implements EmqxAuthService {
     private String generateExpectedPassword(String deviceId) {
         // 获取当前时间，使用配置中的时间格式
         String timeStr = LocalDateTime.now().format(DateTimeFormatter.ofPattern(timeFormat));
-        // 生成MD5(设备ID+timeStr)
-        return DigestUtils.md5Hex(deviceId + timeStr);
+        // 生成SHA256(设备ID+timeStr)
+        return DigestUtils.sha256Hex(deviceId + timeStr);
     }
 } 

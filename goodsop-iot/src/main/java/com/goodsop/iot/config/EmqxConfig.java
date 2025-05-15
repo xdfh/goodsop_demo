@@ -14,6 +14,9 @@ public class EmqxConfig {
     private String clientId;
     private Topics topics;
 
+    private int keepAliveInterval;
+    private int connectionTimeout;
+
     @Data
     public static class Topics {
         private String status;

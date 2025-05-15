@@ -29,7 +29,7 @@ public class EmqxAuthController {
         }
         
         EmqxAuthResponse response = emqxAuthService.authenticate(request);
-        log.info("认证结果: {}", response.isResult());
+        log.info("认证结果: {}", response.toString());
         
         return response;
     }
