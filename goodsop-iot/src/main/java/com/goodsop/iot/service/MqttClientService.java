@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -95,23 +96,23 @@ public class MqttClientService {
 
         try {
             EmqxConfig.Topics topics = emqxConfig.getTopics();
-            int qos = 1; // 对于服务端订阅，QoS 1 通常是合适的选择
+//            int qos = 1; // 对于服务端订阅，QoS 1 通常是合适的选择
 
             if (topics.getStatus() != null && !topics.getStatus().isEmpty()) {
-                log.info("准备订阅设备状态主题: {}, QoS: {}", topics.getStatus(), qos);
-                mqttClient.subscribe(topics.getStatus(), qos);
+                log.info("准备订阅设备状态主题: {}, QoS: {}", topics.getStatus(), topics.getStatusQos());
+                mqttClient.subscribe(topics.getStatus(), topics.getStatusQos());
                 log.info("成功订阅设备状态主题: {}", topics.getStatus());
             }
 
             if (topics.getEvent() != null && !topics.getEvent().isEmpty()) {
-                log.info("准备订阅设备事件主题: {}, QoS: {}", topics.getEvent(), qos);
-                mqttClient.subscribe(topics.getEvent(), qos);
+                log.info("准备订阅设备事件主题: {}, QoS: {}", topics.getEvent(), topics.getEventQos());
+                mqttClient.subscribe(topics.getEvent(), topics.getEventQos());
                 log.info("成功订阅设备事件主题: {}", topics.getEvent());
             }
 
             if (topics.getCommandResponse() != null && !topics.getCommandResponse().isEmpty()) {
-                log.info("准备订阅设备指令响应主题: {}, QoS: {}", topics.getCommandResponse(), qos);
-                mqttClient.subscribe(topics.getCommandResponse(), qos);
+                log.info("准备订阅设备指令响应主题: {}, QoS: {}", topics.getCommandResponse(), topics.getResponseQos());
+                mqttClient.subscribe(topics.getCommandResponse(), topics.getResponseQos());
                 log.info("成功订阅设备指令响应主题: {}", topics.getCommandResponse());
             }
             log.info("所有预定义的主题订阅尝试完成。");
@@ -166,15 +167,17 @@ public class MqttClientService {
     }
 
     // 未来可以添加发布消息的方法等
-    // public void publish(String topic, String payload, int qos, boolean retained) throws MqttException {
-    //     if (!isConnected()) {
-    //         log.warn("MQTT客户端未连接，无法发布消息到主题: {}", topic);
-    //         throw new MqttException(MqttException.REASON_CODE_CLIENT_NOT_CONNECTED);
-    //     }
-    //     MqttMessage message = new MqttMessage(payload.getBytes(java.nio.charset.StandardCharsets.UTF_8));
-    //     message.setQos(qos);
-    //     message.setRetained(retained);
-    //     mqttClient.publish(topic, message);
-    //     log.info("成功发布消息到主题: {}, QoS: {}, Retained: {}", topic, qos, retained);
-    // }
+    public void publish(String topic, String payload, int qos, boolean retained) throws MqttException {
+        if (!isConnected()) {
+            log.warn("MQTT客户端未连接，无法发布消息到主题: {}", topic);
+            // 可以考虑抛出自定义异常或尝试重连，这里简单抛出Paho的异常
+            throw new MqttException(MqttException.REASON_CODE_CLIENT_NOT_CONNECTED);
+        }
+        MqttMessage message = new MqttMessage(payload.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+        message.setQos(qos);
+        message.setRetained(retained);
+        // mqttClient 已经是类成员，直接使用
+        mqttClient.publish(topic, message);
+        log.info("成功通过MqttClientService发布消息到主题: {}, QoS: {}, Retained: {}, Payload: {}", topic, qos, retained, payload);
+    }
 } 

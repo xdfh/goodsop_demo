@@ -149,6 +149,9 @@ emqx:
     # Topic配置
     topics:
       status: '${spring.profiles.active}/+/+/+/base/status'
+      status_qos: 1
       event: '${spring.profiles.active}/+/+/+/base/event'
+      event_qos: 1
       command-response: '${spring.profiles.active}/+/+/+/base/command/response'
+      response_qos: 2
 

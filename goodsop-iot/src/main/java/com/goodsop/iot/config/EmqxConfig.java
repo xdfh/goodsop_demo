@@ -20,7 +20,10 @@ public class EmqxConfig {
     @Data
     public static class Topics {
         private String status;
+        private int statusQos;
         private String event;
+        private int eventQos;
         private String commandResponse;
+        private int responseQos;
     }
 } 

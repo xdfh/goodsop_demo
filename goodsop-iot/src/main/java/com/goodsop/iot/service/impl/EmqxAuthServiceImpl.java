@@ -3,9 +3,16 @@ package com.goodsop.iot.service.impl;
 import com.goodsop.iot.model.dto.EmqxAuthRequest;
 import com.goodsop.iot.model.vo.EmqxAuthResponse;
 import com.goodsop.iot.service.EmqxAuthService;
+import com.goodsop.iot.model.dto.MqttMessageDto;
+import com.goodsop.iot.config.EmqxConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.eclipse.paho.client.mqttv3.MqttClient;
+import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
+import org.eclipse.paho.client.mqttv3.MqttException;
+import org.eclipse.paho.client.mqttv3.MqttMessage;
+import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +21,19 @@ import java.time.format.DateTimeFormatter;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class EmqxAuthServiceImpl implements EmqxAuthService {
+
+    private final EmqxConfig emqxConfig;
 
     @Value("${device.auth.idPattern:GSDEV\\d{8}}")
     private String deviceIdPattern;
 
     @Value("${device.auth.timeFormat:yyyyMMddHH}")
     private String timeFormat;
+
+    public EmqxAuthServiceImpl(EmqxConfig emqxConfig) {
+        this.emqxConfig = emqxConfig;
+    }
 
     @Override
     public EmqxAuthResponse authenticate(EmqxAuthRequest request) {
@@ -41,9 +53,14 @@ public class EmqxAuthServiceImpl implements EmqxAuthService {
             // 验证密码
             boolean isValid = expectedPassword.equals(request.getPassword());
             log.info("设备认证结果: deviceId={}, result={}", deviceId, isValid);
-            
-            return new EmqxAuthResponse()
-                    .setResult("allow");
+            if(isValid){
+                return new EmqxAuthResponse()
+                        .setResult("allow");
+            }else {
+                return new EmqxAuthResponse()
+                        .setResult("ignore");
+            }
+
         } catch (Exception e) {
             log.error("设备认证过程发生错误", e);
             return new EmqxAuthResponse().setResult("allow");
@@ -61,4 +78,5 @@ public class EmqxAuthServiceImpl implements EmqxAuthService {
         // 生成SHA256(设备ID+timeStr)
         return DigestUtils.sha256Hex(deviceId + timeStr);
     }
+
 } 
