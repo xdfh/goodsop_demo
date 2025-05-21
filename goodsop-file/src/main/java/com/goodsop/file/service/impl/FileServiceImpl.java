@@ -226,14 +226,60 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
             // 设置访问URL和域名前缀
             String baseUrl = fileProperties.getStorage().getBaseUrl();
             if (baseUrl != null && !baseUrl.isEmpty()) {
-                String relativePath = targetFile.getAbsolutePath().replace(fileProperties.getStorage().getPath(), "").replace("\\", "/");
-                if (!relativePath.startsWith("/")) {
-                    relativePath = "/" + relativePath;
+                String serverStoragePath = fileProperties.getStorage().getPath();
+                String fileAbsolutePath = targetFile.getAbsolutePath();
+
+                // 统一路径分隔符为 /
+                String normalizedServerStoragePath = serverStoragePath.replace("\\", "/");
+                String normalizedFileAbsolutePath = fileAbsolutePath.replace("\\", "/");
+
+                //确保 normalizedServerStoragePath 以 / 结尾，除非它是根路径 D:/
+                if (!normalizedServerStoragePath.endsWith("/") && normalizedServerStoragePath.contains("/")) {
+                    normalizedServerStoragePath += "/";
                 }
-                fileInfo.setAccessUrl(baseUrl + relativePath);
+                
+                String relativePath = "";
+                if (normalizedFileAbsolutePath.startsWith(normalizedServerStoragePath)) {
+                    relativePath = normalizedFileAbsolutePath.substring(normalizedServerStoragePath.length());
+                } else {
+                    // 如果基础路径不匹配，这可能是一个配置问题或意外情况
+                    // 作为备选，尝试从最后一个 dateDir 开始截取，但这不够通用
+                    log.warn("文件绝对路径 '{}' 与配置的存储基础路径 '{}' 不匹配。将尝试基于日期目录生成相对路径。", normalizedFileAbsolutePath, normalizedServerStoragePath);
+                    // 尝试从日期目录开始获取相对路径
+                    int dateDirIndex = normalizedFileAbsolutePath.indexOf(dateDir);
+                    if (dateDirIndex != -1) {
+                        relativePath = normalizedFileAbsolutePath.substring(dateDirIndex);
+                    } else {
+                        // 如果连日期目录都找不到，则可能无法正确生成相对路径，这里保留文件名作为最后的手段
+                        relativePath = targetFile.getName();
+                        log.warn("无法从路径 '{}' 中定位日期目录 '{}'。 accessUrl 可能不正确。", normalizedFileAbsolutePath, dateDir);
+                    }
+                }
+                
+                // 确保 relativePath 不以 / 开头，因为 baseUrl 通常以 / 结尾（如 /api/files）
+                // 或者 baseUrl 不以 / 结尾而 relativePath 以 / 开头
+                // 这里我们假设 baseUrl 类似 http://host:port/context-path/files (没有末尾斜杠)
+                // 或者 http://host:port/context-path/files/ (有末尾斜杠)
+                // 我们需要确保最终URL路径的正确性
+
+                String finalAccessUrl;
+                if (baseUrl.endsWith("/")) {
+                    if (relativePath.startsWith("/")) {
+                        finalAccessUrl = baseUrl + relativePath.substring(1);
+                    } else {
+                        finalAccessUrl = baseUrl + relativePath;
+                    }
+                } else {
+                    if (relativePath.startsWith("/")) {
+                        finalAccessUrl = baseUrl + relativePath;
+                    } else {
+                        finalAccessUrl = baseUrl + "/" + relativePath;
+                    }
+                }
+                fileInfo.setAccessUrl(finalAccessUrl);
                 
                 try {
-                    URL url = new URL(baseUrl);
+                    URL url = new URL(baseUrl); // 使用 baseUrl 来解析 host，而不是拼接后的 accessUrl
                     fileInfo.setDomainPrefix(url.getHost());
                 } catch (Exception e) {
                     log.warn("解析域名前缀失败: {}", e.getMessage());
@@ -515,28 +561,61 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
             // 解析文件名中的元数据信息 - 使用原始文件名解析，更准确
             parseFileMetadata(fileInfo, originalFilename);
             
-            // 如果没有配置baseUrl，则使用服务器配置生成
-            String relativePath = targetFile.getAbsolutePath().replace(fileProperties.getStorage().getPath(), "").replace("\\", "/");
-            if (!relativePath.startsWith("/")) {
-                relativePath = "/" + relativePath;
+            // 设置访问URL和域名前缀 (与 uploadFile 方法中相同的修正逻辑)
+            String baseUrl = fileProperties.getStorage().getBaseUrl(); // 统一使用 getBaseUrl()
+            if (baseUrl != null && !baseUrl.isEmpty()) {
+                String serverStoragePath = fileProperties.getStorage().getPath();
+                // targetFile 是最终保存在磁盘上的文件对象
+                String fileAbsolutePath = targetFile.getAbsolutePath(); 
+
+                String normalizedServerStoragePath = serverStoragePath.replace("\\", "/");
+                String normalizedFileAbsolutePath = fileAbsolutePath.replace("\\", "/");
+
+                //确保 normalizedServerStoragePath 以 / 结尾，除非它是根路径 D:/
+                if (!normalizedServerStoragePath.endsWith("/") && normalizedServerStoragePath.contains("/")) {
+                    normalizedServerStoragePath += "/";
+                }
+                
+                String relativePath = "";
+                if (normalizedFileAbsolutePath.startsWith(normalizedServerStoragePath)) {
+                    relativePath = normalizedFileAbsolutePath.substring(normalizedServerStoragePath.length());
+                } else {
+                    log.warn("文件绝对路径 '{}' 与配置的存储基础路径 '{}' 不匹配。将尝试基于日期目录生成相对路径。", normalizedFileAbsolutePath, normalizedServerStoragePath);
+                    int dateDirIndex = normalizedFileAbsolutePath.indexOf(dateDir);
+                    if (dateDirIndex != -1) {
+                        relativePath = normalizedFileAbsolutePath.substring(dateDirIndex);
+                    } else {
+                        relativePath = targetFile.getName();
+                        log.warn("无法从路径 '{}' 中定位日期目录 '{}'。 accessUrl 可能不正确。", normalizedFileAbsolutePath, dateDir);
+                    }
+                }
+                
+                String finalAccessUrl;
+                if (baseUrl.endsWith("/")) {
+                    if (relativePath.startsWith("/")) {
+                        finalAccessUrl = baseUrl + relativePath.substring(1);
+                    } else {
+                        finalAccessUrl = baseUrl + relativePath;
+                    }
+                } else {
+                    if (relativePath.startsWith("/")) {
+                        finalAccessUrl = baseUrl + relativePath;
+                    } else {
+                        finalAccessUrl = baseUrl + "/" + relativePath;
+                    }
+                }
+                fileInfo.setAccessUrl(finalAccessUrl);
+                
+                try {
+                    URL url = new URL(baseUrl); // 使用 baseUrl 解析 host
+                    fileInfo.setDomainPrefix(url.getHost());
+                } catch (Exception e) {
+                    log.warn("解析域名前缀失败: {}", e.getMessage());
+                }
+            } else {
+                // 如果 baseUrl 未配置，则记录警告，accessUrl 可能不正确或为空
+                log.warn("配置项 goodsop.file.storage.base-url 未设置，accessUrl 将不会被正确生成。");
             }
-            
-            // 生成完整URL，包含服务器地址和端口
-            String host = fileProperties.getStorage().getServerHost();
-            Integer port = fileProperties.getStorage().getServerPort();
-            String contextPath = fileProperties.getStorage().getContextPath();
-            
-            // 确保contextPath以/开头且不以/结尾
-            if (contextPath != null && !contextPath.isEmpty() && !contextPath.startsWith("/")) {
-                contextPath = "/" + contextPath;
-            }
-            if (contextPath != null && contextPath.endsWith("/")) {
-                contextPath = contextPath.substring(0, contextPath.length() - 1);
-            }
-            
-            String serverUrl = "http://" + host + ":" + port + contextPath;
-            fileInfo.setAccessUrl(serverUrl + "/files" + relativePath);
-            fileInfo.setDomainPrefix(host);
             
             fileInfo.setStatus(FileConstant.FILE_STATUS_NORMAL);
             fileInfo.setCreateTime(LocalDateTime.now());
