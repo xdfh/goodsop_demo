@@ -154,4 +154,10 @@ public class FileInfo {
      */
     @TableField("original_size")
     private Long originalSize;
+
+    /**
+     * 文件关键词
+     */
+    @TableField("keywords")
+    private String keywords;
 } 

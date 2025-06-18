@@ -11,8 +11,8 @@ import com.goodsop.file.mapper.FileInfoMapper;
 import com.goodsop.file.service.FileService;
 import com.goodsop.file.util.FileCompressUtil;
 import com.goodsop.file.util.FileEncryptUtil;
-import com.goodsop.file.util.FileTransferUtil;
 import com.goodsop.file.util.FileProcessingUtil;
+import com.goodsop.file.util.FileTransferUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -23,16 +23,14 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.time.Instant;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
@@ -224,67 +222,7 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
             parseFileMetadata(fileInfo, originalFilename);
             
             // 设置访问URL和域名前缀
-            String baseUrl = fileProperties.getStorage().getBaseUrl();
-            if (baseUrl != null && !baseUrl.isEmpty()) {
-                String serverStoragePath = fileProperties.getStorage().getPath();
-                String fileAbsolutePath = targetFile.getAbsolutePath();
-
-                // 统一路径分隔符为 /
-                String normalizedServerStoragePath = serverStoragePath.replace("\\", "/");
-                String normalizedFileAbsolutePath = fileAbsolutePath.replace("\\", "/");
-
-                //确保 normalizedServerStoragePath 以 / 结尾，除非它是根路径 D:/
-                if (!normalizedServerStoragePath.endsWith("/") && normalizedServerStoragePath.contains("/")) {
-                    normalizedServerStoragePath += "/";
-                }
-                
-                String relativePath = "";
-                if (normalizedFileAbsolutePath.startsWith(normalizedServerStoragePath)) {
-                    relativePath = normalizedFileAbsolutePath.substring(normalizedServerStoragePath.length());
-                } else {
-                    // 如果基础路径不匹配，这可能是一个配置问题或意外情况
-                    // 作为备选，尝试从最后一个 dateDir 开始截取，但这不够通用
-                    log.warn("文件绝对路径 '{}' 与配置的存储基础路径 '{}' 不匹配。将尝试基于日期目录生成相对路径。", normalizedFileAbsolutePath, normalizedServerStoragePath);
-                    // 尝试从日期目录开始获取相对路径
-                    int dateDirIndex = normalizedFileAbsolutePath.indexOf(dateDir);
-                    if (dateDirIndex != -1) {
-                        relativePath = normalizedFileAbsolutePath.substring(dateDirIndex);
-                    } else {
-                        // 如果连日期目录都找不到，则可能无法正确生成相对路径，这里保留文件名作为最后的手段
-                        relativePath = targetFile.getName();
-                        log.warn("无法从路径 '{}' 中定位日期目录 '{}'。 accessUrl 可能不正确。", normalizedFileAbsolutePath, dateDir);
-                    }
-                }
-                
-                // 确保 relativePath 不以 / 开头，因为 baseUrl 通常以 / 结尾（如 /api/files）
-                // 或者 baseUrl 不以 / 结尾而 relativePath 以 / 开头
-                // 这里我们假设 baseUrl 类似 http://host:port/context-path/files (没有末尾斜杠)
-                // 或者 http://host:port/context-path/files/ (有末尾斜杠)
-                // 我们需要确保最终URL路径的正确性
-
-                String finalAccessUrl;
-                if (baseUrl.endsWith("/")) {
-                    if (relativePath.startsWith("/")) {
-                        finalAccessUrl = baseUrl + relativePath.substring(1);
-                    } else {
-                        finalAccessUrl = baseUrl + relativePath;
-                    }
-                } else {
-                    if (relativePath.startsWith("/")) {
-                        finalAccessUrl = baseUrl + relativePath;
-                    } else {
-                        finalAccessUrl = baseUrl + "/" + relativePath;
-                    }
-                }
-                fileInfo.setAccessUrl(finalAccessUrl);
-                
-                try {
-                    URL url = new URL(baseUrl); // 使用 baseUrl 来解析 host，而不是拼接后的 accessUrl
-                    fileInfo.setDomainPrefix(url.getHost());
-                } catch (Exception e) {
-                    log.warn("解析域名前缀失败: {}", e.getMessage());
-                }
-            }
+            setAccessUrlAndDomain(fileInfo, targetFile, dateDir);
             
             fileInfo.setStatus(FileConstant.FILE_STATUS_NORMAL);
             fileInfo.setCreateTime(LocalDateTime.now());
@@ -322,8 +260,12 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
     
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public FileInfo uploadFileChunk(MultipartFile file, String fileName, String deviceId, 
-                                  Integer chunk, Integer chunks, Integer isEncrypted, Integer isCompressed, String originalExtension) {
+    public FileInfo uploadFileChunk(MultipartFile file, String fileName, String deviceId,
+                                  Integer chunk, Integer chunks, Integer isEncrypted, Integer isCompressed, String originalExtension, String keywords) {
+        if (file.isEmpty()) {
+            throw new RuntimeException("文件为空");
+        }
+        
         try {
             // 记录配置项值，便于排查问题
             log.info("===== 文件上传配置检查 =====");
@@ -561,61 +503,13 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
             // 解析文件名中的元数据信息 - 使用原始文件名解析，更准确
             parseFileMetadata(fileInfo, originalFilename);
             
-            // 设置访问URL和域名前缀 (与 uploadFile 方法中相同的修正逻辑)
-            String baseUrl = fileProperties.getStorage().getBaseUrl(); // 统一使用 getBaseUrl()
-            if (baseUrl != null && !baseUrl.isEmpty()) {
-                String serverStoragePath = fileProperties.getStorage().getPath();
-                // targetFile 是最终保存在磁盘上的文件对象
-                String fileAbsolutePath = targetFile.getAbsolutePath(); 
-
-                String normalizedServerStoragePath = serverStoragePath.replace("\\", "/");
-                String normalizedFileAbsolutePath = fileAbsolutePath.replace("\\", "/");
-
-                //确保 normalizedServerStoragePath 以 / 结尾，除非它是根路径 D:/
-                if (!normalizedServerStoragePath.endsWith("/") && normalizedServerStoragePath.contains("/")) {
-                    normalizedServerStoragePath += "/";
-                }
-                
-                String relativePath = "";
-                if (normalizedFileAbsolutePath.startsWith(normalizedServerStoragePath)) {
-                    relativePath = normalizedFileAbsolutePath.substring(normalizedServerStoragePath.length());
-                } else {
-                    log.warn("文件绝对路径 '{}' 与配置的存储基础路径 '{}' 不匹配。将尝试基于日期目录生成相对路径。", normalizedFileAbsolutePath, normalizedServerStoragePath);
-                    int dateDirIndex = normalizedFileAbsolutePath.indexOf(dateDir);
-                    if (dateDirIndex != -1) {
-                        relativePath = normalizedFileAbsolutePath.substring(dateDirIndex);
-                    } else {
-                        relativePath = targetFile.getName();
-                        log.warn("无法从路径 '{}' 中定位日期目录 '{}'。 accessUrl 可能不正确。", normalizedFileAbsolutePath, dateDir);
-                    }
-                }
-                
-                String finalAccessUrl;
-                if (baseUrl.endsWith("/")) {
-                    if (relativePath.startsWith("/")) {
-                        finalAccessUrl = baseUrl + relativePath.substring(1);
-                    } else {
-                        finalAccessUrl = baseUrl + relativePath;
-                    }
-                } else {
-                    if (relativePath.startsWith("/")) {
-                        finalAccessUrl = baseUrl + relativePath;
-                    } else {
-                        finalAccessUrl = baseUrl + "/" + relativePath;
-                    }
-                }
-                fileInfo.setAccessUrl(finalAccessUrl);
-                
-                try {
-                    URL url = new URL(baseUrl); // 使用 baseUrl 解析 host
-                    fileInfo.setDomainPrefix(url.getHost());
-                } catch (Exception e) {
-                    log.warn("解析域名前缀失败: {}", e.getMessage());
-                }
-            } else {
-                // 如果 baseUrl 未配置，则记录警告，accessUrl 可能不正确或为空
-                log.warn("配置项 goodsop.file.storage.base-url 未设置，accessUrl 将不会被正确生成。");
+            // 设置关键词
+            if (StringUtils.hasText(keywords)) {
+                fileInfo.setKeywords(keywords);
             }
+            
+            // 设置访问URL和域名前缀
+            setAccessUrlAndDomain(fileInfo, targetFile, dateDir);
             
             fileInfo.setStatus(FileConstant.FILE_STATUS_NORMAL);
             fileInfo.setCreateTime(LocalDateTime.now());
@@ -628,12 +522,25 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
             
             // 删除临时处理文件
             try {
-                if (!processedFile.equals(targetFile) && !processedFile.equals(tempFile)) {
-                    processedFile.delete();
-                    log.info("删除临时处理文件: {}", processedFile.getAbsolutePath());
+                // 删除最终处理过的临时文件（例如.decompressed）
+                if (processedFile != null && processedFile.exists() && !processedFile.equals(targetFile) && !processedFile.equals(tempFile)) {
+                    if (processedFile.delete()) {
+                        log.info("成功删除临时处理文件: {}", processedFile.getAbsolutePath());
+                    } else {
+                        log.warn("删除临时处理文件失败: {}", processedFile.getAbsolutePath());
+                    }
+                }
+
+                // 删除合并后的原始文件（例如.enc），这个是问题的关键
+                if (tempFile != null && tempFile.exists() && !tempFile.equals(targetFile)) {
+                    if (tempFile.delete()) {
+                        log.info("成功删除合并后的临时文件: {}", tempFile.getAbsolutePath());
+                    } else {
+                        log.warn("删除合并后的临时文件失败: {}", tempFile.getAbsolutePath());
+                    }
                 }
             } catch (Exception e) {
-                log.warn("删除临时处理文件失败: {}", e.getMessage());
+                log.warn("删除临时文件时发生异常: {}", e.getMessage(), e);
             }
             
             return fileInfo;
@@ -1257,6 +1164,71 @@ public class FileServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> imple
             }
         } catch (Exception e) {
             log.error("解析文件元数据失败: {}", e.getMessage());
+        }
+    }
+
+    /**
+     * 设置文件的访问URL和域名前缀
+     *
+     * @param fileInfo 文件信息对象
+     * @param targetFile 目标文件
+     * @param dateDir  日期目录
+     */
+    private void setAccessUrlAndDomain(FileInfo fileInfo, File targetFile, String dateDir) {
+        String baseUrl = fileProperties.getStorage().getBaseUrl();
+        if (!StringUtils.hasText(baseUrl)) {
+            log.warn("配置项 goodsop.file.storage.base-url 未设置，accessUrl 将不会被正确生成。");
+            return;
+        }
+
+        try {
+            String serverStoragePath = fileProperties.getStorage().getPath();
+            String fileAbsolutePath = targetFile.getAbsolutePath();
+
+            String normalizedServerStoragePath = serverStoragePath.replace("\\", "/");
+            String normalizedFileAbsolutePath = fileAbsolutePath.replace("\\", "/");
+
+            if (!normalizedServerStoragePath.endsWith("/") && normalizedServerStoragePath.contains("/")) {
+                normalizedServerStoragePath += "/";
+            }
+            
+            String relativePathFromStorage = "";
+            if (normalizedFileAbsolutePath.startsWith(normalizedServerStoragePath)) {
+                relativePathFromStorage = normalizedFileAbsolutePath.substring(normalizedServerStoragePath.length());
+            } else {
+                log.warn("文件绝对路径 '{}' 与配置的存储基础路径 '{}' 不匹配。将尝试基于日期目录生成相对路径。", normalizedFileAbsolutePath, normalizedServerStoragePath);
+                int dateDirIndex = normalizedFileAbsolutePath.indexOf(dateDir);
+                if (dateDirIndex != -1) {
+                    relativePathFromStorage = normalizedFileAbsolutePath.substring(dateDirIndex);
+                } else {
+                    relativePathFromStorage = targetFile.getName();
+                    log.warn("无法从路径 '{}' 中定位日期目录 '{}'。 accessUrl 可能不正确。", normalizedFileAbsolutePath, dateDir);
+                }
+            }
+
+            URL url = new URL(baseUrl);
+            String basePath = url.getPath();
+            
+            String finalRelativeUrl;
+            if (basePath.endsWith("/")) {
+                if (relativePathFromStorage.startsWith("/")) {
+                    finalRelativeUrl = basePath + relativePathFromStorage.substring(1);
+                } else {
+                    finalRelativeUrl = basePath + relativePathFromStorage;
+                }
+            } else {
+                if (relativePathFromStorage.startsWith("/")) {
+                    finalRelativeUrl = basePath + relativePathFromStorage;
+                } else {
+                    finalRelativeUrl = basePath + "/" + relativePathFromStorage;
+                }
+            }
+
+            fileInfo.setAccessUrl(finalRelativeUrl);
+            fileInfo.setDomainPrefix(url.getHost());
+
+        } catch (Exception e) {
+            log.warn("解析baseUrl或构建accessUrl失败: {}", e.getMessage(), e);
         }
     }
 } 

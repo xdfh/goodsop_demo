@@ -16,7 +16,7 @@ alwaysApply: true
 - powerShell不支持&&作为分隔符
 - mkdir指令需要单行执行
 - 使用IDE或文本编辑器直接创建文件，而不是通过echo命令生成长文本
-
+- 代码开发必须符合MVC规范
 
 # 技术约束
 

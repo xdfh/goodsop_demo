@@ -43,6 +43,26 @@ public class FileProperties {
         private String baseUrl;
         
         /**
+         * 互联网访问主机
+         */
+        private String internetHost;
+        
+        /**
+         * 互联网访问端口
+         */
+        private Integer internetPort;
+        
+        /**
+         * 局域网访问主机
+         */
+        private String lanHost;
+        
+        /**
+         * 局域网访问端口
+         */
+        private Integer lanPort;
+        
+        /**
          * 服务器主机名
          */
         private String serverHost = "localhost";

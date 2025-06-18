@@ -1,9 +1,10 @@
 package com.goodsop.file.controller;
 
 import com.goodsop.common.core.model.Result;
-import com.goodsop.file.constant.FileConstant;
+import com.goodsop.file.config.FileProperties;
 import com.goodsop.file.entity.FileInfo;
 import com.goodsop.file.service.FileService;
+import com.goodsop.file.vo.FileUploadResponseVO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -29,6 +30,7 @@ import java.util.Map;
 public class FileUploadController {
     
     private final FileService fileService;
+    private final FileProperties fileProperties;
     
     /**
      * 上传文件
@@ -70,7 +72,7 @@ public class FileUploadController {
      */
     @PostMapping("/chunk/upload")
     @Operation(summary = "分块上传文件(断点续传)")
-    public Result<Map<String, Object>> uploadFileChunk(
+    public Result<FileUploadResponseVO> uploadFileChunk(
             @Parameter(description = "文件块", required = true) @RequestParam("file") MultipartFile file,
             @Parameter(description = "文件名", required = true) @RequestParam("fileName") String fileName,
             @Parameter(description = "设备ID") @RequestParam(required = false, defaultValue = "unknown") String deviceId,
@@ -78,10 +80,11 @@ public class FileUploadController {
             @Parameter(description = "总块数", required = true) @RequestParam("chunks") Integer chunks,
             @Parameter(description = "是否加密(0-否，1-是)") @RequestParam(required = false, defaultValue = "0") Integer isEncrypted,
             @Parameter(description = "是否压缩(0-否，1-是)") @RequestParam(required = false, defaultValue = "0") Integer isCompressed,
-            @Parameter(description = "原始文件扩展名") @RequestParam(required = false) String originalExtension) {
+            @Parameter(description = "原始文件扩展名") @RequestParam(required = false) String originalExtension,
+            @Parameter(description = "关键词") @RequestParam(required = false) String keywords) {
         
-        log.info("接收到分块上传请求: fileName={}, chunk={}/{}, fileSize={}, deviceId={}, isEncrypted={}, isCompressed={}, originalExtension={}",
-                fileName, chunk + 1, chunks, file.getSize(), deviceId, isEncrypted, isCompressed, originalExtension);
+        log.info("接收到分块上传请求: fileName={}, chunk={}/{}, fileSize={}, deviceId={}, isEncrypted={}, isCompressed={}, originalExtension={}, keywords={}",
+                fileName, chunk + 1, chunks, file.getSize(), deviceId, isEncrypted, isCompressed, originalExtension, keywords);
         
         // 参数校验
         if (file.isEmpty()) {
@@ -110,49 +113,55 @@ public class FileUploadController {
             isCompressed = 0;
         }
         
-        Map<String, Object> result = new HashMap<>();
+        FileUploadResponseVO responseVO = new FileUploadResponseVO();
         
         try {
             // 上传文件块
-            FileInfo fileInfo = fileService.uploadFileChunk(file, fileName, deviceId, chunk, chunks, 
-                                                          isEncrypted, isCompressed, originalExtension);
+            FileInfo fileInfo = fileService.uploadFileChunk(file, fileName, deviceId, chunk, chunks,
+                    isEncrypted, isCompressed, originalExtension, keywords);
             
             // 设置共同的返回信息
-            result.put("fileName", fileName);
-            result.put("chunks", chunks);
-            result.put("chunk", chunk);
-            result.put("success", true);
+            responseVO.setFileName(fileName)
+                      .setChunks(chunks)
+                      .setChunk(chunk)
+                      .setSuccess(true);
             
             if (fileInfo != null) {
                 // 全部分块上传完成，合并成功
-                result.put("fileId", fileInfo.getId());
-                result.put("fileName", fileInfo.getFileName());
-                result.put("fileSize", fileInfo.getFileSize());
-                result.put("fileType", fileInfo.getFileType());
-                result.put("uploadTime", fileInfo.getUploadTime());
-                result.put("filePath", fileInfo.getFilePath());
-                result.put("accessUrl", fileInfo.getAccessUrl());
-                result.put("isEncrypted", isEncrypted);
-                result.put("isCompressed", isCompressed);
-                result.put("completed", true);
-                result.put("message", "文件上传完成");
-                log.info("分块上传完成: fileId={}, filePath={}, accessUrl={}", 
-                         fileInfo.getId(), fileInfo.getFilePath(), fileInfo.getAccessUrl());
+                FileProperties.Storage storage = fileProperties.getStorage();
+                String accessUrl = String.format("http://%s:%d%s", storage.getInternetHost(), storage.getInternetPort(), fileInfo.getAccessUrl());
+                String lanAccessUrl = String.format("http://%s:%d%s", storage.getLanHost(), storage.getLanPort(), fileInfo.getAccessUrl());
+                
+                responseVO.setFileId(fileInfo.getId())
+                          .setFileName(fileInfo.getFileName())
+                          .setFileSize(fileInfo.getFileSize())
+                          .setFileType(fileInfo.getFileType())
+                          .setUploadTime(fileInfo.getUploadTime())
+//                          .setFilePath(fileInfo.getFilePath())
+                          .setAccessUrl(accessUrl)
+                          .setLanAccessUrl(lanAccessUrl)
+                          .setIsEncrypted(isEncrypted)
+                          .setIsCompressed(isCompressed)
+                          .setCompleted(true)
+                          .setMessage("文件上传完成");
+                          
+                log.info("分块上传完成: fileId={}, filePath={}, accessUrl={}, lanAccessUrl={}",
+                        fileInfo.getId(), fileInfo.getFilePath(), accessUrl, lanAccessUrl);
             } else {
                 // 部分分块上传完成，返回当前进度
-                result.put("completed", false);
-                result.put("message", "分块" + (chunk + 1) + "上传成功，请继续上传");
+                responseVO.setCompleted(false)
+                          .setMessage("分块" + (chunk + 1) + "上传成功，请继续上传");
                 log.info("分块{}上传成功，等待继续上传", chunk + 1);
             }
             
-            return Result.success(result);
+            return Result.success(responseVO);
         } catch (Exception e) {
             log.error("分块上传失败: {}", e.getMessage(), e);
-            result.put("success", false);
-            result.put("message", "分块上传失败: " + e.getMessage());
-            result.put("chunk", chunk);
-            result.put("fileName", fileName);
-            return Result.error("分块上传失败: " + e.getMessage());
+            responseVO.setSuccess(false)
+                      .setMessage("分块上传失败: " + e.getMessage())
+                      .setChunk(chunk)
+                      .setFileName(fileName);
+            return Result.error(500, "分块上传失败: " + e.getMessage());
         }
     }
 } 

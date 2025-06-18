@@ -1,6 +1,6 @@
 server:
   host: 192.168.1.30
-  port: 58080
+  port: 8880
   servlet:
     context-path: /api
 
@@ -122,12 +122,14 @@ goodsop:
   file:
     storage:
       path: D:/file/
-      base-url: http://${server.host}:8080/api/files # <--- 这个是关键，用于生成可访问URL的基础部分
+      base-url: http://${server.host}:${server.port}/api/files # <--- 这个是关键，用于生成可访问URL的基础部分
+      internet-host: dev.goodsop.cn # 新增：互联网访问主机
+      internet-port: 50080          # 新增：互联网访问端口
+      lan-host: ${server.host}      # 新增：局域网访问主机
+      lan-port: ${server.port}      # 新增：局域网访问端口
       enable-decrypt: true
       enable-decompress: true
       aes-key: 1234567890abcdef1234567890abcdef
-      # server-host: ${server.host}
-      # server-port: 8080
       context-path: /api
     upload:
       max-size: 100MB
