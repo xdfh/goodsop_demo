@@ -28,7 +28,7 @@ public class EmqxAuthServiceImpl implements EmqxAuthService {
     @Value("${device.auth.idPattern:GSDEV\\d{8}}")
     private String deviceIdPattern;
 
-    @Value("${device.auth.timeFormat:yyyyMMddHH}")
+    @Value("${device.auth.timeFormat:yyyyMMddHHmm}")
     private String timeFormat;
 
     public EmqxAuthServiceImpl(EmqxConfig emqxConfig) {
@@ -49,7 +49,7 @@ public class EmqxAuthServiceImpl implements EmqxAuthService {
 
             // 生成预期的密码
             String expectedPassword = generateExpectedPassword(deviceId);
-            
+
             // 验证密码
             boolean isValid = expectedPassword.equals(request.getPassword());
             log.info("设备认证结果: deviceId={}, result={}", deviceId, isValid);
@@ -76,7 +76,13 @@ public class EmqxAuthServiceImpl implements EmqxAuthService {
         // 获取当前时间，使用配置中的时间格式
         String timeStr = LocalDateTime.now().format(DateTimeFormatter.ofPattern(timeFormat));
         // 生成SHA256(设备ID+timeStr)
-        return DigestUtils.sha256Hex(deviceId + timeStr);
+         String pwd = DigestUtils.sha256Hex(deviceId + timeStr);
+
+
+        log.info("=======>>服务器时间: {}", timeStr);
+        log.info("=======>>设备认证服务器生成的密码: {}", pwd);
+
+        return pwd;
     }
 
 } 
