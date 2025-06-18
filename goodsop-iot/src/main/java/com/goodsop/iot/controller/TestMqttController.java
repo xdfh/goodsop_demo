@@ -24,7 +24,6 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 @RestController
 @RequestMapping("/iot/mqtt/test")
 @RequiredArgsConstructor
-@Hidden
 @Tag(name = "MQTT测试", description = "MQTT消息通信测试接口")
 public class TestMqttController {
 

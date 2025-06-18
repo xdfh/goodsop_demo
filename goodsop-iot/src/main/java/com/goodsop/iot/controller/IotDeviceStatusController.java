@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/iot/device/status")
 @RequiredArgsConstructor
-@Hidden
 @Tag(name = "IoT设备状态管理", description = "提供设备状态的增删改查接口")
 public class IotDeviceStatusController {
 

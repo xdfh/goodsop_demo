@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/mqtt")
 @RequiredArgsConstructor
-@Hidden
 public class EmqxAuthController {
 
     private final EmqxAuthService emqxAuthService;
