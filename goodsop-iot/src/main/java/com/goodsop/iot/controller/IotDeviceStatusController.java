@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.goodsop.iot.entity.IotDeviceStatus;
 import com.goodsop.iot.service.IIotDeviceStatusService;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/iot/device/status")
 @RequiredArgsConstructor
+@Hidden
 @Tag(name = "IoT设备状态管理", description = "提供设备状态的增删改查接口")
 public class IotDeviceStatusController {
 

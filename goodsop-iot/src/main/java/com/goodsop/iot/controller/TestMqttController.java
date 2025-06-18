@@ -3,6 +3,7 @@ package com.goodsop.iot.controller;
 import com.goodsop.iot.model.dto.MqttMessageDto;
 import com.goodsop.iot.service.EmqxAuthService;
 import com.goodsop.iot.service.MqttClientService;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -23,6 +24,7 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 @RestController
 @RequestMapping("/iot/mqtt/test")
 @RequiredArgsConstructor
+@Hidden
 @Tag(name = "MQTT测试", description = "MQTT消息通信测试接口")
 public class TestMqttController {
 

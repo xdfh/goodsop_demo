@@ -1,14 +1,23 @@
 server:
-  port: 8080
+  host: dev.goodsop.cn
+  port: 8880
   servlet:
     context-path: /api
 
 spring:
   application:
     name: goodsop
+  mvc:
+    cors:
+      mapping: "/**"
+      allowed-origins: "*"
+      allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+      allowed-headers: "*"
+      allow-credentials: true
+      max-age: 3600
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://192.168.1.30:65432/mydb_test
+    url: jdbc:postgresql://127.0.0.1:65432/mydb
     username: post
     password: admin@2025
     type: com.alibaba.druid.pool.DruidDataSource
@@ -17,6 +26,14 @@ spring:
       min-idle: 5
       max-active: 20
       max-wait: 60000
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      validation-query: SELECT 1
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss.SSS
     time-zone: GMT+8
@@ -38,31 +55,105 @@ mybatis-plus:
     map-underscore-to-camel-case: true
     cache-enabled: false
 
+# Knife4j配置
 knife4j:
   enable: true
-  production: false
-  
+  setting:
+    language: zh-CN
+    enable-swagger-models: true
+    enable-document-manage: true
+    swagger-model-name: 实体类列表
+    enable-version: true
+    enable-footer: false
+    enable-group: true
+  basic:
+    enable: false
+  documents:
+    - group: default
+      name: 使用指南
+      locations: classpath:markdown/*
+
+# SpringDoc配置
+springdoc:
+  api-docs:
+    enabled: true
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    disable-swagger-default-url: true
+    display-request-duration: true
+    operations-sorter: method
+    tags-sorter: alpha
+  group-configs:
+    - group: 文件管理模块
+      paths-to-match: /file/**
+      packages-to-scan: com.goodsop.file.controller
+    - group: 用户管理模块
+      paths-to-match: /user/**
+      packages-to-scan: com.goodsop.user.controller
+    - group: 系统服务模块
+      paths-to-match: /system/**
+      packages-to-scan: com.goodsop.server.controller
+    - group: IoT设备模块
+      paths-to-match: /iot/**
+      packages-to-scan: com.goodsop.iot.controller
+
 logging:
   level:
     root: info
     com.goodsop: debug
   file:
-    name: logs/goodsop-test.log
+    name: logs/goodsop-dev.log
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      max-history: 30
 
-# 文件模块配置
+# 自定义日志配置
 goodsop:
+  logging:
+    enabled: true
+    include-request-params: true
+    include-response-body: true
+    service-slow-threshold: 300
+    controller-slow-threshold: 500
+    request-id-length: 12
+  # 文件模块配置
   file:
     storage:
-      path: /home/file/
+      path: D:/file/
+      base-url: http://${server.host}:8080/api/files # <--- 这个是关键，用于生成可访问URL的基础部分
       enable-decrypt: true
       enable-decompress: true
       aes-key: 1234567890abcdef1234567890abcdef
-      server-host: dev.goodsop.cn
-      server-port: 80
+      # server-host: ${server.host}
+      # server-port: 8080
       context-path: /api
     upload:
       max-size: 100MB
     cleanup:
       enabled: true
       cron: "0 0 1 * * ?"  # 每天凌晨1点执行
-      temp-file-max-age: 24  # 临时文件最大保留时间（小时） 
+      temp-file-max-age: 24  # 临时文件最大保留时间（小时）
+
+
+# EMQX配置
+emqx:
+  mqtt:
+    host: tcp://127.0.0.1:1883
+    username: admin
+    password: admin@2025
+    #    client-id: goodsop-iot-${random.value}
+    client-id: goodsop-iot-111
+    keepAliveInterval: 60
+    connectionTimeout: 30
+
+    # Topic配置
+    topics:
+      status: '${spring.profiles.active}/+/+/+/base/status'
+      status_qos: 1
+      event: '${spring.profiles.active}/+/+/+/base/event'
+      event_qos: 1
+      command-response: '${spring.profiles.active}/+/+/+/base/command/response'
+      response_qos: 1
+
