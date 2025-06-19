@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -63,7 +64,9 @@ public class EmqxAuthServiceImpl implements EmqxAuthService {
 
         } catch (Exception e) {
             log.error("设备认证过程发生错误", e);
-            return new EmqxAuthResponse().setResult("allow");
+            return new EmqxAuthResponse()
+                    .setToken(UUID.randomUUID().toString().toUpperCase())
+                    .setResult("allow");
         }
     }
 

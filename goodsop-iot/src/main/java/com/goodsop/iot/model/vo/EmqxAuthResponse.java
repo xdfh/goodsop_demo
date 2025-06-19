@@ -7,4 +7,6 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class EmqxAuthResponse {
     private String result;
+
+    private String token;
 }
