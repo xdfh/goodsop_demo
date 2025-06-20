@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -149,7 +151,32 @@ public class LogAspect {
                 
                 // 根据配置决定是否记录响应内容
                 if (logProperties.isIncludeResponseBody() && result != null) {
-                    responseLog.append("│ 返回结果 : ").append(objectMapper.writeValueAsString(result)).append(LINE_SEPARATOR);
+                    try {
+                        Object resultToLog = result;
+                        if (resultToLog instanceof ResponseEntity) {
+                            resultToLog = ((ResponseEntity<?>) resultToLog).getBody();
+                        }
+
+                        if (resultToLog == null) {
+                            responseLog.append("│ 返回结果 : null").append(LINE_SEPARATOR);
+                        } else if (resultToLog instanceof InputStream || resultToLog instanceof OutputStream) {
+                            responseLog.append("│ 返回结果 : 【流数据】").append(LINE_SEPARATOR);
+                        } else if (resultToLog instanceof Resource) {
+                            Resource resource = (Resource) resultToLog;
+                            responseLog.append("│ 返回结果 : 【文件资源: ").append(resource.getFilename()).append("】").append(LINE_SEPARATOR);
+                        } else if (resultToLog instanceof byte[]) {
+                            responseLog.append("│ 返回结果 : 【字节数组，大小: ").append(((byte[]) resultToLog).length).append(" 字节】").append(LINE_SEPARATOR);
+                        } else {
+                            String resultJson = objectMapper.writeValueAsString(resultToLog);
+                            if (resultJson.length() > 1000) {
+                                resultJson = resultJson.substring(0, 1000) + "...(内容过长已截断)";
+                            }
+                            responseLog.append("│ 返回结果 : ").append(resultJson).append(LINE_SEPARATOR);
+                        }
+                    } catch (Exception e) {
+                        log.warn("序列化响应结果失败: {}", e.getMessage());
+                        responseLog.append("│ 返回结果 : [序列化失败]").append(LINE_SEPARATOR);
+                    }
                 }
                 
                 responseLog.append("└─────────────────────────────────────────────────────┘");

@@ -56,6 +56,7 @@ public class EmqxAuthServiceImpl implements EmqxAuthService {
             log.info("设备认证结果: deviceId={}, result={}", deviceId, isValid);
             if(isValid){
                 return new EmqxAuthResponse()
+                        .setToken(UUID.randomUUID().toString().toUpperCase())
                         .setResult("allow");
             }else {
                 return new EmqxAuthResponse()
@@ -65,8 +66,7 @@ public class EmqxAuthServiceImpl implements EmqxAuthService {
         } catch (Exception e) {
             log.error("设备认证过程发生错误", e);
             return new EmqxAuthResponse()
-                    .setToken(UUID.randomUUID().toString().toUpperCase())
-                    .setResult("allow");
+                    .setResult("ignore");
         }
     }
 
