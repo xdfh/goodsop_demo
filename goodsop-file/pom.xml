@@ -76,5 +76,13 @@
             <artifactId>commons-io</artifactId>
             <version>2.13.0</version>
         </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/io.github.jseproject/jse-spi-speex -->
+        <dependency>
+            <groupId>io.github.jseproject</groupId>
+            <artifactId>jse-spi-speex</artifactId>
+            <version>1.0.1</version>
+        </dependency>
     </dependencies>
 </project> 

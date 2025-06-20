@@ -160,4 +160,10 @@ public class FileInfo {
      */
     @TableField("keywords")
     private String keywords;
+
+    /**
+     * 是否使用Speex压缩: 0-未压缩, 1-已压缩. 默认为1 (已压缩).
+     */
+    @TableField("is_speex_compressed")
+    private Integer isSpeexCompressed = 1;
 } 
