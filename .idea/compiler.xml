@@ -7,12 +7,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="goodsop-file" />
         <module name="goodsop-user" />
+        <module name="goodsop-config" />
+        <module name="goodsop-auth" />
+        <module name="goodsop-file" />
         <module name="goodsop-server" />
         <module name="goodsop-common" />
         <module name="goodsop-iot" />
-        <module name="goodsop-config" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -28,6 +29,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="goodsop-api" options="-parameters" />
+      <module name="goodsop-auth" options="-parameters" />
       <module name="goodsop-common" options="-parameters" />
       <module name="goodsop-common-core" options="-parameters" />
       <module name="goodsop-common-swagger" options="-parameters" />

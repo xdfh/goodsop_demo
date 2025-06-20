@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/mqtt")
+@RequestMapping("/iot/v1")
 @RequiredArgsConstructor
 public class EmqxAuthController {
 

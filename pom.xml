@@ -21,6 +21,7 @@
     <modules>
         <module>goodsop-common</module>
         <module>goodsop-config</module>
+        <module>goodsop-auth</module>
         <module>goodsop-file</module>
         <module>goodsop-user</module>
         <module>goodsop-iot</module>
@@ -136,6 +137,12 @@
             <dependency>
                 <groupId>com.goodsop</groupId>
                 <artifactId>goodsop-iot</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.goodsop</groupId>
+                <artifactId>goodsop-auth</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

@@ -68,10 +68,10 @@ knife4j:
     enable-group: true
   basic:
     enable: false
-  documents:
-    - group: default
-      name: 使用指南
-      locations: classpath:markdown/*
+#  documents:
+#    - group: default
+#      name: 使用指南
+#      locations: classpath:markdown/*
 
 # SpringDoc配置
 springdoc:
@@ -97,6 +97,9 @@ springdoc:
     - group: IoT设备模块
       paths-to-match: /iot/**
       packages-to-scan: com.goodsop.iot.controller
+#    - group: MQTT认证模块
+#      paths-to-match: /api/iot/**
+#      packages-to-scan: com.goodsop.iot.controller
 
 logging:
   level:
@@ -158,4 +161,15 @@ emqx:
       event_qos: 1
       command-response: '${spring.profiles.active}/+/+/+/base/command/response'
       response_qos: 1
+
+# JWT 配置
+jwt:
+  #   jwt加解密使用的密钥,min 32
+  secret: goodsop-server-secret-0123456789
+  #  jwt的超期限时间(60*60*24)
+  expiration: 86400
+  # jwt存储的请求头
+  token-header: Authorization
+  # jwt负载中拿到的开头
+  token-head: "Bearer "
 

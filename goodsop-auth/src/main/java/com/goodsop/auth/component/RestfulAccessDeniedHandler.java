@@ -1,0 +1,42 @@
+package com.goodsop.auth.component;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.access.AccessDeniedHandler;
+
+import java.io.IOException;
+
+public class RestfulAccessDeniedHandler implements AccessDeniedHandler {
+    @Override
+    public void handle(HttpServletRequest request,
+                       HttpServletResponse response,
+                       AccessDeniedException accessDeniedException) throws IOException, ServletException {
+        // =====================================================================================
+        // = 在这里实现您的授权失败处理逻辑
+        // =====================================================================================
+        //
+        // 当一个已认证的用户尝试访问一个他们没有权限的资源时，此方法将被调用
+        //
+        // 示例步骤:
+        // 1. 设置 response 的 Content-Type 为 "application/json;charset=UTF-8"
+        // response.setContentType("application/json;charset=UTF-8");
+        //
+        // 2. 设置 HTTP 状态码，通常是 403 Forbidden
+        // response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        //
+        // 3. 构建一个统一的错误响应体（例如，使用您在 goodsop-common 中定义的通用结果类）
+        // CommonResult<String> result = CommonResult.failed("权限不足：" + accessDeniedException.getMessage());
+        //
+        // 4. 使用 ObjectMapper (e.g., from Jackson) 将结果对象序列化为 JSON 字符串
+        // String json = new ObjectMapper().writeValueAsString(result);
+        //
+        // 5. 将 JSON 字符串写入 response 的输出流
+        // response.getWriter().println(json);
+        // response.getWriter().flush();
+
+        // 简单的默认实现
+        response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
+    }
+} 

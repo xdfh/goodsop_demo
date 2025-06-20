@@ -1,30 +1,27 @@
 package com.goodsop.iot.service.impl;
 
+import com.goodsop.auth.detail.AuthUserDetails;
+import com.goodsop.auth.util.JwtTokenUtil;
+import com.goodsop.iot.config.EmqxConfig;
 import com.goodsop.iot.model.dto.EmqxAuthRequest;
 import com.goodsop.iot.model.vo.EmqxAuthResponse;
 import com.goodsop.iot.service.EmqxAuthService;
-import com.goodsop.iot.model.dto.MqttMessageDto;
-import com.goodsop.iot.config.EmqxConfig;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.eclipse.paho.client.mqttv3.MqttClient;
-import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
-import org.eclipse.paho.client.mqttv3.MqttException;
-import org.eclipse.paho.client.mqttv3.MqttMessage;
-import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.UUID;
 
 @Slf4j
 @Service
 public class EmqxAuthServiceImpl implements EmqxAuthService {
 
     private final EmqxConfig emqxConfig;
+    private final JwtTokenUtil jwtTokenUtil;
 
     @Value("${device.auth.idPattern:GSDEV\\d{8}}")
     private String deviceIdPattern;
@@ -32,8 +29,10 @@ public class EmqxAuthServiceImpl implements EmqxAuthService {
     @Value("${device.auth.timeFormat:yyyyMMddHHmm}")
     private String timeFormat;
 
-    public EmqxAuthServiceImpl(EmqxConfig emqxConfig) {
+    @Autowired
+    public EmqxAuthServiceImpl(EmqxConfig emqxConfig, JwtTokenUtil jwtTokenUtil) {
         this.emqxConfig = emqxConfig;
+        this.jwtTokenUtil = jwtTokenUtil;
     }
 
     @Override
@@ -55,8 +54,23 @@ public class EmqxAuthServiceImpl implements EmqxAuthService {
             boolean isValid = expectedPassword.equals(request.getPassword());
             log.info("设备认证结果: deviceId={}, result={}", deviceId, isValid);
             if(isValid){
+                // 生成符合系统规范的JWT token
+                // 创建设备用户详情对象
+                AuthUserDetails deviceUserDetails = new AuthUserDetails()
+                        .setUserId(0L) // 设备用户ID设为0
+                        .setUsername(deviceId)
+                        .setNickname("设备_" + deviceId)
+                        .setDeviceId(deviceId)
+                        .setPassword(null)
+                        .setAuthorities(AuthorityUtils.createAuthorityList("ROLE_DEVICE"));
+                
+                // 使用JWT工具类生成token
+                String jwtToken = jwtTokenUtil.generateToken(deviceUserDetails);
+                log.info("为设备 {} 生成JWT token", jwtToken);
+
+                
                 return new EmqxAuthResponse()
-                        .setToken(UUID.randomUUID().toString().toUpperCase())
+                        .setToken(jwtToken)
                         .setResult("allow");
             }else {
                 return new EmqxAuthResponse()

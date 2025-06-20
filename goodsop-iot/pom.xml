@@ -33,6 +33,13 @@
             <version>${project.version}</version>
         </dependency>
 
+        <!-- 引入认证模块 -->
+        <dependency>
+            <groupId>com.goodsop</groupId>
+            <artifactId>goodsop-auth</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <!-- MQTT客户端 -->
         <dependency>
             <groupId>org.eclipse.paho</groupId>

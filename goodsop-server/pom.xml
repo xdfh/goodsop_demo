@@ -20,6 +20,12 @@
             <artifactId>goodsop-config</artifactId>
         </dependency>
 
+        <!-- 鉴权模块 -->
+        <dependency>
+            <groupId>com.goodsop</groupId>
+            <artifactId>goodsop-auth</artifactId>
+        </dependency>
+
         <!-- 业务模块依赖 -->
         <dependency>
             <groupId>com.goodsop</groupId>
